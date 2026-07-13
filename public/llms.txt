@@ -1,0 +1,17 @@
+# Soham Kamat Portfolio
+
+Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine learning systems, data products, and intelligent web applications.
+
+## Primary links
+
+- [Portfolio home](/)
+- [Resume](/Soham_Kamat_Resume.pdf)
+- [GitHub](https://github.com/sohamkamat28)
+- [LinkedIn](https://www.linkedin.com/in/sohamkamat28/)
+
+## Featured work
+
+- ResumeLens ATS: AI-assisted resume and job-description analysis.
+- MedSimplify: OCR and biomedical NLP for readable medical reports.
+- StockSense: explainable stock-direction modeling.
+- Spotify Analytics: interactive music-data exploration.
