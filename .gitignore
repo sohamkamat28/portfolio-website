@@ -5,3 +5,5 @@ tmp/
 output/
 resume/
 sohamkamat28-profile/
+.vercel
+.env*
