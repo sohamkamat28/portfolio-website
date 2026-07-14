@@ -410,9 +410,13 @@ function Journey() {
         </div>
         <div className="journey-list">
           <article data-reveal>
-            <div className="journey-meta"><span>Experience</span></div>
-            <h3>Intern</h3>
+            <div className="journey-meta"><span>June 2026 – Present</span></div>
+            <h3>Technical Product Intern, Digital Health</h3>
             <p className="journey-org">Purple Ribbon Healthcare</p>
+            <ul className="journey-details">
+              <li>Led early-stage product definition for Purple Ribbon's transition from offline healthcare coordination to an app-based platform; authored a detailed PRD covering functional requirements, role-based workflows, module interactions, automation logic, and operational handoffs, which the CEO shared with external development agencies.</li>
+              <li>Designed a wireframe prototype for <strong>4 core application modules</strong>, translating patient requests, nurse and caregiver allocation, and service coordination into structured screen flows and navigation for technical scoping.</li>
+            </ul>
           </article>
           <article data-reveal>
             <div className="journey-meta"><span>2024-2028</span><span>Mumbai</span></div>
