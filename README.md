@@ -28,3 +28,5 @@ npm run preview
 ## Deployment
 
 The project is Vite-based and ready for Vercel. Use `npm run build` as the build command and `dist` as the output directory.
+
+The `/api/github-contributions` serverless route reads Soham's public contribution calendar directly from GitHub, caches it for five minutes, and supplies the live calendar rendered in the portfolio.
