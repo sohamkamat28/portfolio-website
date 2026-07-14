@@ -678,7 +678,6 @@ function GitHubActivity() {
             </a>
           )}
         </div>
-        <p className="github-refresh-note">Updated directly from GitHub every 5 minutes</p>
       </div>
     </section>
   );
