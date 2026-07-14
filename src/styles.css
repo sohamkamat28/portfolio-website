@@ -1136,6 +1136,194 @@ h3 {
   }
 }
 
+/* Live GitHub calendar — native GitHub palette on a transparent surface. */
+:root {
+  --github-level-0: #ebedf0;
+  --github-level-1: #9be9a8;
+  --github-level-2: #40c463;
+  --github-level-3: #30a14e;
+  --github-level-4: #216e39;
+}
+
+:root[data-theme="dark"] {
+  --github-level-0: #161b22;
+  --github-level-1: #0e4429;
+  --github-level-2: #006d32;
+  --github-level-3: #26a641;
+  --github-level-4: #39d353;
+}
+
+.contribution-chart,
+.contribution-chart--loading,
+.contribution-chart--ready,
+.contribution-chart--error {
+  display: block;
+  min-height: 150px;
+  overflow-x: auto;
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  background: transparent;
+  scrollbar-color: color-mix(in srgb, var(--text) 22%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.github-calendar {
+  width: max-content;
+  min-width: 784px;
+}
+
+.calendar-months {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 11px;
+  gap: 3px;
+  margin: 0 0 8px 31px;
+  color: var(--muted);
+  font-size: 0.67rem;
+  line-height: 1;
+}
+
+.calendar-months span {
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.calendar-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.calendar-weekdays,
+.calendar-week {
+  display: grid;
+  grid-template-rows: repeat(7, 11px);
+  gap: 3px;
+}
+
+.calendar-weekdays {
+  width: 22px;
+  color: var(--muted);
+  font-size: 0.58rem;
+  line-height: 11px;
+}
+
+.calendar-weeks {
+  display: flex;
+  gap: 3px;
+}
+
+.contribution-day {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 5%, transparent);
+}
+
+.contribution-day--level-0 {
+  background: var(--github-level-0);
+}
+
+.contribution-day--level-1 {
+  background: var(--github-level-1);
+}
+
+.contribution-day--level-2 {
+  background: var(--github-level-2);
+}
+
+.contribution-day--level-3 {
+  background: var(--github-level-3);
+}
+
+.contribution-day--level-4 {
+  background: var(--github-level-4);
+}
+
+.contribution-day--empty {
+  visibility: hidden;
+}
+
+.calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 14px;
+  padding-left: 31px;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.calendar-legend > span:first-child {
+  margin-right: 4px;
+}
+
+.calendar-legend > span:last-child {
+  margin-left: 4px;
+}
+
+.contribution-loading {
+  width: min(100%, 784px);
+  height: 132px;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--text) 6%, transparent) 0 11px, transparent 11px 14px),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text) 6%, transparent) 0 11px, transparent 11px 14px);
+  mask-image: linear-gradient(90deg, black, transparent 96%);
+  animation: contribution-pulse 1.4s ease-in-out infinite alternate;
+}
+
+.contribution-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.github-refresh-note {
+  margin-top: 18px;
+}
+
+@keyframes contribution-pulse {
+  from { opacity: 0.35; }
+  to { opacity: 0.7; }
+}
+
+@media (max-width: 767px) {
+  .contribution-chart,
+  .contribution-chart--loading,
+  .contribution-chart--ready,
+  .contribution-chart--error {
+    width: 100%;
+    max-width: 100%;
+    min-height: 136px;
+    padding: 0;
+    overscroll-behavior-inline: contain;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .github-calendar {
+    min-width: 784px;
+  }
+
+  .github-refresh-note {
+    margin-top: 14px;
+    text-align: left;
+  }
+}
+
 /* Symmetric premium project gallery */
 .project-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3684,5 +3872,24 @@ h3 {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Keep the live contribution grid transparent after all legacy layout overrides. */
+.contribution-chart,
+.contribution-chart--loading,
+.contribution-chart--ready,
+.contribution-chart--error {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+@media (max-width: 767px) {
+  .contribution-chart,
+  .contribution-chart--loading,
+  .contribution-chart--ready,
+  .contribution-chart--error {
+    padding: 0;
   }
 }
