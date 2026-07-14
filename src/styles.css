@@ -740,6 +740,29 @@ h3 {
   font-weight: 600;
 }
 
+.journey-details {
+  max-width: 720px;
+  margin: 24px 0 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  font-size: clamp(0.92rem, 1.12vw, 1.05rem);
+  line-height: 1.7;
+}
+
+.journey-details li {
+  margin-bottom: 12px;
+  padding-left: 6px;
+}
+
+.journey-details li:last-child {
+  margin-bottom: 0;
+}
+
+.journey-details strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
