@@ -3875,21 +3875,154 @@ h3 {
   }
 }
 
-/* Keep the live contribution grid transparent after all legacy layout overrides. */
+/* Large editorial GitHub contribution section. */
+.github-heading {
+  position: relative;
+  align-items: flex-end;
+  margin-bottom: clamp(64px, 7vw, 108px);
+  padding-bottom: clamp(54px, 6vw, 86px);
+  border-bottom: 1px solid var(--line);
+}
+
+.github-heading h2 {
+  position: relative;
+  width: fit-content;
+  max-width: none;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(4.6rem, 7.8vw, 8.4rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.88;
+}
+
+.github-heading h2::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -18px;
+  left: 0;
+  height: 3px;
+  background: currentColor;
+}
+
 .contribution-chart,
 .contribution-chart--loading,
 .contribution-chart--ready,
 .contribution-chart--error {
+  width: 100%;
+  min-height: clamp(230px, 20vw, 320px);
   padding: 0;
   border: 0;
   background: transparent;
 }
 
+.github-calendar {
+  width: 100%;
+  min-width: 1040px;
+  margin: 0 auto;
+}
+
+.calendar-months {
+  display: flex;
+  gap: clamp(3px, 0.34vw, 6px);
+  margin: 0 0 12px;
+  font-size: clamp(0.78rem, 0.9vw, 1rem);
+}
+
+.calendar-months span {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.calendar-body {
+  display: block;
+  width: 100%;
+}
+
+.calendar-weekdays {
+  display: none;
+}
+
+.calendar-weeks {
+  display: flex;
+  width: 100%;
+  gap: clamp(3px, 0.34vw, 6px);
+}
+
+.calendar-week {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  gap: clamp(3px, 0.34vw, 6px);
+}
+
+.calendar-week .contribution-day {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 3px;
+}
+
+.calendar-footer {
+  margin-top: clamp(18px, 2vw, 28px);
+  padding-left: 0;
+  font-size: clamp(0.82rem, 1vw, 1rem);
+}
+
+.calendar-legend .contribution-day {
+  width: clamp(12px, 1.15vw, 18px);
+  height: clamp(12px, 1.15vw, 18px);
+}
+
 @media (max-width: 767px) {
+  .github-heading {
+    align-items: flex-start;
+    margin-bottom: 52px;
+    padding-bottom: 44px;
+  }
+
+  .github-heading h2 {
+    font-size: clamp(3.25rem, 15.5vw, 4.8rem) !important;
+  }
+
+  .github-heading h2::after {
+    bottom: -12px;
+    height: 2px;
+  }
+
+  .github-heading > a {
+    margin-bottom: 2px;
+  }
+
   .contribution-chart,
   .contribution-chart--loading,
   .contribution-chart--ready,
   .contribution-chart--error {
+    min-height: 190px;
     padding: 0;
+  }
+
+  .github-calendar {
+    min-width: 760px;
+  }
+
+  .calendar-months {
+    gap: 3px;
+    font-size: 0.68rem;
+  }
+
+  .calendar-weeks,
+  .calendar-week {
+    gap: 3px;
+  }
+
+  .calendar-week .contribution-day {
+    border-radius: 2px;
+  }
+
+  .calendar-footer {
+    font-size: 0.72rem;
   }
 }

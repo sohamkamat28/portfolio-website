@@ -606,7 +606,7 @@ function GitHubActivity() {
       <div className="section-shell">
         <div className="github-heading" data-reveal>
           <div>
-            <h2>GitHub activity</h2>
+            <h2>My Contributions.</h2>
           </div>
           <a href={profileUrl} target="_blank" rel="noreferrer">
             View GitHub <ArrowUpRight size={16} weight="bold" />
