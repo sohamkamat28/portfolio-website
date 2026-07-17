@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  DownloadSimple,
-  EnvelopeSimple,
-  GithubLogo,
-  LinkedinLogo,
-  List,
-  Moon,
-  Phone,
-  Sun,
-  WhatsappLogo,
-  X,
-} from "@phosphor-icons/react";
+import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
+import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
+import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
+import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
+import { GithubLogo } from "@phosphor-icons/react/GithubLogo";
+import { LinkedinLogo } from "@phosphor-icons/react/LinkedinLogo";
+import { List } from "@phosphor-icons/react/List";
+import { Moon } from "@phosphor-icons/react/Moon";
+import { Phone } from "@phosphor-icons/react/Phone";
+import { Sun } from "@phosphor-icons/react/Sun";
+import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
+import { X } from "@phosphor-icons/react/X";
 
 const projects = [
   {
@@ -310,16 +308,19 @@ function About() {
           </div>
           <div className="about-copy" data-reveal>
             <p className="about-lead">
-              I&apos;m an AI and Data Science undergraduate who likes owning the whole problem—from raw data and model choices to APIs, interfaces, and deployment.
+              I am an AI and Data Science builder focused on turning real-world problems into intelligent, usable products.
             </p>
             <div className="about-notes">
               <p>
-                At K.J. Somaiya School of Engineering, I&apos;m building a strong technical base while maintaining a 9.98 CGPA. Outside class, I use projects to test whether an idea can survive contact with real users.
+                I work best where an idea needs structure. I define the problem, map the experience, decide what the system must accomplish, and use modern AI-assisted workflows to move efficiently from concept to a functioning product.
               </p>
               <p>
-                That approach runs through ResumeLens, MedSimplify, StockSense, and Spotify Analytics. Different domains, same standard: make the result understandable, useful, and honest about what the model can do.
+                My understanding of Python, machine learning, NLP, data analysis, and backend systems helps me make informed decisions and evaluate whether a solution is genuinely reliable. I am currently deepening this foundation across LLM applications, model evaluation, scalable APIs, databases, and production AI systems.
               </p>
             </div>
+            <p className="about-closing">
+              Whatever I am building, the objective stays the same: direct technology with purpose and create dependable solutions that can grow beyond their first version.
+            </p>
             <p className="about-location">Based in Thane, India · Open to international, remote, and India-based opportunities.</p>
           </div>
         </div>

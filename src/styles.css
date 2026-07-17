@@ -2461,8 +2461,19 @@ h3 {
   line-height: 1.75;
 }
 
+.about-closing {
+  max-width: 30ch;
+  margin: clamp(38px, 5vw, 64px) 0 0 !important;
+  color: var(--text) !important;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 1.9vw, 2.15rem) !important;
+  letter-spacing: -0.025em;
+  line-height: 1.25 !important;
+  text-wrap: balance;
+}
+
 .about-location {
-  margin: 42px 0 0 !important;
+  margin: 30px 0 0 !important;
   padding-left: 16px;
   border-left: 3px solid var(--accent);
   color: var(--text) !important;
@@ -3534,8 +3545,15 @@ h3 {
     line-height: 1.7;
   }
 
-  .about-location {
+  .about-closing {
+    max-width: 27ch;
     margin-top: 30px !important;
+    font-size: clamp(1.25rem, 6.4vw, 1.7rem) !important;
+    line-height: 1.28 !important;
+  }
+
+  .about-location {
+    margin-top: 24px !important;
     font-size: 0.7rem !important;
   }
 
