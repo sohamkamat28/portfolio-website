@@ -82,27 +82,22 @@ const skillGroups = [
       "Model evaluation",
       "PCA",
     ],
-    className: "skill-block skill-block--large",
   },
   {
     title: "AI and NLP",
     items: ["Hugging Face", "spaCy", "OCR", "Groq API", "Natural Language Processing"],
-    className: "skill-block skill-block--accent",
   },
   {
     title: "Data",
     items: ["Pandas", "NumPy", "Plotly", "Matplotlib", "Seaborn", "Power BI", "Tableau"],
-    className: "skill-block",
   },
   {
     title: "Applications",
     items: ["FastAPI", "Flask", "Streamlit", "Dash", "React", "Next.js", "REST APIs"],
-    className: "skill-block skill-block--wide",
   },
   {
     title: "Systems and Tools",
     items: ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Git", "Vercel", "Render"],
-    className: "skill-block",
   },
 ];
 
@@ -451,11 +446,11 @@ function Skills() {
         </div>
         <div className="skills-grid" id="capability-list">
           {skillGroups.map((group) => (
-            <article className={group.className} key={group.title} data-reveal>
+            <article className="skill-block" key={group.title} data-reveal>
               <h3>{group.title}</h3>
-              <div className="skill-words">
-                {group.items.map((item) => <span key={item}>{item}</span>)}
-              </div>
+              <ul className="skill-words">
+                {group.items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
             </article>
           ))}
         </div>
