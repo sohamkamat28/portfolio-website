@@ -4165,3 +4165,220 @@ main > section {
     font-size: 0.76rem;
   }
 }
+
+/* Symmetric editorial About composition. */
+.about-grid {
+  display: block !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+}
+
+.about-manifesto {
+  padding-top: 0 !important;
+}
+
+.about-manifesto h2 {
+  max-width: none !important;
+  margin-bottom: clamp(56px, 7vw, 96px) !important;
+}
+
+.about-copy {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  padding-top: 0 !important;
+}
+
+.about-copy .about-lead {
+  grid-column: 1 / -1;
+  width: min(100%, 19ch);
+  margin: 0 auto clamp(54px, 7vw, 88px) !important;
+  font-size: clamp(2.75rem, 4.75vw, 5.35rem) !important;
+  line-height: 1.02 !important;
+  text-align: left;
+  text-wrap: balance;
+}
+
+.about-notes {
+  grid-column: 1 / -1;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  width: min(100%, 1080px);
+  margin: 0 auto;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  gap: clamp(48px, 8vw, 112px) !important;
+}
+
+.about-notes p {
+  max-width: 46ch;
+  font-size: clamp(0.98rem, 1.15vw, 1.08rem) !important;
+  line-height: 1.78 !important;
+}
+
+.about-notes p:last-child {
+  justify-self: end;
+}
+
+.about-closing {
+  grid-column: 1 / -1;
+  max-width: 36ch !important;
+  margin: clamp(56px, 7vw, 92px) auto 0 !important;
+  font-size: clamp(1.65rem, 2.35vw, 2.65rem) !important;
+  line-height: 1.2 !important;
+  text-align: center;
+}
+
+.about-location {
+  grid-column: 1 / -1;
+  width: fit-content;
+  max-width: 100%;
+  margin: clamp(32px, 4vw, 48px) auto 0 !important;
+  padding: 12px 0 12px 18px;
+  text-align: center;
+}
+
+/* Dense capability rows with one uniform icon language. */
+.skills-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+
+.skill-block,
+.skill-block:nth-child(-n + 2),
+.skill-block:last-child {
+  grid-column: 1 / -1 !important;
+  display: grid !important;
+  grid-template-columns: minmax(210px, 0.3fr) minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: clamp(28px, 4vw, 64px) !important;
+  min-height: 0 !important;
+  padding: clamp(22px, 2.2vw, 30px) clamp(22px, 3vw, 40px) !important;
+  border-radius: 10px !important;
+}
+
+.skill-block h3 {
+  margin: 0 !important;
+  font-size: clamp(1.1rem, 1.45vw, 1.4rem) !important;
+  line-height: 1.15 !important;
+}
+
+.skill-words {
+  align-items: center;
+  gap: 9px !important;
+  margin: 0 !important;
+}
+
+.skill-words li {
+  min-height: 48px;
+  padding: 9px 13px 9px 10px;
+  gap: 9px;
+  border-radius: 6px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  font-weight: 600;
+}
+
+.skill-words .skill-icon {
+  display: inline-grid !important;
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px;
+  place-items: center;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+.skill-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0);
+}
+
+:root[data-theme="dark"] .skill-icon img {
+  filter: brightness(0) invert(1);
+}
+
+.skill-words li > span:last-child {
+  display: inline-block !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: "Instrument Sans", sans-serif !important;
+  font-size: clamp(0.9rem, 1.05vw, 1rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.15 !important;
+  transform: none !important;
+}
+
+@media (max-width: 760px) {
+  .about-manifesto h2 {
+    margin-bottom: 44px !important;
+  }
+
+  .about-copy .about-lead {
+    margin-bottom: 42px !important;
+    font-size: clamp(2rem, 9.1vw, 3rem) !important;
+  }
+
+  .about-notes {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .about-notes p,
+  .about-notes p:last-child {
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .about-closing {
+    margin-top: 42px !important;
+    font-size: clamp(1.4rem, 6.7vw, 1.9rem) !important;
+    text-align: left;
+  }
+
+  .about-location {
+    width: 100%;
+    margin-top: 28px !important;
+    text-align: left;
+  }
+
+  .skill-block,
+  .skill-block:nth-child(-n + 2),
+  .skill-block:last-child {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 24px 22px 26px !important;
+  }
+
+  .skill-block h3 {
+    font-size: 1.18rem !important;
+  }
+
+  .skill-words li {
+    min-height: 45px;
+    padding: 8px 11px 8px 9px;
+    font-size: 0.86rem;
+  }
+
+  .skill-words .skill-icon {
+    width: 21px !important;
+    height: 21px !important;
+    flex-basis: 21px;
+  }
+
+  .skill-words li > span:last-child {
+    font-size: 0.86rem !important;
+  }
+}

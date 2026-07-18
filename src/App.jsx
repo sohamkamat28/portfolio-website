@@ -1,14 +1,45 @@
 import { useEffect, useRef, useState } from "react";
+import dashLogo from "simple-icons/icons/dash.svg";
+import fastApiLogo from "simple-icons/icons/fastapi.svg";
+import flaskLogo from "simple-icons/icons/flask.svg";
+import gitLogo from "simple-icons/icons/git.svg";
+import huggingFaceLogo from "simple-icons/icons/huggingface.svg";
+import mongoDbLogo from "simple-icons/icons/mongodb.svg";
+import mySqlLogo from "simple-icons/icons/mysql.svg";
+import nextJsLogo from "simple-icons/icons/nextdotjs.svg";
+import numpyLogo from "simple-icons/icons/numpy.svg";
+import pandasLogo from "simple-icons/icons/pandas.svg";
+import plotlyLogo from "simple-icons/icons/plotly.svg";
+import postgreSqlLogo from "simple-icons/icons/postgresql.svg";
+import reactLogo from "simple-icons/icons/react.svg";
+import renderLogo from "simple-icons/icons/render.svg";
+import scikitLearnLogo from "simple-icons/icons/scikitlearn.svg";
+import spacyLogo from "simple-icons/icons/spacy.svg";
+import streamlitLogo from "simple-icons/icons/streamlit.svg";
+import supabaseLogo from "simple-icons/icons/supabase.svg";
+import vercelLogo from "simple-icons/icons/vercel.svg";
 import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
+import { Brain } from "@phosphor-icons/react/Brain";
+import { ChartBar } from "@phosphor-icons/react/ChartBar";
+import { ChartLineUp } from "@phosphor-icons/react/ChartLineUp";
+import { ChartPieSlice } from "@phosphor-icons/react/ChartPieSlice";
+import { ChartScatter } from "@phosphor-icons/react/ChartScatter";
+import { CirclesThreePlus } from "@phosphor-icons/react/CirclesThreePlus";
 import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
+import { FileText } from "@phosphor-icons/react/FileText";
+import { FlowArrow } from "@phosphor-icons/react/FlowArrow";
+import { FunnelSimple } from "@phosphor-icons/react/FunnelSimple";
+import { Gauge } from "@phosphor-icons/react/Gauge";
 import { GithubLogo } from "@phosphor-icons/react/GithubLogo";
 import { LinkedinLogo } from "@phosphor-icons/react/LinkedinLogo";
 import { List } from "@phosphor-icons/react/List";
+import { Lightning } from "@phosphor-icons/react/Lightning";
 import { Moon } from "@phosphor-icons/react/Moon";
 import { Phone } from "@phosphor-icons/react/Phone";
 import { Sun } from "@phosphor-icons/react/Sun";
+import { TreeStructure } from "@phosphor-icons/react/TreeStructure";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
 import { X } from "@phosphor-icons/react/X";
 
@@ -75,29 +106,59 @@ const skillGroups = [
   {
     title: "Machine Learning",
     items: [
-      "scikit-learn",
-      "Classification",
-      "Clustering",
-      "Feature engineering",
-      "Model evaluation",
-      "PCA",
+      { name: "scikit-learn", logo: scikitLearnLogo },
+      { name: "Classification", icon: TreeStructure },
+      { name: "Clustering", icon: CirclesThreePlus },
+      { name: "Feature engineering", icon: FunnelSimple },
+      { name: "Model evaluation", icon: Gauge },
+      { name: "PCA", icon: ChartScatter },
     ],
   },
   {
     title: "AI and NLP",
-    items: ["Hugging Face", "spaCy", "OCR", "Groq API", "Natural Language Processing"],
+    items: [
+      { name: "Hugging Face", logo: huggingFaceLogo },
+      { name: "spaCy", logo: spacyLogo },
+      { name: "OCR", icon: FileText },
+      { name: "Groq API", icon: Lightning },
+      { name: "Natural Language Processing", icon: Brain },
+    ],
   },
   {
     title: "Data",
-    items: ["Pandas", "NumPy", "Plotly", "Matplotlib", "Seaborn", "Power BI", "Tableau"],
+    items: [
+      { name: "Pandas", logo: pandasLogo },
+      { name: "NumPy", logo: numpyLogo },
+      { name: "Plotly", logo: plotlyLogo },
+      { name: "Matplotlib", icon: ChartLineUp },
+      { name: "Seaborn", icon: ChartBar },
+      { name: "Power BI", icon: ChartBar },
+      { name: "Tableau", icon: ChartPieSlice },
+    ],
   },
   {
     title: "Applications",
-    items: ["FastAPI", "Flask", "Streamlit", "Dash", "React", "Next.js", "REST APIs"],
+    items: [
+      { name: "FastAPI", logo: fastApiLogo },
+      { name: "Flask", logo: flaskLogo },
+      { name: "Streamlit", logo: streamlitLogo },
+      { name: "Dash", logo: dashLogo },
+      { name: "React", logo: reactLogo },
+      { name: "Next.js", logo: nextJsLogo },
+      { name: "REST APIs", icon: FlowArrow },
+    ],
   },
   {
     title: "Systems and Tools",
-    items: ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Git", "Vercel", "Render"],
+    items: [
+      { name: "PostgreSQL", logo: postgreSqlLogo },
+      { name: "MySQL", logo: mySqlLogo },
+      { name: "MongoDB", logo: mongoDbLogo },
+      { name: "Supabase", logo: supabaseLogo },
+      { name: "Git", logo: gitLogo },
+      { name: "Vercel", logo: vercelLogo },
+      { name: "Render", logo: renderLogo },
+    ],
   },
 ];
 
@@ -449,7 +510,17 @@ function Skills() {
             <article className="skill-block" key={group.title} data-reveal>
               <h3>{group.title}</h3>
               <ul className="skill-words">
-                {group.items.map((item) => <li key={item}>{item}</li>)}
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.name}>
+                      <span className="skill-icon" aria-hidden="true">
+                        {item.logo ? <img src={item.logo} alt="" /> : <Icon size={18} weight="bold" />}
+                      </span>
+                      <span>{item.name}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </article>
           ))}
