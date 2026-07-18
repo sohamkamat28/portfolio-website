@@ -4382,3 +4382,108 @@ main > section {
     font-size: 0.86rem !important;
   }
 }
+
+/* About: one editorial grid with compact, deliberate vertical rhythm. */
+.about {
+  padding: clamp(82px, 8vw, 120px) 0 clamp(96px, 9vw, 136px) !important;
+}
+
+.about .section-shell {
+  width: min(90vw, 1460px);
+}
+
+.about-manifesto h2 {
+  margin: 0 0 clamp(40px, 4.5vw, 66px) !important;
+}
+
+.about-copy .about-lead {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 clamp(46px, 4.6vw, 68px) !important;
+  font-size: clamp(2.8rem, 5.4vw, 6.8rem) !important;
+  line-height: 1.02 !important;
+  text-align: left !important;
+  text-wrap: unset !important;
+}
+
+.about-lead span {
+  display: block;
+  white-space: nowrap;
+}
+
+.about-notes {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  gap: clamp(56px, 8vw, 128px) !important;
+}
+
+.about-notes p,
+.about-notes p:last-child {
+  width: 100%;
+  max-width: 55ch !important;
+  justify-self: start !important;
+  font-size: clamp(1rem, 1.12vw, 1.08rem) !important;
+  line-height: 1.75 !important;
+  text-wrap: pretty;
+}
+
+.about-notes p:last-child {
+  justify-self: end !important;
+}
+
+.about-closing {
+  grid-column: 1 / -1;
+  width: min(100%, 42ch);
+  max-width: none !important;
+  margin: clamp(48px, 5vw, 72px) 0 0 !important;
+  font-size: clamp(1.8rem, 2.5vw, 2.8rem) !important;
+  line-height: 1.18 !important;
+  text-align: left !important;
+  text-wrap: balance;
+}
+
+.about-location {
+  width: fit-content !important;
+  margin: clamp(28px, 3vw, 42px) 0 0 !important;
+  text-align: left !important;
+}
+
+@media (max-width: 900px) {
+  .about-copy .about-lead {
+    font-size: clamp(2.2rem, 6.6vw, 3.8rem) !important;
+  }
+
+  .about-lead span {
+    white-space: normal;
+  }
+
+  .about-notes {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .about-notes p,
+  .about-notes p:last-child {
+    max-width: 62ch !important;
+    justify-self: start !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-manifesto h2 {
+    margin-bottom: 34px !important;
+  }
+
+  .about-copy .about-lead {
+    margin-bottom: 34px !important;
+    font-size: clamp(2rem, 10vw, 2.8rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .about-closing {
+    width: 100%;
+    margin-top: 38px !important;
+    font-size: clamp(1.5rem, 7.2vw, 2rem) !important;
+  }
+}

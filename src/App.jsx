@@ -364,14 +364,16 @@ function About() {
           </div>
           <div className="about-copy" data-reveal>
             <p className="about-lead">
-              I am an AI and Data Science builder focused on turning real-world problems into intelligent, usable products.
+              <span>I am an AI and Data Science builder</span>
+              <span>focused on turning real-world problems</span>
+              <span>into intelligent products people can use.</span>
             </p>
             <div className="about-notes">
               <p>
-                I work best where an idea needs structure. I define the problem, map the experience, decide what the system must accomplish, and use modern AI-assisted workflows to move efficiently from concept to a functioning product.
+                I work best where an idea needs structure. I define the problem, understand the user, map the experience, and decide what a useful system must accomplish. From there, I use modern AI-assisted workflows to move efficiently from an early concept to a coherent, functioning product.
               </p>
               <p>
-                My understanding of Python, machine learning, NLP, data analysis, and backend systems helps me make informed decisions and evaluate whether a solution is genuinely reliable. I am currently deepening this foundation across LLM applications, model evaluation, scalable APIs, databases, and production AI systems.
+                My foundation in Python, machine learning, NLP, data analysis, and backend systems helps me judge which approaches fit the problem and whether the result is dependable. I am continuing to deepen that understanding across LLM applications, model evaluation, scalable APIs, databases, and production AI systems.
               </p>
             </div>
             <p className="about-closing">
