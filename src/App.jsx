@@ -486,7 +486,7 @@ function Journey() {
           <article data-reveal>
             <div className="journey-meta"><span>2024</span><span>Thane</span></div>
             <h3>Maharashtra HSC Board</h3>
-            <p className="journey-org">95.66% and top rank in Thane District</p>
+            <p className="journey-org">95.33% and top rank in Thane District</p>
           </article>
           <article data-reveal>
             <div className="journey-meta"><span>2022</span><span>Thane</span></div>
