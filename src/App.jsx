@@ -100,6 +100,20 @@ const projects = [
     github: "https://github.com/sohamkamat28/SpotifyDashboard",
     className: "project-card project-card--spotify",
   },
+  {
+    name: "AI Gym Coach",
+    kicker: "Real-time exercise intelligence",
+    description:
+      "Tracks form and repetitions for five exercises from a live camera feed, then delivers concise AI voice coaching and records workout progress.",
+    stack: ["MediaPipe", "OpenCV", "Streamlit", "WebRTC", "Groq"],
+    image: "/assets/ai-gym-coach-1280.webp",
+    imageSmall: "/assets/ai-gym-coach-640.webp",
+    imageAlt: "AI Gym Coach tracking squat form from a live camera feed",
+    live: "https://ai-gym-bot-app.streamlit.app/",
+    domain: "ai-gym-bot-app.streamlit.app",
+    github: "https://github.com/sohamkamat28/AI-GYM_COACH",
+    className: "project-card project-card--gym",
+  },
 ];
 
 const skillGroups = [
@@ -429,7 +443,7 @@ function Work() {
             </article>
           ))}
 
-          {[5, 6].map((number) => (
+          {[6].map((number) => (
             <article className="future-project" key={number} aria-label={`Reserved project slot ${number}`}>
               <span>0{number}</span>
               <div>

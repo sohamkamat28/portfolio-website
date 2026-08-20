@@ -1399,6 +1399,10 @@ h3 {
   --project-tone: #75c987;
 }
 
+.project-card--gym {
+  --project-tone: #f0a94b;
+}
+
 .project-window {
   position: relative;
   z-index: 1;
