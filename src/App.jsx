@@ -546,41 +546,6 @@ function Skills() {
   );
 }
 
-function Recognition() {
-  return (
-    <section className="section recognition" id="recognition">
-      <div className="section-shell recognition-layout">
-        <div className="recognition-lead" data-reveal>
-          <h2>Recognition</h2>
-          <p>Awards and community work.</p>
-        </div>
-        <article className="recognition-feature" data-reveal>
-          <span>IDEA 2.0, PSBs Hackathon Series</span>
-          <h3>SENTINEL</h3>
-          <p>
-            Waitlisted among 1,500+ submissions for a team ideation entry addressing Zombie API risk in banking. The concept used eBPF monitoring, Isolation Forest, NetworkX, and AWS Bedrock.
-          </p>
-        </article>
-        <div className="recognition-notes">
-          <article data-reveal>
-            <h3>Data Visualization</h3>
-            <p>Simplilearn certification, 2026</p>
-          </article>
-          <article data-reveal>
-            <h3>SQL for Analyst</h3>
-            <p>DevTown with Google Developer Group and MSIT, 2025</p>
-          </article>
-          <article data-reveal>
-            <h3>Crowdfunding Volunteer</h3>
-            <p>Supported a Fueladream and Rotary Club campaign distributing 45-liter water wheels to women in rural India.</p>
-            <a href="https://www.fueladream.com/home/campaign/41405" target="_blank" rel="noreferrer">Campaign <ArrowUpRight size={15} /></a>
-          </article>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Contact() {
   return (
     <section className="contact-section" id="contact">
@@ -818,7 +783,6 @@ export default function App() {
         <Work />
         <Journey />
         <Skills />
-        <Recognition />
         <GitHubActivity />
         <Contact />
       </main>
