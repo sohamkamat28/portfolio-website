@@ -452,21 +452,6 @@ function Work() {
               </div>
             </article>
           ))}
-
-          <article className="security-project" data-reveal>
-            <div className="security-title">
-              <p>Network security simulation</p>
-              <h3>Secure Banking Communication</h3>
-            </div>
-            <p>
-              A three-process Python socket system with a banking client, bidirectional MITM proxy, and server. It demonstrates plaintext interception, a 10,000-PIN brute-force keyspace, and a protected Diffie-Hellman channel.
-            </p>
-            <div className="security-facts" aria-label="Verified project details">
-              <span><strong>2048-bit</strong> Diffie-Hellman</span>
-              <span><strong>AES-256-CBC</strong> encryption</span>
-              <span><strong>7 tests</strong> passed</span>
-            </div>
-          </article>
         </div>
       </div>
     </section>
