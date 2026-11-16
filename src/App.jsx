@@ -7,7 +7,6 @@ import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
 import { CaretDown } from "@phosphor-icons/react/CaretDown";
 import { ChatCircleDots } from "@phosphor-icons/react/ChatCircleDots";
-import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
 import { FileText } from "@phosphor-icons/react/FileText";
 import { FolderSimple } from "@phosphor-icons/react/FolderSimple";
@@ -306,10 +305,7 @@ function Hero() {
         </Reveal>
       </Section>
       <Reveal className="resume-row" immediate delay={0.08} blur={false}>
-        <a className="resume-button" href={profile.resume} download>
-          <span>Download Resume</span>
-          <span className="resume-button-icon"><DownloadSimple size={17} weight="bold" aria-hidden="true" /></span>
-        </a>
+        <a className="resume-button" href={profile.resume} download>Download Resume</a>
       </Reveal>
     </>
   );
