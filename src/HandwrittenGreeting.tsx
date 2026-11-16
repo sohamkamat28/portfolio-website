@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { GREETINGS } from "./greetings.data";
 
+// The English demo draws for (0.7s + 2.8s) × 1.1.
+const DRAW_SECONDS = 3.85;
+const CLEAR_SECONDS = 0.5;
 const HOLD_MS = 2100;
 const GAP_MS = 500;
 const penStart = { pathLength: 0, opacity: 0 };
@@ -13,10 +16,10 @@ export default function HandwrittenGreeting() {
   const [phase, setPhase] = useState<"writing" | "clearing" | "gap">("writing");
 
   const greeting = GREETINGS[reduced ? 0 : index];
-  const timeScale = greeting.timeScale ?? 1;
-  const duration = Math.max(...greeting.strokes.map(({ delay, duration }) => delay + duration)) * timeScale * 1000;
-  const clearAt = duration + HOLD_MS;
-  const gapAt = clearAt + greeting.clear * 1000;
+  const timelineEnd = Math.max(...greeting.strokes.map(({ delay, duration }) => delay + duration));
+  const timeScale = DRAW_SECONDS / timelineEnd;
+  const clearAt = DRAW_SECONDS * 1000 + HOLD_MS;
+  const gapAt = clearAt + CLEAR_SECONDS * 1000;
 
   useEffect(() => {
     if (reduced) return;
@@ -33,7 +36,6 @@ export default function HandwrittenGreeting() {
   }, [index, reduced, clearAt, gapAt]);
 
   const visiblePhase = reduced ? "writing" : phase;
-  const artHeight = greeting.timeScale ? "var(--apple-greeting-height)" : (greeting.h * 64) / 386;
 
   return (
     <div className="greeting" role="img" aria-label={greeting.label}>
@@ -41,16 +43,15 @@ export default function HandwrittenGreeting() {
         <motion.svg
           key={greeting.id}
           aria-hidden="true"
-          viewBox={`0 0 ${greeting.w} ${greeting.h}`}
+          viewBox={greeting.viewBox}
           fill="none"
           stroke="currentColor"
           strokeWidth={greeting.strokeWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={{ height: artHeight }}
           initial={false}
           animate={{ opacity: visiblePhase === "clearing" ? 0 : 1 }}
-          transition={{ duration: reduced ? 0 : greeting.clear, ease: "easeOut" }}
+          transition={{ duration: reduced ? 0 : CLEAR_SECONDS, ease: "easeOut" }}
         >
           {greeting.strokes.map((stroke) => (
             <motion.path
@@ -60,7 +61,10 @@ export default function HandwrittenGreeting() {
               animate={penEnd}
               transition={reduced ? { duration: 0 } : {
                 pathLength: { duration: stroke.duration * timeScale, delay: stroke.delay * timeScale, ease: stroke.ease },
-                opacity: { duration: stroke.opacityDuration, delay: stroke.delay * timeScale },
+                opacity: {
+                  duration: stroke.opacityDuration * (greeting.id === "hello" ? 1 : timeScale),
+                  delay: stroke.delay * timeScale,
+                },
               }}
             />
           ))}

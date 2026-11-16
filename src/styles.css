@@ -149,7 +149,7 @@ ul { padding: 0; list-style: none; }
   place-items: end center;
   color: #f2cb30;
 }
-.greeting svg { display: block; width: auto; max-width: 100%; overflow: visible; }
+.greeting svg { display: block; width: auto; height: var(--apple-greeting-height); max-width: 100%; overflow: visible; }
 [data-theme="light"] .greeting { color: #a27719; }
 .hero-name {
   position: relative;
