@@ -28,22 +28,22 @@ export const sectionLinks = [
 export const education = [
   {
     institution: "K.J. Somaiya School of Engineering",
-    badge: "K",
+    logo: "/assets/education/somaiya.svg",
     details: "B.Tech in Artificial Intelligence and Data Science · CGPA 9.98/10",
-    date: "2024 – 2028",
+    date: "2024 – Present",
     href: "https://kjsce.somaiya.edu/en/",
   },
   {
     institution: "Maharashtra HSC Board",
-    badge: "M",
+    logo: "/assets/education/state-board.webp",
     details: "Higher Secondary Certificate · 95.33% · Top rank in Thane District",
     date: "2024",
   },
   {
     institution: "EuroSchool Thane",
-    badge: "E",
+    logo: "/assets/education/euroschool.svg",
     details: "ICSE · 98.2% · Elected Head Boy",
-    date: "2022",
+    date: "2012 – 2022",
   },
 ];
 

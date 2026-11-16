@@ -391,11 +391,11 @@ function Education() {
           return (
             <Reveal key={entry.institution} delay={index * 0.05}>
               <Tag className="education-item" href={entry.href} target={entry.href ? "_blank" : undefined} rel={entry.href ? "noreferrer" : undefined}>
-                <Badge value={entry.badge} className={`education-badge--${index}`} />
+                <span className="education-logo"><img src={entry.logo} alt="" width="44" height="44" /></span>
                 <div className="education-meta">
                   <h3>{entry.institution}</h3><p>{entry.details}</p>
                 </div>
-                <time>{entry.date}</time>
+                <span className="education-date">{entry.date}</span>
               </Tag>
             </Reveal>
           );
