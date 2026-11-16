@@ -216,19 +216,20 @@ ul { padding: 0; list-style: none; }
 .hero-label--work { top: 12px; right: calc(100% + 20px); color: #1f2a3a; background: #dce5f1; }
 .hero-label--location { top: -33px; right: -50px; color: #18354e; background: #c1daee; }
 .hero p {
-  max-width: 570px;
+  max-width: 624px;
   margin: 13px auto 0;
   color: color-mix(in srgb, var(--fg), transparent 17%);
-  font-size: 20px;
+  font-size: clamp(18px, 3vw, 20px);
   line-height: 1.4;
 }
 .hero mark {
   padding: 0 4px 2px;
   border-radius: 4px;
-  background: rgb(50 109 166 / 45%);
+  background: rgb(151 59 102 / 58%);
   color: inherit;
-  box-decoration-break: clone;
+  white-space: nowrap;
 }
+[data-theme="light"] .hero mark { background: rgb(151 59 102 / 21%); }
 .resume-row { display: flex; justify-content: center; margin: 40px auto 0; }
 .resume-button {
   --resume-glow: linear-gradient(90deg, #6992bb, #a1c2e5, #639ce6, #3973bc, #6992bb);
@@ -885,6 +886,7 @@ a.education-item:hover { background: color-mix(in srgb, var(--chip), transparent
   .greeting { --apple-greeting-height: 46px; height: 76px; }
   .hero h1 { font-size: 30px; line-height: 1.2; }
   .hero p { margin-top: 9px; font-size: 16px; line-height: 1.5; }
+  .tagline-break { display: none; }
   .folder-tabs button { min-width: min(153px, 43%); padding-inline: 16px; }
   .folder-panel { min-height: 285px; padding: 25px 24px 31px; }
   .compact-section { margin-top: 53px; }

@@ -298,7 +298,10 @@ function Hero() {
           </div>
         </Reveal>
         <Reveal immediate delay={0.04}>
-          <p>AI and Data Science student. Building <mark>practical AI systems</mark> and data products.</p>
+          <p>
+            AI &amp; Data Science Student. Passionate about designing, building
+            <br className="tagline-break" />{" "}and <mark>solving real-world problems</mark> through AI systems
+          </p>
         </Reveal>
       </Section>
       <Reveal className="resume-row" immediate delay={0.08}>
