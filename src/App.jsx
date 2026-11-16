@@ -6,15 +6,16 @@ import {
 import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
 import { CaretDown } from "@phosphor-icons/react/CaretDown";
+import { ChatCircleDots } from "@phosphor-icons/react/ChatCircleDots";
 import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
 import { FileText } from "@phosphor-icons/react/FileText";
 import { FolderSimple } from "@phosphor-icons/react/FolderSimple";
 import { GithubLogo } from "@phosphor-icons/react/GithubLogo";
 import { House } from "@phosphor-icons/react/House";
 import { LinkedinLogo } from "@phosphor-icons/react/LinkedinLogo";
+import { MapPin } from "@phosphor-icons/react/MapPin";
 import { MoonStars } from "@phosphor-icons/react/MoonStars";
 import { Notebook } from "@phosphor-icons/react/Notebook";
-import { PaperPlaneTilt } from "@phosphor-icons/react/PaperPlaneTilt";
 import { Phone } from "@phosphor-icons/react/Phone";
 import { Sun } from "@phosphor-icons/react/Sun";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
@@ -24,7 +25,7 @@ import {
   projects, repositories, sectionLinks, skills,
 } from "./content";
 import GitHubActivity from "./Activity";
-import { Garden, Greeting, Note, PixelBackdrop, Sticker } from "./Decorations";
+import { Greeting, PixelBackdrop } from "./Decorations";
 
 const pageTitles = {
   "/projects": "Projects",
@@ -112,8 +113,10 @@ function SectionIndex() {
     const sections = sectionLinks.map(([id]) => document.getElementById(id)).filter(Boolean);
     const track = () => {
       const guide = window.innerHeight * 0.45;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const atBottom = maxScroll > 0 && window.scrollY >= maxScroll - 2;
       const current = sections.findLast((section) => section.getBoundingClientRect().top <= guide);
-      setActive(current?.id ?? "about");
+      setActive((atBottom ? sections.at(-1) : current)?.id ?? "about");
       frame = 0;
     };
     const requestTrack = () => {
@@ -249,7 +252,7 @@ function AssistantMenu() {
         {open && <motion.div className="assistant-popover" id="assistant-menu" role="dialog" aria-label={label}
           initial={{ opacity: 0, scale: 0.95, y: 8 }} animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 8 }} transition={{ duration: 0.18 }}>
-          <h2>ask an ai about me</h2>
+          <h2>Ask an AI about me</h2>
           <p>Ask your favorite assistant about my work.</p>
           <div className="assistant-links">
             {assistants.map(([name, url], index) => (
@@ -268,10 +271,7 @@ function AssistantMenu() {
       <button ref={button} className="assistant-trigger" type="button" aria-label={label} aria-expanded={open}
         aria-haspopup="dialog" aria-controls={open ? "assistant-menu" : undefined}
         onClick={() => { setCopyStatus(""); setOpen(!open); }}>
-        <svg viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M32 4C38 0 44 5 47 10C55 10 59 15 59 22C65 27 65 35 60 41C60 48 55 54 48 55C44 62 37 64 31 60C24 64 18 61 14 55C7 54 3 48 4 41C-1 35 0 27 5 22C5 15 10 10 17 10C20 4 26 1 32 4Z" />
-        </svg>
-        <span aria-hidden="true">{open ? "(^_^)" : "(._.)"}</span>
+        <ChatCircleDots size={23} aria-hidden="true" />
       </button>
     </div>
   );
@@ -286,7 +286,7 @@ function Hero() {
           <div className="hero-name">
             <span className="hero-label hero-label--work">BUILDS THINGS</span>
             <h1 id="hero-title">I’m <span className="name-outline">{profile.name}</span>.</h1>
-            <span className="hero-label hero-label--location"><span aria-hidden="true">📍</span> {profile.location.toUpperCase()}</span>
+            <span className="hero-label hero-label--location"><MapPin size={12} aria-hidden="true" /> {profile.location.toUpperCase()}</span>
           </div>
         </Reveal>
         <Reveal immediate delay={0.04}>
@@ -338,7 +338,7 @@ function About() {
                   <p>
                     I’m pursuing a <Link to="#education">B.Tech in Artificial Intelligence and Data Science</Link> at K.J. Somaiya School of Engineering.
                     I like <mark>building useful products</mark> and giving real problems enough structure to solve them.
-                    My work spans <span className="inline-wave">machine learning, NLP, and data analysis</span>,
+                    My work spans <span className="inline-underline">machine learning, NLP, and data analysis</span>,
                     from <Link to="#work">defining product requirements in digital health</Link> to <Link to="#projects">shipping AI and data applications</Link>.
                     I’m based in Thane and open to remote and India-based opportunities.
                   </p>
@@ -409,7 +409,6 @@ function Role({ role, expanded }) {
 function Experience() {
   return (
     <Section id="work" className="compact-section">
-      <Note variant="yellow" title="Shuffle">A deck has 52! possible orders. A good shuffle is almost surely brand new.</Note>
       <Reveal><SmallTitle id="work">Work Experience</SmallTitle></Reveal>
       <div className="experience-list">
         {experience.map((entry) => (
@@ -432,7 +431,6 @@ function Experience() {
 function Skills() {
   return (
     <Section id="skills" className="compact-section">
-      <Sticker type="flower" />
       <Reveal>
         <SmallTitle id="skills">Skills</SmallTitle>
         <ul className="skill-pills">
@@ -446,7 +444,6 @@ function Skills() {
 function Activity() {
   return (
     <Section id="activity" className="compact-section activity-section">
-      <Sticker type="mirror" />
       <Reveal>
         <SmallTitle id="activity">Activity</SmallTitle>
         <GitHubActivity />
@@ -561,7 +558,7 @@ function Timeline({ entries, type }) {
 function Honours() {
   return (
     <Section id="honours" className="feature-section">
-      <SectionIntro id="honours" label="Honours" tone="pink">
+      <SectionIntro id="honours" label="Honours" tone="slate">
         Pushing Limits, Earning <span className="heading-mark heading-mark--yellow">Laurels</span>
       </SectionIntro>
       <Timeline type="honours" entries={honours} />
@@ -607,8 +604,7 @@ function OpenSource() {
 function Certifications() {
   return (
     <Section id="certifications" className="feature-section">
-      <Note variant="blue" title="Binary search">Finding one item among a billion sorted ones takes only about 30 guesses.</Note>
-      <SectionIntro id="certifications" label="Licenses & Certifications" tone="violet">
+      <SectionIntro id="certifications" label="Licenses & Certifications" tone="slate">
         Always Learning <span className="heading-mark heading-mark--green">Something New</span>
       </SectionIntro>
       <Timeline type="certifications" entries={certifications.slice(0, 4)} />
@@ -622,10 +618,9 @@ function Books() {
   return (
     <Section id="books" className="books">
       <Reveal>
-        <h2 id="books-title" className="sr-only">Bookshelf</h2>
+        <SmallTitle id="books">Bookshelf</SmallTitle>
         <div className="books-display">
-          <p className="books-caption">Books I keep<br />coming back to <span aria-hidden="true">↙</span></p>
-          <div className="shelf" role="group" aria-label="Books I keep coming back to">
+          <div className="shelf" role="group" aria-labelledby="books-title">
             {books.map((book) => (
               <button key={book.title} type="button" aria-pressed={selected === book.title}
                 aria-label={`${book.title}, by ${book.author}`}
@@ -645,8 +640,6 @@ function Books() {
 function Contact() {
   return (
     <Section id="contact" className="feature-section contact">
-      <Note variant="green" title="History">The first website, from CERN in 1991, can still be visited at info.cern.ch.</Note>
-      <PaperPlaneTilt aria-hidden="true" className="paper-plane" size={27} weight="fill" />
       <SectionIntro id="contact" label="Contact" tone="blue">
         <span className="heading-mark heading-mark--blue">Connect</span> with me
       </SectionIntro>
@@ -677,7 +670,6 @@ function Home() {
       <Certifications />
       <Books />
       <Contact />
-      <Garden />
     </main>
   );
 }
