@@ -286,7 +286,14 @@ function Hero() {
         <Reveal immediate>
           <div className="hero-name">
             <span className="hero-label hero-label--work">BUILDS THINGS</span>
-            <h1 id="hero-title">I’m <span className="name-outline">{profile.name}</span>.</h1>
+            <h1 id="hero-title">
+              I’m <span className="name-outline">
+                {profile.name}
+                <span className="name-frame" aria-hidden="true">
+                  <span /><span /><span /><span />
+                </span>
+              </span>.
+            </h1>
             <span className="hero-label hero-label--location"><MapPin size={12} aria-hidden="true" /> {profile.location.toUpperCase()}</span>
           </div>
         </Reveal>
