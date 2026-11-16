@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useReducedMotion } from "motion/react";
 
 const stars = [
   [0.049, 0.39, 0.076], [0.25, 0.075, 0.085], [0.35, 0.45, 0.139],
@@ -71,8 +71,6 @@ function skyColor(x, y, index, row, kind, theme) {
 export function PixelBackdrop({ kind, theme }) {
   const canvas = useRef(null);
   const reduced = useReducedMotion();
-  const { scrollY } = useScroll();
-  const skyOpacity = useTransform(scrollY, [0, 220, 760], [0.88, 0.52, 0.16]);
 
   useEffect(() => {
     const element = canvas.current;
@@ -148,6 +146,5 @@ export function PixelBackdrop({ kind, theme }) {
     };
   }, [kind, theme, reduced]);
 
-  return <motion.canvas ref={canvas} aria-hidden="true" className={`pixels pixels--${kind}`}
-    style={{ opacity: kind === "sky" && !reduced ? skyOpacity : undefined }} />;
+  return <canvas ref={canvas} aria-hidden="true" className={`pixels pixels--${kind}`} />;
 }

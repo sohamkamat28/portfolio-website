@@ -1,13 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigationType, useParams } from "react-router";
 import {
-  AnimatePresence, LayoutGroup, motion, MotionConfig, useMotionValue, useReducedMotion, useSpring, useTransform,
+  AnimatePresence, motion, MotionConfig, useMotionValue, useReducedMotion, useSpring, useTransform,
 } from "motion/react";
 import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
 import { CaretDown } from "@phosphor-icons/react/CaretDown";
 import { ChatCircleDots } from "@phosphor-icons/react/ChatCircleDots";
-import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
 import { FileText } from "@phosphor-icons/react/FileText";
 import { FolderSimple } from "@phosphor-icons/react/FolderSimple";
@@ -39,7 +38,7 @@ const legacyAnchors = { top: "hero", journey: "education", "github-activity": "a
 const emailHref = `mailto:${profile.email}`;
 const phoneHref = `tel:${profile.phone.replaceAll(" ", "")}`;
 const easeOut = [0.22, 1, 0.36, 1];
-const sectionSpring = { type: "spring", stiffness: 300, damping: 32, mass: 0.75 };
+const sectionSpring = { type: "spring", stiffness: 420, damping: 34, mass: 0.7 };
 
 function RouteEffects() {
   const { pathname, hash, key } = useLocation();
@@ -89,13 +88,13 @@ function Reveal({ children, className, delay = 0, immediate = false }) {
   const visible = { opacity: 1, y: 0, ...(immediate && { filter: "blur(0px)" }) };
   return (
     <motion.div className={className}
-      initial={{ opacity: 0, y: immediate ? 9 : 16, ...(immediate && { filter: "blur(3px)" }) }}
+      initial={{ opacity: 0, y: immediate ? 6 : 20, ...(immediate && { filter: "blur(6px)" }) }}
       animate={immediate ? visible : undefined}
       whileInView={immediate ? undefined : visible}
       viewport={{ once: true, amount: "some", margin: "0px 0px -36px 0px" }}
-      transition={immediate ? { duration: 0.62, ease: easeOut, delay } : {
+      transition={immediate ? { duration: 0.4, ease: easeOut, delay } : {
         default: { ...sectionSpring, delay },
-        opacity: { duration: 0.34, ease: easeOut, delay },
+        opacity: { duration: 0.18, ease: easeOut, delay },
       }}>
       {children}
     </motion.div>
@@ -281,23 +280,24 @@ function AssistantMenu() {
 
 function Hero() {
   return (
-    <Section id="hero" className="hero">
-      <div className="greeting"><HandwrittenGreeting color="currentColor" size={112} /></div>
-      <Reveal immediate delay={0.16}>
-        <h1 id="hero-title">Soham Kamat<span aria-hidden="true">.</span></h1>
+    <>
+      <Section id="hero" className="hero">
+        <div className="greeting"><HandwrittenGreeting color="currentColor" /></div>
+        <Reveal immediate>
+          <div className="hero-name">
+            <span className="hero-label hero-label--work">BUILDS THINGS</span>
+            <h1 id="hero-title">I’m <span className="name-outline">{profile.name}</span>.</h1>
+            <span className="hero-label hero-label--location"><MapPin size={12} aria-hidden="true" /> {profile.location.toUpperCase()}</span>
+          </div>
+        </Reveal>
+        <Reveal immediate delay={0.04}>
+          <p>AI and Data Science student. Building <mark>practical AI systems</mark> and data products.</p>
+        </Reveal>
+      </Section>
+      <Reveal className="resume-row" immediate delay={0.08}>
+        <a className="resume-button" href={profile.resume} download>Download Resume</a>
       </Reveal>
-      <Reveal immediate delay={0.25}>
-        <p className="hero-summary">AI and Data Science student building applied AI systems and data products.</p>
-      </Reveal>
-      <Reveal className="hero-location" immediate delay={0.31}>
-        <MapPin size={13} aria-hidden="true" /> {profile.location}
-      </Reveal>
-      <Reveal className="resume-row" immediate delay={0.38}>
-        <a className="resume-button" href={profile.resume} download>
-          Download résumé <DownloadSimple size={17} aria-hidden="true" />
-        </a>
-      </Reveal>
-    </Section>
+    </>
   );
 }
 
@@ -320,32 +320,26 @@ function About() {
   return (
     <Section id="about" className="about">
       <Reveal immediate delay={0.12}>
-        <div className="folder-shell">
-          <LayoutGroup id="about-tabs">
-            <div className="folder-tabs" role="tablist" aria-label="About me" onKeyDown={onTabKey}>
-              {aboutTabs.map((label, index) => (
-                <button ref={(element) => { tabRefs.current[index] = element; }} key={label}
-                  type="button" role="tab" id={`about-tab-${index}`} aria-controls="about-panel"
-                  aria-selected={active === index} tabIndex={active === index ? 0 : -1}
-                  onClick={() => setActive(index)}>
-                  {active === index && (reduced ? <span className="tab-selection" />
-                    : <motion.span aria-hidden="true" className="tab-selection" layoutId="selection" transition={sectionSpring} />)}
-                  <span className="tab-label">{label}</span>
-                </button>
-              ))}
-            </div>
-          </LayoutGroup>
+        <div className="folder-tabs" role="tablist" aria-label="About me" onKeyDown={onTabKey}>
+          {aboutTabs.map((label, index) => (
+            <button ref={(element) => { tabRefs.current[index] = element; }} key={label}
+              type="button" role="tab" id={`about-tab-${index}`} aria-controls="about-panel"
+              aria-selected={active === index} tabIndex={active === index ? 0 : -1}
+              onClick={() => setActive(index)}>{label}</button>
+          ))}
+        </div>
+        <div className="folder-surface">
           <div className="folder-panel" id="about-panel" role="tabpanel" aria-labelledby={`about-tab-${active}`} tabIndex={0}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }} exit={reduced ? undefined : { opacity: 0, y: -4 }}
-                transition={{ duration: reduced ? 0 : 0.19, ease: easeOut }}>
+                animate={{ opacity: 1, y: 0 }} exit={reduced ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: reduced ? 0 : 0.22, ease: "easeOut" }}>
                 <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
                 {active === 0 ? (
                   <p>
                     I’m pursuing a <Link to="#education">B.Tech in Artificial Intelligence and Data Science</Link> at K.J. Somaiya School of Engineering.
                     I like <mark>building useful products</mark> and giving real problems enough structure to solve them.
-                    My work spans <span className="about-emphasis">machine learning, NLP, and data analysis</span>,
+                    My work spans <span className="inline-underline">machine learning, NLP, and data analysis</span>,
                     from <Link to="#work">defining product requirements in digital health</Link> to <Link to="#projects">shipping AI and data applications</Link>.
                     I’m based in Thane and open to remote and India-based opportunities.
                   </p>
@@ -459,11 +453,11 @@ function Activity() {
   );
 }
 
-function SectionIntro({ id, label, children, description, serif = false, page = false }) {
+function SectionIntro({ id, label, children, description, tone = "", serif = false, page = false }) {
   const Heading = page ? "h1" : "h2";
   return (
     <Reveal className={`section-intro ${serif ? "section-intro--serif" : ""}`} immediate={page}>
-      {label && <span className="section-kicker">{label}</span>}
+      <span className={`section-kicker ${tone && `section-kicker--${tone}`}`}>{label}</span>
       <Heading id={`${id}-title`}>{children}</Heading>
       {description && <p>{description}</p>}
     </Reveal>
@@ -524,10 +518,10 @@ function ProjectCard({ project }) {
 
 function ProjectSection() {
   return (
-    <Section id="projects" className="feature-section selected-work">
-      <SectionIntro id="projects" label="Portfolio"
-        description="Projects across applied AI, machine learning, and data products.">
-        Selected work
+    <Section id="projects" className="feature-section">
+      <SectionIntro id="projects" label="My Projects" tone="yellow"
+        description="Selected projects across applied AI, machine learning, and data products.">
+        Here’s what I’ve been <span className="heading-mark heading-mark--blue">up to!</span>
       </SectionIntro>
       <div className="project-grid">
         {projects.slice(0, 4).map((project, index) => (
@@ -565,7 +559,9 @@ function Timeline({ entries, type }) {
 function Honours() {
   return (
     <Section id="honours" className="feature-section">
-      <SectionIntro id="honours">Honours</SectionIntro>
+      <SectionIntro id="honours" label="Honours" tone="slate">
+        Pushing Limits, Earning <span className="heading-mark heading-mark--yellow">Laurels</span>
+      </SectionIntro>
       <Timeline type="honours" entries={honours} />
     </Section>
   );
@@ -590,7 +586,9 @@ function RepositoryCard({ repo, mirror = false }) {
 function OpenSource() {
   return (
     <Section id="open-source" className="feature-section open-source">
-      <SectionIntro id="open-source">Open source</SectionIntro>
+      <SectionIntro id="open-source" label="Open Source" tone="green">
+        Building in the <span className="heading-mark heading-mark--green">Open</span>
+      </SectionIntro>
       <div className="repository-band"><Reveal>
         {repositories.length ? <div className="repository-marquee">
           <div className="repository-group">{repositories.map((repo) => <RepositoryCard key={repo.name} repo={repo} />)}</div>
@@ -607,7 +605,9 @@ function OpenSource() {
 function Certifications() {
   return (
     <Section id="certifications" className="feature-section">
-      <SectionIntro id="certifications">Licenses &amp; certifications</SectionIntro>
+      <SectionIntro id="certifications" label="Licenses & Certifications" tone="slate">
+        Always Learning <span className="heading-mark heading-mark--green">Something New</span>
+      </SectionIntro>
       <Timeline type="certifications" entries={certifications.slice(0, 4)} />
       <MoreLink to="/certifications">Show all {certifications.length} certifications</MoreLink>
     </Section>
@@ -641,7 +641,9 @@ function Books() {
 function Contact() {
   return (
     <Section id="contact" className="feature-section contact">
-      <SectionIntro id="contact">Get in touch</SectionIntro>
+      <SectionIntro id="contact" label="Contact" tone="blue">
+        <span className="heading-mark heading-mark--blue">Connect</span> with me
+      </SectionIntro>
       <Reveal>
         <p>Get in touch by <a href={emailHref}>email</a>, connect with me on <OutLink href={profile.linkedin}>LinkedIn</OutLink>, or explore my work on <OutLink href={profile.github}>GitHub</OutLink>.</p>
         <div className="contact-links">
@@ -786,7 +788,7 @@ function Portfolio() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0b0d11" : "#f6f8fb");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0a0b0c" : "#ffffff");
     try { localStorage.setItem("soham-portfolio-theme", theme); }
     catch { /* The theme remains active for this visit. */ }
   }, [theme]);
