@@ -232,41 +232,117 @@ ul { padding: 0; list-style: none; }
 [data-theme="light"] .hero mark { background: rgb(151 59 102 / 21%); }
 .resume-row { display: flex; justify-content: center; margin: 40px auto 0; }
 .resume-button {
-  --resume-glow: linear-gradient(90deg, #6992bb, #a1c2e5, #639ce6, #3973bc, #6992bb);
+  --glass-base: rgb(27 46 71 / 86%);
+  --glass-edge: rgb(202 228 255 / 56%);
+  --glass-color: #f7fbff;
+  --glass-layer: rgb(217 236 255 / 10%);
+  --glass-rim: rgb(228 242 255 / 40%);
+  --glass-shadow: rgb(0 9 27 / 54%);
+  --glass-light: rgb(148 207 255 / 31%);
+  --glass-ease: cubic-bezier(.22, 1, .36, 1);
   position: relative;
-  display: inline-grid;
-  place-items: center;
   isolation: isolate;
-  min-width: 208px;
-  min-height: 44px;
-  padding: 9px 22px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  color: var(--inverse);
-  background: linear-gradient(var(--button), var(--button)) padding-box, var(--resume-glow) border-box;
-  background-size: 100% 100%, 200% 100%;
-  animation: resume-shimmer 2s linear infinite;
-  font-weight: 500;
-  transition: transform .2s cubic-bezier(.22, 1, .36, 1);
+  display: inline-flex;
+  min-width: 211px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  overflow: hidden;
+  padding: 6px 7px 6px 19px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background:
+    radial-gradient(115% 135% at 18% -60%, var(--glass-light), transparent 76%),
+    linear-gradient(168deg, var(--glass-layer), transparent 64%),
+    var(--glass-base);
+  color: var(--glass-color);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    inset 0 -1px 2px rgb(111 177 233 / 18%),
+    0 6px 20px var(--glass-shadow);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .005em;
+  transition: transform .36s var(--glass-ease), border-color .28s ease, box-shadow .36s var(--glass-ease);
+}
+[data-theme="light"] .resume-button {
+  --glass-base: rgb(238 246 253 / 91%);
+  --glass-edge: rgb(122 157 192 / 65%);
+  --glass-color: #162e49;
+  --glass-layer: rgb(255 255 255 / 65%);
+  --glass-rim: rgb(255 255 255 / 93%);
+  --glass-shadow: rgb(44 83 125 / 23%);
+  --glass-light: rgb(255 255 255 / 85%);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .resume-button {
+    --glass-base: rgb(27 46 71 / 58%);
+    -webkit-backdrop-filter: blur(14px) saturate(148%);
+    backdrop-filter: blur(14px) saturate(148%);
+  }
+  [data-theme="light"] .resume-button { --glass-base: rgb(238 246 253 / 67%); }
 }
 .resume-button::before {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: 82% 20% -17%;
-  border-radius: 12px;
-  background: var(--resume-glow);
-  background-size: 200% 100%;
-  filter: blur(11px);
-  opacity: .55;
-  animation: resume-shimmer 2s linear infinite;
-  transition: opacity .2s ease, filter .2s ease;
+  inset: 1px;
+  border: 1px solid rgb(223 241 255 / 16%);
+  border-bottom-color: rgb(150 206 251 / 30%);
+  border-radius: inherit;
+  pointer-events: none;
 }
-.resume-button:is(:hover, :focus-visible)::before { opacity: .95; filter: blur(9px); }
-.resume-button:active { transform: scale(.985); }
-@keyframes resume-shimmer {
-  from { background-position: 0% center; }
-  to { background-position: 200% center; }
+.resume-button::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -45% auto -45% 0;
+  width: 44%;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, rgb(238 249 255 / 42%), transparent);
+  transform: translateX(-140%) skewX(-23deg);
+  transition: opacity .23s ease, transform 0s .23s;
+  pointer-events: none;
+}
+.resume-button-icon {
+  display: grid;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgb(185 217 248 / 32%);
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--glass-light), var(--glass-layer));
+  box-shadow: inset 0 1px 0 var(--glass-rim);
+  transition: background-color .26s ease, border-color .26s ease;
+}
+.resume-button-icon svg { transition: transform .36s var(--glass-ease); }
+.resume-button:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--glass-edge), var(--glass-color) 45%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    inset 0 -2px 4px rgb(145 213 255 / 23%),
+    0 8px 22px var(--glass-shadow),
+    0 0 20px rgb(112 182 255 / 19%);
+}
+.resume-button:is(:hover, :focus-visible)::after {
+  opacity: .8;
+  transform: translateX(275%) skewX(-23deg);
+  transition: opacity .15s ease, transform .66s var(--glass-ease);
+}
+.resume-button:is(:hover, :focus-visible) .resume-button-icon {
+  background-color: rgb(147 199 247 / 16%);
+  border-color: var(--glass-edge);
+}
+.resume-button:is(:hover, :focus-visible) .resume-button-icon svg { transform: translateY(2px); }
+.resume-button:active { transform: translateY(0) scale(.975); }
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-button, .resume-button:is(:hover, :focus-visible, :active),
+  .resume-button:is(:hover, :focus-visible) .resume-button-icon svg { transform: none; }
+  .resume-button::after { display: none; }
 }
 
 .about { margin-top: 44px; }

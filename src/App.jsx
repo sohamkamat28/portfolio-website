@@ -7,6 +7,7 @@ import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
 import { CaretDown } from "@phosphor-icons/react/CaretDown";
 import { ChatCircleDots } from "@phosphor-icons/react/ChatCircleDots";
+import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
 import { FileText } from "@phosphor-icons/react/FileText";
 import { FolderSimple } from "@phosphor-icons/react/FolderSimple";
@@ -81,14 +82,14 @@ function RouteEffects() {
   return null;
 }
 
-function Reveal({ children, className, delay = 0, immediate = false }) {
+function Reveal({ children, className, delay = 0, immediate = false, blur = immediate }) {
   const reduced = useReducedMotion();
   if (reduced) return <div className={className}>{children}</div>;
 
-  const visible = { opacity: 1, y: 0, ...(immediate && { filter: "blur(0px)" }) };
+  const visible = { opacity: 1, y: 0, ...(blur && { filter: "blur(0px)" }) };
   return (
     <motion.div className={className}
-      initial={{ opacity: 0, y: immediate ? 6 : 20, ...(immediate && { filter: "blur(6px)" }) }}
+      initial={{ opacity: 0, y: immediate ? 6 : 20, ...(blur && { filter: "blur(6px)" }) }}
       animate={immediate ? visible : undefined}
       whileInView={immediate ? undefined : visible}
       viewport={{ once: true, amount: "some", margin: "0px 0px -36px 0px" }}
@@ -304,8 +305,11 @@ function Hero() {
           </p>
         </Reveal>
       </Section>
-      <Reveal className="resume-row" immediate delay={0.08}>
-        <a className="resume-button" href={profile.resume} download>Download Resume</a>
+      <Reveal className="resume-row" immediate delay={0.08} blur={false}>
+        <a className="resume-button" href={profile.resume} download>
+          <span>Download Resume</span>
+          <span className="resume-button-icon"><DownloadSimple size={17} weight="bold" aria-hidden="true" /></span>
+        </a>
       </Reveal>
     </>
   );
