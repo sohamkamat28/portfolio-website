@@ -1,0 +1,188 @@
+export const profile = {
+  name: "Soham Kamat",
+  location: "Thane, India",
+  email: "kamatsoham28@gmail.com",
+  phone: "+91 9833383225",
+  github: "https://github.com/sohamkamat28",
+  linkedin: "https://www.linkedin.com/in/sohamkamat28/",
+  whatsapp: "https://wa.me/919833383225",
+  resume: "/Soham_Kamat_Resume.pdf",
+  website: "https://sohamkamat.xyz",
+  summary: "AI and Data Science student building practical machine learning systems, data products, and intelligent web applications.",
+};
+
+export const sectionLinks = [
+  ["about", "About"],
+  ["education", "Education"],
+  ["work", "Experience"],
+  ["skills", "Skills"],
+  ["activity", "Activity"],
+  ["projects", "Projects"],
+  ["honours", "Honours"],
+  ["open-source", "Open Source"],
+  ["certifications", "Certifications"],
+  ["books", "Books"],
+  ["contact", "Contact"],
+];
+
+export const education = [
+  {
+    institution: "K.J. Somaiya School of Engineering",
+    badge: "K",
+    details: "B.Tech in Artificial Intelligence and Data Science · CGPA 9.98/10",
+    date: "2024 – 2028",
+    href: "https://kjsce.somaiya.edu/en/",
+  },
+  {
+    institution: "Maharashtra HSC Board",
+    badge: "M",
+    details: "Higher Secondary Certificate · 95.33% · Top rank in Thane District",
+    date: "2024",
+  },
+  {
+    institution: "EuroSchool Thane",
+    badge: "E",
+    details: "ICSE · 98.2% · Elected Head Boy",
+    date: "2022",
+  },
+];
+
+export const experience = [
+  {
+    organization: "Purple Ribbon Healthcare",
+    badge: "P",
+    roles: [
+      {
+        title: "Technical Product Intern, Digital Health",
+        start: "June 2026",
+        current: true,
+        details: [
+          "Led product definition for Purple Ribbon’s transition from offline healthcare coordination to an app-based platform. Authored the product requirements for role-based workflows, module interactions, and operational handoffs.",
+          "Designed wireframes for four core app modules covering patient requests, nurse and caregiver allocation, and service coordination.",
+        ],
+      },
+    ],
+  },
+];
+
+export const skills = [
+  "Python", "SQL", "JavaScript", "C++", "C", "scikit-learn", "Hugging Face",
+  "spaCy", "NLP", "OCR", "Classification", "Clustering", "Feature Engineering",
+  "Model Evaluation", "PCA", "Pandas", "NumPy", "Matplotlib", "Seaborn",
+  "Plotly", "Power BI", "Tableau", "FastAPI", "Flask", "Streamlit", "Dash",
+  "React", "Next.js", "HTML", "CSS", "REST APIs", "PostgreSQL", "MySQL",
+  "MongoDB", "Supabase", "Vercel", "Render", "Git", "GitHub", "Groq API",
+];
+
+export const honours = [
+  {
+    title: "IDEA 2.0, PSBs Hackathon Series",
+    date: "2026",
+    subtitle: "Waitlisted among 1,500+ submissions",
+    badge: "I",
+    description: "Submitted SENTINEL as a team ideation entry.",
+  },
+  {
+    title: "Maharashtra HSC Board Examination",
+    date: "2024",
+    subtitle: "Top rank in Thane District",
+    badge: "H",
+    description: "Scored 95.33%.",
+  },
+  {
+    title: "Elected Head Boy",
+    date: "2022",
+    subtitle: "Student Council, EuroSchool Thane",
+    badge: "E",
+  },
+];
+
+export const certifications = [
+  {
+    title: "Introduction to Data Visualization",
+    date: "2026",
+    subtitle: "Simplilearn",
+    badge: "S",
+    tags: ["Data Visualization"],
+  },
+  {
+    title: "SQL for Analyst",
+    date: "2025",
+    subtitle: "DevTown × Google Developer Group and MSIT",
+    badge: "D",
+    tags: ["SQL"],
+  },
+];
+
+export const fun = "";
+export const books = [];
+export const repositories = [];
+export const posts = [];
+
+export const projects = [
+  {
+    name: "ResumeLens ATS",
+    kicker: "AI resume intelligence",
+    description:
+      "Parses resumes, evaluates ATS structure and skill evidence, and compares applications with job descriptions using NLP and structured LLM output.",
+    stack: ["FastAPI", "Next.js", "Supabase", "Groq", "spaCy"],
+    image: "/assets/resumelens-1280.webp",
+    imageSmall: "/assets/resumelens-640.webp",
+    imageAlt: "ResumeLens ATS resume analysis interface",
+    live: "https://resumelens-ats.vercel.app/",
+    github: "https://github.com/sohamkamat28/ATS_SCORER",
+  },
+  {
+    name: "MedSimplify",
+    kicker: "Medical report intelligence",
+    description:
+      "Turns report text and scans into readable medical terms using OCR, biomedical entity recognition, and a verified 370-term glossary.",
+    stack: ["Python", "Dash", "Tesseract", "Hugging Face"],
+    image: "/assets/medsimplify-1280.webp",
+    imageSmall: "/assets/medsimplify-640.webp",
+    imageAlt: "MedSimplify medical report analyzer interface",
+    live: "https://medlife-topaz.vercel.app/",
+    github: "https://github.com/sohamkamat28/medlife",
+  },
+  {
+    name: "StockSense",
+    kicker: "Explainable market modeling",
+    description:
+      "Predicts next-session stock direction from nine engineered indicators with walk-forward testing, confidence scores, and decision-path explanations.",
+    stack: ["Flask", "scikit-learn", "yfinance", "D3.js"],
+    image: "/assets/stocksense-1280.webp",
+    imageSmall: "/assets/stocksense-640.webp",
+    imageAlt: "StockSense market signal and decision-tree interface",
+    live: "https://stocksense-rho-ochre.vercel.app/",
+    github: "https://github.com/sohamkamat28/StockSense",
+  },
+  {
+    name: "Spotify Analytics",
+    kicker: "Music data exploration",
+    description:
+      "Explores 2,000 tracks across 18 attributes and segments songs by applying K-means clustering and PCA to nine audio features.",
+    stack: ["Streamlit", "Plotly", "Pandas", "PCA"],
+    image: "/assets/spotify-1280.webp",
+    imageSmall: "/assets/spotify-640.webp",
+    imageAlt: "Spotify music analytics dashboard",
+    live: "https://spotify-trends-dashboard.streamlit.app/",
+    github: "https://github.com/sohamkamat28/SpotifyDashboard",
+  },
+  {
+    name: "AI Gym Coach",
+    kicker: "Real-time exercise intelligence",
+    description:
+      "Tracks form and repetitions for five exercises from a live camera feed, then delivers concise AI voice coaching and records workout progress.",
+    stack: ["MediaPipe", "OpenCV", "Streamlit", "WebRTC", "Groq"],
+    image: "/assets/ai-gym-coach-1280.webp",
+    imageSmall: "/assets/ai-gym-coach-640.webp",
+    imageAlt: "AI Gym Coach public landing page",
+    live: "https://ai-gym-bot.netlify.app/",
+    github: "https://github.com/sohamkamat28/AI-GYM_COACH",
+  },
+  {
+    name: "Secure Banking Communication",
+    description: "A local security lab project that compares insecure communication with a protected client–server design and documents the lessons from both.",
+    stack: ["Python", "Socket Programming", "Diffie–Hellman", "AES", "SHA-256"],
+  },
+];

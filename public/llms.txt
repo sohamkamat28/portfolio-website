@@ -5,6 +5,8 @@ Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine 
 ## Primary links
 
 - [Portfolio home](/)
+- [Projects](/projects)
+- [Certifications](/certifications)
 - [Resume](/Soham_Kamat_Resume.pdf)
 - [GitHub](https://github.com/sohamkamat28)
 - [LinkedIn](https://www.linkedin.com/in/sohamkamat28/)
@@ -15,3 +17,15 @@ Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine 
 - MedSimplify: OCR and biomedical NLP for readable medical reports.
 - StockSense: explainable stock-direction modeling.
 - Spotify Analytics: interactive music-data exploration.
+
+- AI Gym Coach: camera-based exercise tracking and voice coaching.
+
+## Education and experience
+
+- B.Tech in Artificial Intelligence and Data Science, K.J. Somaiya School of Engineering, 2024–2028.
+- Technical Product Intern, Digital Health at Purple Ribbon Healthcare, since June 2026.
+
+## Certifications
+
+- Introduction to Data Visualization, Simplilearn (2026).
+- SQL for Analyst, DevTown × Google Developer Group and MSIT (2025).

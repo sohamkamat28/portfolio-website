@@ -1,776 +1,787 @@
-import { useEffect, useRef, useState } from "react";
-import dashLogo from "simple-icons/icons/dash.svg";
-import fastApiLogo from "simple-icons/icons/fastapi.svg";
-import flaskLogo from "simple-icons/icons/flask.svg";
-import gitLogo from "simple-icons/icons/git.svg";
-import huggingFaceLogo from "simple-icons/icons/huggingface.svg";
-import mongoDbLogo from "simple-icons/icons/mongodb.svg";
-import mySqlLogo from "simple-icons/icons/mysql.svg";
-import nextJsLogo from "simple-icons/icons/nextdotjs.svg";
-import numpyLogo from "simple-icons/icons/numpy.svg";
-import pandasLogo from "simple-icons/icons/pandas.svg";
-import plotlyLogo from "simple-icons/icons/plotly.svg";
-import postgreSqlLogo from "simple-icons/icons/postgresql.svg";
-import reactLogo from "simple-icons/icons/react.svg";
-import renderLogo from "simple-icons/icons/render.svg";
-import scikitLearnLogo from "simple-icons/icons/scikitlearn.svg";
-import spacyLogo from "simple-icons/icons/spacy.svg";
-import streamlitLogo from "simple-icons/icons/streamlit.svg";
-import supabaseLogo from "simple-icons/icons/supabase.svg";
-import vercelLogo from "simple-icons/icons/vercel.svg";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigationType, useParams } from "react-router";
+import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
-import { Brain } from "@phosphor-icons/react/Brain";
-import { ChartBar } from "@phosphor-icons/react/ChartBar";
-import { ChartLineUp } from "@phosphor-icons/react/ChartLineUp";
-import { ChartPieSlice } from "@phosphor-icons/react/ChartPieSlice";
-import { ChartScatter } from "@phosphor-icons/react/ChartScatter";
-import { CirclesThreePlus } from "@phosphor-icons/react/CirclesThreePlus";
-import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
+import { CaretDown } from "@phosphor-icons/react/CaretDown";
 import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
 import { FileText } from "@phosphor-icons/react/FileText";
-import { FlowArrow } from "@phosphor-icons/react/FlowArrow";
-import { FunnelSimple } from "@phosphor-icons/react/FunnelSimple";
-import { Gauge } from "@phosphor-icons/react/Gauge";
+import { FolderSimple } from "@phosphor-icons/react/FolderSimple";
 import { GithubLogo } from "@phosphor-icons/react/GithubLogo";
+import { House } from "@phosphor-icons/react/House";
 import { LinkedinLogo } from "@phosphor-icons/react/LinkedinLogo";
-import { List } from "@phosphor-icons/react/List";
-import { Lightning } from "@phosphor-icons/react/Lightning";
-import { Moon } from "@phosphor-icons/react/Moon";
+import { MoonStars } from "@phosphor-icons/react/MoonStars";
+import { Notebook } from "@phosphor-icons/react/Notebook";
+import { PaperPlaneTilt } from "@phosphor-icons/react/PaperPlaneTilt";
 import { Phone } from "@phosphor-icons/react/Phone";
 import { Sun } from "@phosphor-icons/react/Sun";
-import { TreeStructure } from "@phosphor-icons/react/TreeStructure";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
-import { X } from "@phosphor-icons/react/X";
+import { XLogo } from "@phosphor-icons/react/XLogo";
+import {
+  books, certifications, education, experience, fun, honours, posts, profile,
+  projects, repositories, sectionLinks, skills,
+} from "./content";
+import GitHubActivity from "./Activity";
+import { Garden, Greeting, Note, PixelBackdrop, Sticker } from "./Decorations";
 
-const projects = [
-  {
-    name: "ResumeLens ATS",
-    kicker: "AI resume intelligence",
-    description:
-      "Parses resumes, evaluates ATS structure and skill evidence, and compares applications with job descriptions using NLP and structured LLM output.",
-    stack: ["FastAPI", "Next.js", "Supabase", "Groq", "spaCy"],
-    image: "/assets/resumelens-1280.webp",
-    imageSmall: "/assets/resumelens-640.webp",
-    imageAlt: "ResumeLens ATS resume analysis interface",
-    live: "https://resumelens-ats.vercel.app/",
-    domain: "resumelens-ats.vercel.app",
-    github: "https://github.com/sohamkamat28/ATS_SCORER",
-    className: "project-card project-card--resumelens",
-  },
-  {
-    name: "MedSimplify",
-    kicker: "Medical report intelligence",
-    description:
-      "Turns report text and scans into readable medical terms using OCR, biomedical entity recognition, and a verified 370-term glossary.",
-    stack: ["Python", "Dash", "Tesseract", "Hugging Face"],
-    image: "/assets/medsimplify-1280.webp",
-    imageSmall: "/assets/medsimplify-640.webp",
-    imageAlt: "MedSimplify medical report analyzer interface",
-    live: "https://medlife-topaz.vercel.app/",
-    domain: "medlife-topaz.vercel.app",
-    github: "https://github.com/sohamkamat28/medlife",
-    className: "project-card project-card--medsimplify",
-  },
-  {
-    name: "StockSense",
-    kicker: "Explainable market modeling",
-    description:
-      "Predicts next-session stock direction from nine engineered indicators with walk-forward testing, confidence scores, and decision-path explanations.",
-    stack: ["Flask", "scikit-learn", "yfinance", "D3.js"],
-    image: "/assets/stocksense-1280.webp",
-    imageSmall: "/assets/stocksense-640.webp",
-    imageAlt: "StockSense market signal and decision-tree interface",
-    live: "https://stocksense-rho-ochre.vercel.app/",
-    domain: "stocksense-rho-ochre.vercel.app",
-    github: "https://github.com/sohamkamat28/StockSense",
-    className: "project-card project-card--stocksense",
-  },
-  {
-    name: "Spotify Analytics",
-    kicker: "Music data exploration",
-    description:
-      "Explores 2,000 tracks across 18 attributes and segments songs by applying K-means clustering and PCA to nine audio features.",
-    stack: ["Streamlit", "Plotly", "Pandas", "PCA"],
-    image: "/assets/spotify-1280.webp",
-    imageSmall: "/assets/spotify-640.webp",
-    imageAlt: "Spotify music analytics dashboard",
-    live: "https://spotify-trends-dashboard.streamlit.app/",
-    domain: "spotify-trends-dashboard.streamlit.app",
-    github: "https://github.com/sohamkamat28/SpotifyDashboard",
-    className: "project-card project-card--spotify",
-  },
-  {
-    name: "AI Gym Coach",
-    kicker: "Real-time exercise intelligence",
-    description:
-      "Tracks form and repetitions for five exercises from a live camera feed, then delivers concise AI voice coaching and records workout progress.",
-    stack: ["MediaPipe", "OpenCV", "Streamlit", "WebRTC", "Groq"],
-    image: "/assets/ai-gym-coach-1280.webp",
-    imageSmall: "/assets/ai-gym-coach-640.webp",
-    imageAlt: "AI Gym Coach public landing page",
-    live: "https://ai-gym-bot.netlify.app/",
-    domain: "ai-gym-bot.netlify.app",
-    github: "https://github.com/sohamkamat28/AI-GYM_COACH",
-    className: "project-card project-card--gym",
-  },
-];
+const pageTitles = {
+  "/projects": "Projects",
+  "/open-source": "Open Source",
+  "/certifications": "Certifications",
+  "/blog": "Blog",
+};
+const legacyAnchors = { top: "hero", journey: "education", "github-activity": "activity" };
+const emailHref = `mailto:${profile.email}`;
+const phoneHref = `tel:${profile.phone.replaceAll(" ", "")}`;
 
-const skillGroups = [
-  {
-    title: "Machine Learning",
-    items: [
-      { name: "scikit-learn", logo: scikitLearnLogo },
-      { name: "Classification", icon: TreeStructure },
-      { name: "Clustering", icon: CirclesThreePlus },
-      { name: "Feature engineering", icon: FunnelSimple },
-      { name: "Model evaluation", icon: Gauge },
-      { name: "PCA", icon: ChartScatter },
-    ],
-  },
-  {
-    title: "AI and NLP",
-    items: [
-      { name: "Hugging Face", logo: huggingFaceLogo },
-      { name: "spaCy", logo: spacyLogo },
-      { name: "OCR", icon: FileText },
-      { name: "Groq API", icon: Lightning },
-      { name: "Natural Language Processing", icon: Brain },
-    ],
-  },
-  {
-    title: "Data",
-    items: [
-      { name: "Pandas", logo: pandasLogo },
-      { name: "NumPy", logo: numpyLogo },
-      { name: "Plotly", logo: plotlyLogo },
-      { name: "Matplotlib", icon: ChartLineUp },
-      { name: "Seaborn", icon: ChartBar },
-      { name: "Power BI", icon: ChartBar },
-      { name: "Tableau", icon: ChartPieSlice },
-    ],
-  },
-  {
-    title: "Applications",
-    items: [
-      { name: "FastAPI", logo: fastApiLogo },
-      { name: "Flask", logo: flaskLogo },
-      { name: "Streamlit", logo: streamlitLogo },
-      { name: "Dash", logo: dashLogo },
-      { name: "React", logo: reactLogo },
-      { name: "Next.js", logo: nextJsLogo },
-      { name: "REST APIs", icon: FlowArrow },
-    ],
-  },
-  {
-    title: "Systems and Tools",
-    items: [
-      { name: "PostgreSQL", logo: postgreSqlLogo },
-      { name: "MySQL", logo: mySqlLogo },
-      { name: "MongoDB", logo: mongoDbLogo },
-      { name: "Supabase", logo: supabaseLogo },
-      { name: "Git", logo: gitLogo },
-      { name: "Vercel", logo: vercelLogo },
-      { name: "Render", logo: renderLogo },
-    ],
-  },
-];
+function RouteEffects() {
+  const { pathname, hash, key } = useLocation();
+  const reduced = useReducedMotion();
+  const navigation = useNavigationType();
+  const scrollPositions = useRef(new Map());
 
-function useReveal() {
   useEffect(() => {
-    const elements = document.querySelectorAll("[data-reveal]");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      elements.forEach((element) => element.classList.add("is-visible"));
-      return undefined;
+    const restore = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    return () => { window.history.scrollRestoration = restore; };
+  }, []);
+
+  useLayoutEffect(() => {
+    const title = pageTitles[pathname] ?? (pathname === "/" ? "AI and Data Science" : "Page not found");
+    const article = posts.find((post) => pathname === `/blog/${post.slug}`);
+    document.title = `${article?.title ?? title} | ${profile.name}`;
+    const meta = document.querySelector('meta[property="og:title"]');
+    meta?.setAttribute("content", document.title);
+    const canonical = new URL(pathname, profile.website).href;
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", canonical);
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", canonical);
+    const previousOffset = navigation === "POP" ? scrollPositions.current.get(key) : undefined;
+    if (previousOffset !== undefined) {
+      window.scrollTo({ top: previousOffset, behavior: "instant" });
+    } else if (hash) {
+      const id = hash.slice(1);
+      const target = document.getElementById(legacyAnchors[id] ?? id);
+      target?.scrollIntoView({ behavior: reduced ? "instant" : "smooth" });
+      target?.focus({ preventScroll: true });
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.16 },
-    );
+    const recordScroll = () => scrollPositions.current.set(key, window.scrollY);
+    window.addEventListener("scroll", recordScroll, { passive: true });
+    return () => window.removeEventListener("scroll", recordScroll);
+  }, [pathname, hash, key, navigation, reduced]);
 
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
+  return null;
 }
 
-function ProjectVisual({ src, srcSmall, alt, href, name, domain }) {
-  const [status, setStatus] = useState("loading");
+function Reveal({ children, className, delay = 0, immediate = false }) {
+  const reduced = useReducedMotion();
+  if (reduced) return <div className={className}>{children}</div>;
 
+  const visible = { opacity: 1, y: 0, filter: "blur(0px)" };
   return (
-    <a
-      className={`project-visual project-visual--${status}`}
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`Open the live ${name} project`}
-    >
-      {status === "loading" && <div className="image-skeleton" aria-hidden="true" />}
-      {status === "error" && (
-        <div className="image-error" role="status">
-          Preview unavailable. Use the project links below.
-        </div>
-      )}
-      <div className="project-window">
-        <div className="project-window-bar" aria-hidden="true">
-          <span className="window-dots"><i /><i /><i /></span>
-          <span>{domain}</span>
-          <ArrowUpRight size={13} weight="bold" />
-        </div>
-        <div className="project-window-screen">
-          <picture>
-            <source media="(max-width: 767px)" srcSet={srcSmall} />
-            <img
-              src={src}
-              alt={alt}
-              width="1280"
-              height="720"
-              loading="lazy"
-              onLoad={() => setStatus("ready")}
-              onError={() => setStatus("error")}
-            />
-          </picture>
-        </div>
-      </div>
-    </a>
+    <motion.div className={className}
+      initial={{ opacity: 0, y: 12, filter: "blur(5px)" }}
+      animate={immediate ? visible : undefined}
+      whileInView={immediate ? undefined : visible}
+      viewport={{ once: true, amount: "some", margin: "0px 0px -15px 0px" }}
+      transition={{ duration: 0.48, delay, ease: [0.22, 1, 0.36, 1] }}>
+      {children}
+    </motion.div>
   );
 }
 
-function Header({ theme, onThemeToggle }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+function Section({ id, className = "", children }) {
+  return <section id={id} tabIndex={-1} className={className} aria-labelledby={`${id}-title`}>{children}</section>;
+}
 
-  const closeMenu = () => setMenuOpen(false);
+function SectionIndex() {
+  const [active, setActive] = useState("about");
 
   useEffect(() => {
-    if (!menuOpen) return undefined;
-
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") setMenuOpen(false);
+    let frame = 0;
+    const sections = sectionLinks.map(([id]) => document.getElementById(id)).filter(Boolean);
+    const track = () => {
+      const guide = window.innerHeight * 0.46;
+      const current = sections.findLast((section) => section.getBoundingClientRect().top <= guide);
+      setActive(current?.id ?? "about");
+      frame = 0;
     };
-
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [menuOpen]);
+    const requestTrack = () => {
+      if (!frame) frame = window.requestAnimationFrame(track);
+    };
+    const resize = new ResizeObserver(requestTrack);
+    const main = document.getElementById("main-content");
+    if (main) resize.observe(main);
+    requestTrack();
+    window.addEventListener("scroll", requestTrack, { passive: true });
+    window.addEventListener("resize", requestTrack);
+    return () => {
+      resize.disconnect();
+      window.removeEventListener("scroll", requestTrack);
+      window.removeEventListener("resize", requestTrack);
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
-    <header className="site-header">
-      <a className="monogram" href="#top" aria-label="SK - Soham Kamat home" onClick={closeMenu}>
-        SK
-      </a>
-      <div className="nav-capsule">
-        <nav id="primary-navigation" className={menuOpen ? "nav-links is-open" : "nav-links"} aria-label="Primary navigation">
-          <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#work" onClick={closeMenu}>Work</a>
-          <a href="#journey" onClick={closeMenu}>Journey</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
-          <a className="nav-resume" href="/Soham_Kamat_Resume.pdf" target="_blank" rel="noreferrer" onClick={closeMenu}>
-            Resume
-          </a>
-        </nav>
-        <div className="nav-actions">
-          <button className="icon-button" type="button" onClick={onThemeToggle} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
-            {theme === "dark" ? <Sun size={18} weight="regular" /> : <Moon size={18} weight="regular" />}
-          </button>
-          <button className="icon-button menu-button" type="button" onClick={() => setMenuOpen((value) => !value)} aria-controls="primary-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>
-            {menuOpen ? <X size={20} weight="regular" /> : <List size={20} weight="regular" />}
-          </button>
-        </div>
-      </div>
-    </header>
+    <nav className="section-index" aria-label="Page sections">
+      {sectionLinks.map(([id, label]) => (
+        <a key={id} href={`#${id}`} aria-current={active === id ? "location" : undefined}>
+          <span className="section-index-label">{label}</span>
+          <span className="section-index-line" aria-hidden="true" />
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+function DockItem({ title, icon: Icon, to, href, onClick, disabled }) {
+  const children = <><Icon size={17} aria-hidden="true" /><span className="dock-tooltip" aria-hidden="true">{title}</span></>;
+  const props = { className: "dock-item", "aria-label": title };
+  if (disabled) return <button {...props} type="button" aria-disabled="true">{children}</button>;
+  if (onClick) return <button {...props} onClick={onClick} type="button">{children}</button>;
+  if (to) return <NavLink {...props} to={to} end>{children}</NavLink>;
+  return <a {...props} href={href} target={href?.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer">{children}</a>;
+}
+
+function Dock({ theme, toggleTheme }) {
+  return (
+    <nav className="dock" aria-label="Portfolio navigation">
+      <DockItem title="Home" icon={House} to="/" />
+      <DockItem title="Projects" icon={FolderSimple} to="/projects" />
+      <DockItem title="Blog" icon={Notebook} to="/blog" />
+      <DockItem title="Resume" icon={FileText} href={profile.resume} />
+      <span className="dock-divider" aria-hidden="true" />
+      <DockItem title="GitHub" icon={GithubLogo} href={profile.github} />
+      <DockItem title="LinkedIn" icon={LinkedinLogo} href={profile.linkedin} />
+      <DockItem title={profile.x ? "X" : "X profile unavailable"} icon={XLogo} href={profile.x} disabled={!profile.x} />
+      <DockItem title="Email" icon={EnvelopeSimple} href={emailHref} />
+      <span className="dock-divider" aria-hidden="true" />
+      <DockItem title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+        icon={theme === "dark" ? MoonStars : Sun} onClick={toggleTheme} />
+    </nav>
+  );
+}
+
+const prompt = `Research ${profile.name}, an AI and Data Science student and product builder based in ${profile.location}. Use the public portfolio (${profile.website}) and GitHub (${profile.github}) as primary sources. Give a concise, factual overview of projects, technical strengths, and verified achievements. Cite your sources and identify details you could not verify.`;
+const assistants = [
+  ["ChatGPT", "https://chatgpt.com/?hints=search&q="],
+  ["Claude", "https://claude.ai/new?q="],
+  ["Perplexity", "https://www.perplexity.ai/search?q="],
+  ["Gemini", "https://gemini.google.com/app?q="],
+];
+
+function AssistantMenu() {
+  const [open, setOpen] = useState(false);
+  const [copyStatus, setCopyStatus] = useState("");
+  const container = useRef(null);
+  const button = useRef(null);
+  const firstLink = useRef(null);
+  const label = `Ask an AI about ${profile.name}`;
+
+  useEffect(() => {
+    if (!open) return undefined;
+    firstLink.current?.focus();
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        button.current?.focus();
+      }
+    };
+    const onPointer = (event) => {
+      if (!container.current?.contains(event.target)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [open]);
+
+  async function copyPrompt() {
+    try {
+      await navigator.clipboard.writeText(prompt);
+      setCopyStatus("Prompt copied");
+    } catch {
+      setCopyStatus("Select the prompt below to copy it");
+    }
+  }
+
+  return (
+    <div className="assistant" ref={container}>
+      <AnimatePresence>
+        {open && <motion.div className="assistant-popover" id="assistant-menu" role="dialog" aria-label={label}
+          initial={{ opacity: 0, scale: 0.95, y: 8 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 8 }} transition={{ duration: 0.18 }}>
+          <h2>ask an ai about me</h2>
+          <p>Ask your favorite assistant about my work.</p>
+          <div className="assistant-links">
+            {assistants.map(([name, url], index) => (
+              <a key={name} ref={index === 0 ? firstLink : undefined}
+                href={url + encodeURIComponent(prompt)} target="_blank" rel="noreferrer"
+                aria-label={`Ask ${name} about ${profile.name}`}>
+                {name} <ArrowUpRight size={13} />
+              </a>
+            ))}
+          </div>
+          <button className="copy-prompt" type="button" onClick={copyPrompt}>copy the prompt instead</button>
+          <span role="status" className="copy-status">{copyStatus}</span>
+          {copyStatus.startsWith("Select") && <textarea readOnly aria-label="Assistant prompt" value={prompt} />}
+        </motion.div>}
+      </AnimatePresence>
+      <button ref={button} className="assistant-trigger" type="button" aria-label={label} aria-expanded={open}
+        aria-haspopup="dialog" aria-controls={open ? "assistant-menu" : undefined}
+        onClick={() => { setCopyStatus(""); setOpen(!open); }}>
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 4C38 0 44 5 47 10C55 10 59 15 59 22C65 27 65 35 60 41C60 48 55 54 48 55C44 62 37 64 31 60C24 64 18 61 14 55C7 54 3 48 4 41C-1 35 0 27 5 22C5 15 10 10 17 10C20 4 26 1 32 4Z" />
+        </svg>
+        <span aria-hidden="true">{open ? "(^_^)" : "(._.)"}</span>
+      </button>
+    </div>
   );
 }
 
 function Hero() {
-  const nameRef = useRef(null);
-
-  const handleNamePointerMove = (event) => {
-    const name = nameRef.current;
-    if (
-      !name
-      || window.matchMedia("(pointer: coarse)").matches
-      || window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) return;
-
-    const bounds = name.getBoundingClientRect();
-    name.style.setProperty("--cursor-x", `${event.clientX - bounds.left}px`);
-    name.style.setProperty("--cursor-y", `${event.clientY - bounds.top}px`);
-    name.classList.add("is-active");
-
-    name.querySelectorAll(".hero-letter").forEach((letter) => {
-      const letterBounds = letter.getBoundingClientRect();
-      const centerX = letterBounds.left + letterBounds.width / 2;
-      const centerY = letterBounds.top + letterBounds.height / 2;
-      const distance = Math.hypot(event.clientX - centerX, (event.clientY - centerY) * 0.7);
-      const influence = Math.max(0, 1 - distance / 150);
-      letter.style.setProperty("--letter-scale", String(1 - influence * 0.84));
-    });
-  };
-
-  const resetName = () => {
-    const name = nameRef.current;
-    if (!name) return;
-    name.classList.remove("is-active");
-    name.querySelectorAll(".hero-letter").forEach((letter) => {
-      letter.style.removeProperty("--letter-scale");
-    });
-  };
-
-  const renderName = (name) => (
-    <span className="hero-name-line" aria-hidden="true">
-      {name.split("").map((letter, index) => (
-        <span className="hero-letter" key={`${letter}-${index}`}>{letter}</span>
-      ))}
-    </span>
-  );
-
   return (
-    <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero-grid" aria-hidden="true" />
-      <div className="hero-copy">
-        <p className="hero-eyebrow">AI engineer · Data scientist · Product builder</p>
-        <h1
-          className="hero-name"
-          id="hero-title"
-          aria-label="Soham Kamat"
-          ref={nameRef}
-          onPointerMove={handleNamePointerMove}
-          onPointerLeave={resetName}
-        >
-          {renderName("SOHAM")}
-          {renderName("KAMAT")}
-        </h1>
-        <p className="hero-intro">Designing AI systems that solve real problems and deliver clear value.</p>
-        <div className="hero-actions">
-          <a className="button button--solid" href="#work">
-            View work <ArrowRight size={18} weight="regular" />
-          </a>
-          <a className="button button--outline" href="/Soham_Kamat_Resume.pdf" target="_blank" rel="noreferrer">
-            Resume <DownloadSimple size={18} weight="regular" />
-          </a>
-          <a className="button button--outline" href="https://github.com/sohamkamat28" target="_blank" rel="noreferrer">
-            GitHub <GithubLogo size={18} weight="regular" />
-          </a>
-        </div>
-      </div>
-      <div className="hero-role" aria-hidden="true">
-        <span>Machine Learning</span>
-        <span>Applied AI</span>
-        <span>Data Products</span>
-      </div>
-    </section>
+    <>
+      <Section id="hero" className="hero">
+        <Reveal immediate>
+          <Greeting />
+          <div className="hero-name">
+            <span className="hero-label hero-label--work">BUILDS THINGS</span>
+            <h1 id="hero-title">I’m <span className="name-outline">{profile.name}</span>.</h1>
+            <span className="hero-label hero-label--location"><span aria-hidden="true">📍</span> {profile.location.toUpperCase()}</span>
+          </div>
+          <p>AI and Data Science student. Building <mark>practical AI systems</mark> and data products.</p>
+        </Reveal>
+      </Section>
+      <Reveal className="resume-row" immediate delay={0.14}>
+        <a className="resume-button" href={profile.resume} download>Download Resume</a>
+      </Reveal>
+    </>
   );
 }
+
+const aboutTabs = ["Professional", "Fun"];
 
 function About() {
+  const [active, setActive] = useState(0);
+  const tabRefs = useRef([]);
+  const reduced = useReducedMotion();
+
+  function onTabKey(event) {
+    const direction = { ArrowLeft: (active + 1) % 2, ArrowRight: (active + 1) % 2, Home: 0, End: 1 };
+    if (!(event.key in direction)) return;
+    event.preventDefault();
+    const next = direction[event.key];
+    setActive(next);
+    tabRefs.current[next]?.focus();
+  }
+
   return (
-    <section className="section about" id="about">
-      <div className="section-shell">
-        <div className="about-grid">
-          <div className="about-manifesto" data-reveal>
-            <h2>About me</h2>
-          </div>
-          <div className="about-copy" data-reveal>
-            <p className="about-lead">
-              <span>I am an AI and Data Science builder</span>
-              <span>focused on turning real-world problems</span>
-              <span>into intelligent products people can use.</span>
-            </p>
-            <div className="about-notes">
-              <p>
-                I work best where an idea needs structure. I define the problem, understand the user, map the experience, and decide what a useful system must accomplish. From there, I use modern AI-assisted workflows to move efficiently from an early concept to a coherent, functioning product.
-              </p>
-              <p>
-                My foundation in Python, machine learning, NLP, data analysis, and backend systems helps me judge which approaches fit the problem and whether the result is dependable. I am continuing to deepen that understanding across LLM applications, model evaluation, scalable APIs, databases, and production AI systems.
-              </p>
-            </div>
-            <p className="about-closing">
-              Whatever I am building, the objective stays the same: direct technology with purpose and create dependable solutions that can grow beyond their first version.
-            </p>
-            <p className="about-location">Based in Thane, India · Open to international, remote, and India-based opportunities.</p>
+    <Section id="about" className="about">
+      <Reveal>
+        <div className="folder-tabs" role="tablist" aria-label="About me" onKeyDown={onTabKey}>
+          {aboutTabs.map((label, index) => (
+            <button ref={(element) => { tabRefs.current[index] = element; }} key={label}
+              type="button" role="tab" id={`about-tab-${index}`} aria-controls="about-panel"
+              aria-selected={active === index} tabIndex={active === index ? 0 : -1}
+              onClick={() => setActive(index)}>{label}</button>
+          ))}
+        </div>
+        <div className="folder-surface">
+          <div className="folder-panel" id="about-panel" role="tabpanel" aria-labelledby={`about-tab-${active}`} tabIndex={0}>
+            <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22 }}>
+              <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
+              {active === 0 ? (
+                <p>
+                  I’m pursuing a <a href="#education">B.Tech in Artificial Intelligence and Data Science</a> at K.J. Somaiya School of Engineering.
+                  I like <mark>building useful products</mark> and giving real problems enough structure to solve them.
+                  My work spans <span className="inline-wave">machine learning, NLP, and data analysis</span>,
+                  from <a href="#work">defining product requirements in digital health</a> to <a href="#projects">shipping AI and data applications</a>.
+                  I’m based in Thane and open to remote and India-based opportunities.
+                </p>
+              ) : fun && <p>{fun}</p>}
+            </motion.div>
           </div>
         </div>
-      </div>
-    </section>
+      </Reveal>
+    </Section>
   );
 }
 
-function Work() {
+function SmallTitle({ id, children }) {
+  return <h2 id={`${id}-title`} className="small-title"><span>{children}</span></h2>;
+}
+
+function Badge({ value, className = "" }) {
+  return <span aria-hidden="true" className={`identity-badge ${className}`}>{value}</span>;
+}
+
+function Education() {
   return (
-    <section className="section work" id="work">
-      <div className="section-shell">
-        <div className="section-heading" data-reveal>
-          <h2>Projects</h2>
-          <p>Selected systems where machine learning, data, and product engineering meet.</p>
-        </div>
-
-        <div className="project-grid" id="project-grid">
-          {projects.map((project, index) => (
-            <article className={project.className} key={project.name} data-reveal>
-              <ProjectVisual
-                src={project.image}
-                srcSmall={project.imageSmall}
-                alt={project.imageAlt}
-                href={project.live}
-                name={project.name}
-                domain={project.domain}
-              />
-              <div className="project-content">
-                <div>
-                  <div className="project-card-meta">
-                    <p className="project-kicker">{project.kicker}</p>
-                    <span>0{index + 1}</span>
-                  </div>
-                  <h3>{project.name}</h3>
-                  <p>{project.description}</p>
+    <Section id="education" className="compact-section">
+      <Reveal><SmallTitle id="education">Education</SmallTitle></Reveal>
+      <div className="education-list">
+        {education.map((entry, index) => {
+          const Tag = entry.href ? "a" : "div";
+          return (
+            <Reveal key={entry.institution} delay={index * 0.05}>
+              <Tag className="education-item" href={entry.href} target={entry.href ? "_blank" : undefined} rel={entry.href ? "noreferrer" : undefined}>
+                <Badge value={entry.badge} className={`education-badge--${index}`} />
+                <div className="education-meta">
+                  <h3>{entry.institution}</h3><p>{entry.details}</p>
                 </div>
-                <div>
-                  <ul className="tag-list" aria-label={`${project.name} technologies`}>
-                    {project.stack.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                  <div className="project-actions">
-                    <a href={project.live} target="_blank" rel="noreferrer">Live <ArrowUpRight size={16} /></a>
-                    <a href={project.github} target="_blank" rel="noreferrer">GitHub <GithubLogo size={16} /></a>
-                  </div>
-                </div>
-              </div>
-            </article>
-          ))}
-
-          {[6].map((number) => (
-            <article className="future-project" key={number} aria-label={`Reserved project slot ${number}`}>
-              <span>0{number}</span>
-              <div>
-                <strong>Future build</strong>
-                <p>Reserved for a project currently in development.</p>
-              </div>
-            </article>
-          ))}
-        </div>
+                <time>{entry.date}</time>
+              </Tag>
+            </Reveal>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }
 
-function Journey() {
+function Role({ role, expanded }) {
+  const [open, setOpen] = useState(expanded);
+  const reduced = useReducedMotion();
+  const panelId = `role-${role.title.toLowerCase().replace(/[^a-z]+/g, "-")}`;
   return (
-    <section className="section journey" id="journey">
-      <div className="section-shell journey-grid">
-        <div className="journey-heading" data-reveal>
-          <h2>Journey</h2>
-          <p>Education and experience.</p>
-        </div>
-        <div className="journey-list">
-          <article data-reveal>
-            <div className="journey-meta"><span>June 2026 – Present</span></div>
-            <h3>Technical Product Intern, Digital Health</h3>
-            <p className="journey-org">Purple Ribbon Healthcare</p>
-            <ul className="journey-details">
-              <li>Led early-stage product definition for Purple Ribbon's transition from offline healthcare coordination to an app-based platform; authored a detailed PRD covering functional requirements, role-based workflows, module interactions, automation logic, and operational handoffs, which the CEO shared with external development agencies.</li>
-              <li>Designed a wireframe prototype for <strong>4 core application modules</strong>, translating patient requests, nurse and caregiver allocation, and service coordination into structured screen flows and navigation for technical scoping.</li>
-            </ul>
-          </article>
-          <article data-reveal>
-            <div className="journey-meta"><span>2024-2028</span><span>Mumbai</span></div>
-            <h3>B.Tech in Artificial Intelligence and Data Science</h3>
-            <p className="journey-org">K.J. Somaiya School of Engineering</p>
-            <p>Current CGPA: 9.98/10</p>
-          </article>
-          <article data-reveal>
-            <div className="journey-meta"><span>2024</span><span>Thane</span></div>
-            <h3>Maharashtra HSC Board</h3>
-            <p className="journey-org">95.33% and top rank in Thane District</p>
-          </article>
-          <article data-reveal>
-            <div className="journey-meta"><span>2022</span><span>Thane</span></div>
-            <h3>ICSE</h3>
-            <p className="journey-org">98.2% and elected Head Boy at Euroschool</p>
-          </article>
-        </div>
+    <div className="experience-role">
+      <button className="role-trigger" type="button" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)}>
+        <span className="role-caret"><CaretDown size={12} weight="bold" /></span>
+        <span className="role-text">
+          <strong>{role.title}</strong>
+          <span>{role.start} – {role.current ? "Present" : role.end}{role.location && ` · ${role.location}`}</span>
+        </span>
+      </button>
+      <motion.div id={panelId} aria-hidden={!open} initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: reduced ? 0 : 0.25 }} className="role-collapse">
+        <ul>{role.details.map((item) => <li key={item}>{item}</li>)}</ul>
+      </motion.div>
+    </div>
+  );
+}
+
+function Experience() {
+  return (
+    <Section id="work" className="compact-section">
+      <Note variant="yellow" title="Shuffle">A deck has 52! possible orders. A good shuffle is almost surely brand new.</Note>
+      <Reveal><SmallTitle id="work">Work Experience</SmallTitle></Reveal>
+      <div className="experience-list">
+        {experience.map((entry) => (
+          <Reveal key={entry.organization}>
+            <article className="experience-item">
+              <div className="employer"><Badge value={entry.badge} className="employer-badge" /><h3>{entry.organization}</h3>
+                {entry.roles.some((role) => role.current) && <span className="current-dot" aria-label="Current employer" />}
+              </div>
+              <div className="experience-roles">
+                {entry.roles.map((role, index) => <Role key={role.title} role={role} expanded={index === 0 && role.current} />)}
+              </div>
+            </article>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }
 
 function Skills() {
   return (
-    <section className="section skills" id="skills">
-      <div className="section-shell">
-        <div className="section-heading" data-reveal>
-          <h2>Skills</h2>
-          <p>Tools and methods.</p>
-        </div>
-        <div className="skills-grid" id="capability-list">
-          {skillGroups.map((group) => (
-            <article className="skill-block" key={group.title} data-reveal>
-              <h3>{group.title}</h3>
-              <ul className="skill-words">
-                {group.items.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <li key={item.name}>
-                      <span className="skill-icon" aria-hidden="true">
-                        {item.logo ? <img src={item.logo} alt="" /> : <Icon size={18} weight="bold" />}
-                      </span>
-                      <span>{item.name}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </article>
-          ))}
-        </div>
+    <Section id="skills" className="compact-section">
+      <Sticker type="flower" />
+      <Reveal>
+        <SmallTitle id="skills">Skills</SmallTitle>
+        <ul className="skill-pills">
+          {skills.map((skill) => <li key={skill}>{skill}</li>)}
+        </ul>
+      </Reveal>
+    </Section>
+  );
+}
+
+function Activity() {
+  return (
+    <Section id="activity" className="compact-section activity-section">
+      <Sticker type="mirror" />
+      <Reveal>
+        <SmallTitle id="activity">Activity</SmallTitle>
+        <GitHubActivity />
+      </Reveal>
+    </Section>
+  );
+}
+
+function SectionIntro({ id, label, children, description, tone = "", serif = false, page = false }) {
+  const Heading = page ? "h1" : "h2";
+  return (
+    <Reveal className={`section-intro ${serif ? "section-intro--serif" : ""}`} immediate={page}>
+      <span className={`section-kicker ${tone && `section-kicker--${tone}`}`}>{label}</span>
+      <Heading id={`${id}-title`}>{children}</Heading>
+      {description && <p>{description}</p>}
+    </Reveal>
+  );
+}
+
+function MoreLink({ to, children }) {
+  return <Reveal className="more-row"><Link className="more-link" to={to}>{children} <ArrowRight size={15} aria-hidden="true" /></Link></Reveal>;
+}
+
+function OutLink({ href, children, label, className = "" }) {
+  if (!href) return null;
+  return <a className={className} href={href} target="_blank" rel="noreferrer" aria-label={label}>{children}</a>;
+}
+
+function Tags({ values, className = "" }) {
+  if (!values?.length) return null;
+  return <ul className={`tags ${className}`}>{values.map((tag) => <li key={tag}>{tag}</li>)}</ul>;
+}
+
+function ProjectImage({ project, index, number = false }) {
+  return (
+    <div className="project-media">
+      {project.image ? (
+        <img src={project.image} srcSet={project.imageSmall ? `${project.imageSmall} 640w, ${project.image} 1280w` : undefined}
+          sizes="(max-width: 640px) 90vw, 500px" alt={project.imageAlt} loading="lazy" width="1280" height="720" />
+      ) : number && <div className="project-number" aria-hidden="true"><span>Project</span><strong>{String(index + 1).padStart(2, "0")}</strong></div>}
+    </div>
+  );
+}
+
+function ProjectLinks({ project, full = false }) {
+  if (!project.live && !project.github) return null;
+  return (
+    <div className={`project-links ${full ? "project-links--full" : ""}`}>
+      <OutLink href={project.live} label={`Open ${project.name} live site`}><ArrowUpRight size={12} /> {full ? "Live" : "Website"}</OutLink>
+      <OutLink href={project.github} label={`View ${project.name} source on GitHub`}><GithubLogo size={12} /> {full ? "GitHub" : "Source"}</OutLink>
+    </div>
+  );
+}
+
+function ProjectCard({ project }) {
+  return (
+    <article className="project-card">
+      {project.live ? (
+        <OutLink href={project.live} label={`Preview ${project.name}`}><ProjectImage project={project} /></OutLink>
+      ) : <ProjectImage project={project} />}
+      <div className="project-card-body">
+        <h3>{project.name}</h3>
+        {project.date && <time>{project.date}</time>}
+        <p>{project.description}</p>
+        <Tags values={project.stack} />
+        <ProjectLinks project={project} />
       </div>
-    </section>
+    </article>
+  );
+}
+
+function ProjectSection() {
+  return (
+    <Section id="projects" className="feature-section">
+      <SectionIntro id="projects" label="My Projects" tone="yellow"
+        description="Selected projects across applied AI, machine learning, and data products.">
+        Here’s what I’ve been <span className="heading-mark heading-mark--blue">up to!</span>
+      </SectionIntro>
+      <div className="project-grid">
+        {projects.slice(0, 4).map((project, index) => (
+          <Reveal key={project.name} delay={(index % 2) * 0.07}><ProjectCard project={project} /></Reveal>
+        ))}
+      </div>
+      <MoreLink to="/projects">Show all {projects.length} projects</MoreLink>
+    </Section>
+  );
+}
+
+function Timeline({ entries, type }) {
+  return (
+    <ul className={`timeline timeline--${type}`}>
+      {entries.map((entry, index) => (
+        <li key={entry.title}>
+          <Reveal className="timeline-entry">
+            <Badge value={entry.badge} className={`timeline-badge--${index % 3}`} />
+            <div>
+              {entry.date && <time>{entry.date}</time>}
+              <h3>{entry.title}</h3>
+              {entry.subtitle && <p className="timeline-subtitle">{entry.subtitle}</p>}
+              {entry.description && <p>{entry.description}</p>}
+              {entry.credential && <p className="credential">Credential ID {entry.credential}</p>}
+              <Tags values={entry.tags} />
+            </div>
+            <OutLink className="credential-link" href={entry.href} label={`Open credential for ${entry.title}`}><ArrowUpRight size={14} /></OutLink>
+          </Reveal>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Honours() {
+  return (
+    <Section id="honours" className="feature-section">
+      <SectionIntro id="honours" label="Honours" tone="pink">
+        Pushing Limits, Earning <span className="heading-mark heading-mark--yellow">Laurels</span>
+      </SectionIntro>
+      <Timeline type="honours" entries={honours} />
+    </Section>
+  );
+}
+
+function RepositoryCard({ repo, mirror = false }) {
+  return (
+    <article className="repository-card">
+      <div className="repository-media">
+        {repo.image ? <img src={repo.image} alt="" loading="lazy" /> : <strong>{repo.owner && `${repo.owner}/`}{repo.name}</strong>}
+      </div>
+      <div className="repository-content">
+        <h3>{mirror ? repo.name : <OutLink href={repo.href}>{repo.name}</OutLink>}</h3>
+        {repo.parent && <p>Forked from {mirror ? repo.parent.name : <OutLink href={repo.parent.href}>{repo.parent.name}</OutLink>}</p>}
+        {repo.description && <p>{repo.description}</p>}
+        <div className="repository-meta">{repo.language} {Number.isFinite(repo.stars) && ` ☆ ${repo.stars.toLocaleString()}`}</div>
+      </div>
+    </article>
+  );
+}
+
+function OpenSource() {
+  return (
+    <Section id="open-source" className="feature-section open-source">
+      <SectionIntro id="open-source" label="Open Source" tone="green">
+        Building in the <span className="heading-mark heading-mark--green">Open</span>
+      </SectionIntro>
+      <div className="repository-band"><Reveal>
+        {repositories.length ? <div className="repository-marquee">
+          <div className="repository-group">{repositories.map((repo) => <RepositoryCard key={repo.name} repo={repo} />)}</div>
+          <div className="repository-group repository-group--copy" aria-hidden="true">
+            {repositories.map((repo) => <RepositoryCard key={repo.name} repo={repo} mirror />)}
+          </div>
+        </div> : <div className="repository-empty" />}
+      </Reveal></div>
+      <MoreLink to="/open-source">View all repositories</MoreLink>
+    </Section>
+  );
+}
+
+function Certifications() {
+  return (
+    <Section id="certifications" className="feature-section">
+      <Note variant="blue" title="Binary search">Finding one item among a billion sorted ones takes only about 30 guesses.</Note>
+      <SectionIntro id="certifications" label="Licenses & Certifications" tone="violet">
+        Always Learning <span className="heading-mark heading-mark--green">Something New</span>
+      </SectionIntro>
+      <Timeline type="certifications" entries={certifications.slice(0, 4)} />
+      <MoreLink to="/certifications">Show all {certifications.length} certifications</MoreLink>
+    </Section>
+  );
+}
+
+function Books() {
+  const [selected, setSelected] = useState(null);
+  return (
+    <Section id="books" className="books">
+      <Reveal>
+        <h2 id="books-title" className="sr-only">Bookshelf</h2>
+        <div className="books-display">
+          <p className="books-caption">Books I keep<br />coming back to <span aria-hidden="true">↙</span></p>
+          <div className="shelf" role="group" aria-label="Books I keep coming back to">
+            {books.map((book) => (
+              <button key={book.title} type="button" aria-pressed={selected === book.title}
+                aria-label={`${book.title}, by ${book.author}`}
+                style={{ "--book-color": book.color }}
+                onClick={() => setSelected(selected === book.title ? null : book.title)}>
+                {book.cover && <img src={book.cover} alt="" loading="lazy" />}
+                <span>{book.title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </Section>
   );
 }
 
 function Contact() {
   return (
-    <section className="contact-section" id="contact">
-      <div className="section-shell contact-layout" data-reveal>
-        <h2>Contact</h2>
-        <p>Open to AI engineering, machine learning, data science, and software opportunities.</p>
-        <div className="contact-cards">
-          <a className="contact-card" href="mailto:kamatsoham28@gmail.com">
-            <EnvelopeSimple size={22} weight="regular" />
-            <span>Mail</span>
-            <strong>kamatsoham28@gmail.com</strong>
-            <ArrowUpRight size={16} weight="regular" />
-          </a>
-          <a className="contact-card" href="https://www.linkedin.com/in/sohamkamat28/" target="_blank" rel="noreferrer">
-            <LinkedinLogo size={22} weight="regular" />
-            <span>LinkedIn</span>
-            <strong>sohamkamat28</strong>
-            <ArrowUpRight size={16} weight="regular" />
-          </a>
-          <a className="contact-card" href="tel:+919833383225">
-            <Phone size={22} weight="regular" />
-            <span>Phone</span>
-            <strong>+91 9833383225</strong>
-            <ArrowUpRight size={16} weight="regular" />
-          </a>
-          <a className="contact-card" href="https://wa.me/919833383225" target="_blank" rel="noreferrer">
-            <WhatsappLogo size={22} weight="regular" />
-            <span>WhatsApp</span>
-            <strong>Message me</strong>
-            <ArrowUpRight size={16} weight="regular" />
-          </a>
+    <Section id="contact" className="feature-section contact">
+      <Note variant="green" title="History">The first website, from CERN in 1991, can still be visited at info.cern.ch.</Note>
+      <PaperPlaneTilt aria-hidden="true" className="paper-plane" size={27} weight="fill" />
+      <SectionIntro id="contact" label="Contact" tone="blue">
+        <span className="heading-mark heading-mark--blue">Connect</span> with me
+      </SectionIntro>
+      <Reveal>
+        <p>Get in touch by <a href={emailHref}>email</a>, connect with me on <OutLink href={profile.linkedin}>LinkedIn</OutLink>, or explore my work on <OutLink href={profile.github}>GitHub</OutLink>.</p>
+        <div className="contact-links">
+          <a href={phoneHref} aria-label={`Call ${profile.name}`}><Phone size={16} /> {profile.phone}</a>
+          <OutLink href={profile.whatsapp}><WhatsappLogo size={16} /> WhatsApp</OutLink>
         </div>
-      </div>
-    </section>
+      </Reveal>
+    </Section>
   );
 }
 
-const monthFormatter = new Intl.DateTimeFormat("en", { month: "short", timeZone: "UTC" });
-
-function toUtcDate(date) {
-  return new Date(`${date}T00:00:00Z`);
-}
-
-function toDateKey(date) {
-  return date.toISOString().slice(0, 10);
-}
-
-function buildContributionWeeks(days) {
-  if (!days.length) return [];
-
-  const orderedDays = [...days].sort((left, right) => left.date.localeCompare(right.date));
-  const contributionByDate = new Map(orderedDays.map((day) => [day.date, day]));
-  const start = toUtcDate(orderedDays[0].date);
-  start.setUTCDate(start.getUTCDate() - start.getUTCDay());
-
-  const end = toUtcDate(orderedDays.at(-1).date);
-  end.setUTCDate(end.getUTCDate() + (6 - end.getUTCDay()));
-
-  const weeks = [];
-  for (const cursor = new Date(start); cursor <= end; cursor.setUTCDate(cursor.getUTCDate() + 7)) {
-    const week = [];
-    for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
-      const date = new Date(cursor);
-      date.setUTCDate(date.getUTCDate() + dayIndex);
-      week.push(contributionByDate.get(toDateKey(date)) ?? null);
-    }
-    weeks.push(week);
-  }
-
-  return weeks;
-}
-
-function GitHubActivity() {
-  const [activity, setActivity] = useState({ status: "loading", total: 0, days: [] });
-  const profileUrl = "https://github.com/sohamkamat28";
-  const weeks = buildContributionWeeks(activity.days);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const loadActivity = async () => {
-      try {
-        const refreshWindow = Math.floor(Date.now() / 300000);
-        const response = await fetch(`/api/github-contributions?refresh=${refreshWindow}`, {
-          cache: "no-store",
-          signal: controller.signal,
-        });
-
-        if (!response.ok) throw new Error("GitHub activity request failed.");
-        const nextActivity = await response.json();
-        setActivity({ status: "ready", total: nextActivity.total, days: nextActivity.days });
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setActivity((current) => ({ ...current, status: "error" }));
-        }
-      }
-    };
-
-    loadActivity();
-    const refreshTimer = window.setInterval(loadActivity, 300000);
-
-    return () => {
-      controller.abort();
-      window.clearInterval(refreshTimer);
-    };
-  }, []);
-
+function Home() {
   return (
-    <section className="section github-activity" id="github-activity">
-      <div className="section-shell">
-        <div className="github-heading" data-reveal>
-          <div>
-            <h2>My Contributions.</h2>
-          </div>
-          <a href={profileUrl} target="_blank" rel="noreferrer">
-            View GitHub <ArrowUpRight size={16} weight="bold" />
-          </a>
-        </div>
-        <div
-          className={`contribution-chart contribution-chart--${activity.status}`}
-          id="contribution-grid"
-          role="img"
-          aria-label={activity.status === "ready" ? `${activity.total} GitHub contributions in the last year` : "Soham Kamat's GitHub contribution activity"}
-          data-reveal
-        >
-          {activity.status === "loading" && <div className="contribution-loading" aria-hidden="true" />}
-
-          {activity.status === "ready" && (
-            <div className="github-calendar">
-              <div className="calendar-months" aria-hidden="true">
-                {weeks.map((week, index) => {
-                  const month = week.find(Boolean)?.date.slice(0, 7);
-                  const previousMonth = index > 0 ? weeks[index - 1].find(Boolean)?.date.slice(0, 7) : null;
-                  const label = month && month !== previousMonth ? monthFormatter.format(toUtcDate(`${month}-01`)) : "";
-                  return <span key={`month-${index}`}>{label}</span>;
-                })}
-              </div>
-
-              <div className="calendar-body">
-                <div className="calendar-weekdays" aria-hidden="true">
-                  <span />
-                  <span>Mon</span>
-                  <span />
-                  <span>Wed</span>
-                  <span />
-                  <span>Fri</span>
-                  <span />
-                </div>
-                <div className="calendar-weeks" aria-hidden="true">
-                  {weeks.map((week, weekIndex) => (
-                    <div className="calendar-week" key={`week-${weekIndex}`}>
-                      {week.map((day, dayIndex) => day ? (
-                        <span
-                          className={`contribution-day contribution-day--level-${day.level}`}
-                          title={day.label}
-                          key={day.date}
-                        />
-                      ) : <span className="contribution-day contribution-day--empty" key={`empty-${weekIndex}-${dayIndex}`} />)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="calendar-footer">
-                <span>{activity.total} contributions in the last year</span>
-                <div className="calendar-legend" aria-label="Contribution intensity from less to more">
-                  <span>Less</span>
-                  {[0, 1, 2, 3, 4].map((level) => <i className={`contribution-day contribution-day--level-${level}`} key={level} />)}
-                  <span>More</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activity.status === "error" && (
-            <a className="contribution-error" href={profileUrl} target="_blank" rel="noreferrer">
-              GitHub activity is temporarily unavailable. View the live profile <ArrowUpRight size={15} />
-            </a>
-          )}
-        </div>
-      </div>
-    </section>
+    <main id="main-content" tabIndex={-1} className="home page-column">
+      <SectionIndex />
+      <Hero />
+      <About />
+      <Education />
+      <Experience />
+      <Skills />
+      <Activity />
+      <ProjectSection />
+      <Honours />
+      <OpenSource />
+      <Certifications />
+      <Books />
+      <Contact />
+      <Garden />
+    </main>
   );
 }
 
-function ScrollProgress() {
-  const progressRef = useRef(null);
-
-  useEffect(() => {
-    let frame;
-    const update = () => {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
-      progressRef.current?.style.setProperty("--scroll-progress", String(progress));
-      frame = undefined;
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  return <div className="scroll-progress" ref={progressRef} aria-hidden="true" />;
+function ProjectPage() {
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column inner-page inner-page--pixels">
+      <SectionIntro id="projects-page" label="My Projects" page description="Applied AI, data exploration, and tools that make complex work easier.">
+        Things I’ve Built
+      </SectionIntro>
+      <div role="region" aria-label="Projects" className="project-list">
+        {projects.map((project, index) => (
+          <Reveal key={project.name}>
+            <article className="project-detail">
+              <ProjectImage project={project} index={index} number />
+              <div>
+                <div className="project-detail-heading">
+                  <h2>{project.name}</h2>
+                  <ProjectLinks project={project} full />
+                </div>
+                {project.date && <time>{project.date}</time>}
+                <p>{project.description}</p>
+                <h3>Technologies Used:</h3>
+                <Tags values={project.stack} />
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </main>
+  );
 }
 
-export default function App() {
-  const [theme, setTheme] = useState(() => {
-    const saved = window.localStorage.getItem("soham-portfolio-theme");
-    if (saved === "light" || saved === "dark") return saved;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+function RepositoryPage() {
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column inner-page">
+      <SectionIntro id="repos-page" label="Open Source" serif page>Building in the Open</SectionIntro>
+      <div className="repository-grid">{repositories.map((repo) => <RepositoryCard key={repo.name} repo={repo} />)}</div>
+    </main>
+  );
+}
 
-  useReveal();
+function CertificationPage() {
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column inner-page">
+      <SectionIntro id="certs-page" label="Licenses & Certifications" serif page
+        description="Coursework and programs I’ve completed in data analysis and visualization.">
+        Things I’ve Learned
+      </SectionIntro>
+      <Timeline type="certifications" entries={certifications} />
+    </main>
+  );
+}
+
+function BlogPage() {
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column inner-page inner-page--pixels">
+      <SectionIntro id="blog-page" label="My Blog" serif page>Thoughts, Stories &amp; Ideas</SectionIntro>
+      <div className="blog-list">
+        {posts.map((post) => (
+          <Reveal key={post.slug}>
+            <Link className="blog-card" to={`/blog/${post.slug}`}>
+              {post.cover && <img src={post.cover} alt="" loading="lazy" />}
+              <div>
+                <h2>{post.title}</h2>{post.description && <p>{post.description}</p>}
+                {post.date && <time>{post.date}</time>} <span>{profile.name}</span>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+function BlogArticle() {
+  const { slug } = useParams();
+  const post = posts.find((entry) => entry.slug === slug);
+  if (!post) return <NotFound />;
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column article-page">
+      <article>
+        <header className="article-header">
+          {post.topic && <span>{post.topic}</span>}
+          <h1>{post.title}</h1>
+          {post.description && <p>{post.description}</p>}
+          <div>{post.date && <time>{post.date}</time>} <span>{profile.name}</span></div>
+        </header>
+        {post.cover && <img className="article-cover" src={post.cover} alt={post.coverAlt ?? ""} />}
+        <div className="article-flow">{post.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
+      </article>
+      <Link className="more-link" to="/blog">Back to blog</Link>
+    </main>
+  );
+}
+
+function NotFound() {
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column inner-page not-found">
+      <SectionIntro id="missing" label="404" page>Page not found</SectionIntro>
+      <Link className="more-link" to="/">Back to home <ArrowRight size={15} /></Link>
+    </main>
+  );
+}
+
+function getInitialTheme() {
+  try { return localStorage.getItem("soham-portfolio-theme") === "light" ? "light" : "dark"; }
+  catch { return "dark"; }
+}
+
+function Portfolio() {
+  const [theme, setTheme] = useState(getInitialTheme);
+  const { pathname } = useLocation();
+  const kind = pathname === "/" ? "sky" : pathname === "/projects" ? "teal" : pathname === "/blog" ? "violet" : null;
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem("soham-portfolio-theme", theme);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0a0b0c" : "#ffffff");
+    try { localStorage.setItem("soham-portfolio-theme", theme); }
+    catch { /* The theme remains active for this visit. */ }
   }, [theme]);
 
   return (
     <>
+      <RouteEffects />
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <ScrollProgress />
-      <Header theme={theme} onThemeToggle={() => setTheme((value) => value === "dark" ? "light" : "dark")} />
-      <main id="main-content">
-        <Hero />
-        <About />
-        <Work />
-        <Journey />
-        <Skills />
-        <GitHubActivity />
-        <Contact />
-      </main>
+      {kind && <PixelBackdrop kind={kind} theme={theme} />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<ProjectPage />} />
+        <Route path="/open-source" element={<RepositoryPage />} />
+        <Route path="/certifications" element={<CertificationPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogArticle />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {pathname === "/" && <AssistantMenu />}
+      <Dock theme={theme} toggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")} />
     </>
   );
+}
+
+export default function App() {
+  return <BrowserRouter><MotionConfig reducedMotion="user"><Portfolio /></MotionConfig></BrowserRouter>;
 }
