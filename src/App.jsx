@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigationType, useParams } from "react-router";
-import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence, motion, MotionConfig, useMotionValue, useReducedMotion, useSpring, useTransform,
+} from "motion/react";
 import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
 import { CaretDown } from "@phosphor-icons/react/CaretDown";
@@ -33,6 +35,8 @@ const pageTitles = {
 const legacyAnchors = { top: "hero", journey: "education", "github-activity": "activity" };
 const emailHref = `mailto:${profile.email}`;
 const phoneHref = `tel:${profile.phone.replaceAll(" ", "")}`;
+const easeOut = [0.22, 1, 0.36, 1];
+const sectionSpring = { type: "spring", stiffness: 420, damping: 34, mass: 0.7 };
 
 function RouteEffects() {
   const { pathname, hash, key } = useLocation();
@@ -79,14 +83,17 @@ function Reveal({ children, className, delay = 0, immediate = false }) {
   const reduced = useReducedMotion();
   if (reduced) return <div className={className}>{children}</div>;
 
-  const visible = { opacity: 1, y: 0, filter: "blur(0px)" };
+  const visible = { opacity: 1, y: 0, ...(immediate && { filter: "blur(0px)" }) };
   return (
     <motion.div className={className}
-      initial={{ opacity: 0, y: 12, filter: "blur(5px)" }}
+      initial={{ opacity: 0, y: immediate ? 6 : 20, ...(immediate && { filter: "blur(6px)" }) }}
       animate={immediate ? visible : undefined}
       whileInView={immediate ? undefined : visible}
-      viewport={{ once: true, amount: "some", margin: "0px 0px -15px 0px" }}
-      transition={{ duration: 0.48, delay, ease: [0.22, 1, 0.36, 1] }}>
+      viewport={{ once: true, amount: "some", margin: "0px 0px -36px 0px" }}
+      transition={immediate ? { duration: 0.4, ease: easeOut, delay } : {
+        default: { ...sectionSpring, delay },
+        opacity: { duration: 0.18, ease: easeOut, delay },
+      }}>
       {children}
     </motion.div>
   );
@@ -98,12 +105,13 @@ function Section({ id, className = "", children }) {
 
 function SectionIndex() {
   const [active, setActive] = useState("about");
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     let frame = 0;
     const sections = sectionLinks.map(([id]) => document.getElementById(id)).filter(Boolean);
     const track = () => {
-      const guide = window.innerHeight * 0.46;
+      const guide = window.innerHeight * 0.45;
       const current = sections.findLast((section) => section.getBoundingClientRect().top <= guide);
       setActive(current?.id ?? "about");
       frame = 0;
@@ -128,38 +136,63 @@ function SectionIndex() {
   return (
     <nav className="section-index" aria-label="Page sections">
       {sectionLinks.map(([id, label]) => (
-        <a key={id} href={`#${id}`} aria-current={active === id ? "location" : undefined}>
+        <Link key={id} to={{ hash: `#${id}` }} replace aria-current={active === id ? "location" : undefined}>
           <span className="section-index-label">{label}</span>
-          <span className="section-index-line" aria-hidden="true" />
-        </a>
+          <motion.span className="section-index-line" aria-hidden="true" initial={false}
+            animate={{ width: active === id ? 44 : 28 }} whileHover={reduced ? undefined : { width: 44 }}
+            transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 240, damping: 24 }} />
+        </Link>
       ))}
     </nav>
   );
 }
 
-function DockItem({ title, icon: Icon, to, href, onClick, disabled }) {
+function DockItem({ title, icon: Icon, to, href, onClick, disabled, pointer }) {
+  const item = useRef(null);
+  const width = useTransform(pointer, (pointerX) => {
+    if (!Number.isFinite(pointerX) || !item.current) return 40;
+    const bounds = item.current.getBoundingClientRect();
+    const distance = Math.abs(pointerX - (bounds.left + bounds.width / 2));
+    return 40 + 20 * Math.max(0, 1 - distance / 140);
+  });
+  const spring = useSpring(width, { mass: 0.1, stiffness: 150, damping: 12 });
+  const animatedWidth = useTransform(spring, (value) => `${value}px`);
   const children = <><Icon size={17} aria-hidden="true" /><span className="dock-tooltip" aria-hidden="true">{title}</span></>;
   const props = { className: "dock-item", "aria-label": title };
-  if (disabled) return <button {...props} type="button" aria-disabled="true">{children}</button>;
-  if (onClick) return <button {...props} onClick={onClick} type="button">{children}</button>;
-  if (to) return <NavLink {...props} to={to} end>{children}</NavLink>;
-  return <a {...props} href={href} target={href?.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer">{children}</a>;
+
+  let control;
+  if (disabled) control = <button {...props} type="button" aria-disabled="true">{children}</button>;
+  else if (onClick) control = <button {...props} onClick={onClick} type="button">{children}</button>;
+  else if (to) control = <NavLink {...props} to={to} end>{children}</NavLink>;
+  else control = <a {...props} href={href} target={href?.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer">{children}</a>;
+
+  return <motion.div ref={item} className="dock-slot" style={{ "--dock-item-width": animatedWidth }}>{control}</motion.div>;
 }
 
 function Dock({ theme, toggleTheme }) {
+  const pointer = useMotionValue(Infinity);
+  const reduced = useReducedMotion();
+  const onPointerMove = (event) => {
+    if (!reduced && event.pointerType === "mouse" && window.innerWidth >= 640) {
+      pointer.set(event.clientX);
+    }
+  };
+
   return (
-    <nav className="dock" aria-label="Portfolio navigation">
-      <DockItem title="Home" icon={House} to="/" />
-      <DockItem title="Projects" icon={FolderSimple} to="/projects" />
-      <DockItem title="Blog" icon={Notebook} to="/blog" />
-      <DockItem title="Resume" icon={FileText} href={profile.resume} />
+    <nav className="dock" aria-label="Portfolio navigation"
+      onPointerMove={onPointerMove} onPointerLeave={() => pointer.set(Infinity)}
+      onPointerCancel={() => pointer.set(Infinity)}>
+      <DockItem pointer={pointer} title="Home" icon={House} to="/" />
+      <DockItem pointer={pointer} title="Projects" icon={FolderSimple} to="/projects" />
+      <DockItem pointer={pointer} title="Blog" icon={Notebook} to="/blog" />
+      <DockItem pointer={pointer} title="Resume" icon={FileText} href={profile.resume} />
       <span className="dock-divider" aria-hidden="true" />
-      <DockItem title="GitHub" icon={GithubLogo} href={profile.github} />
-      <DockItem title="LinkedIn" icon={LinkedinLogo} href={profile.linkedin} />
-      <DockItem title={profile.x ? "X" : "X profile unavailable"} icon={XLogo} href={profile.x} disabled={!profile.x} />
-      <DockItem title="Email" icon={EnvelopeSimple} href={emailHref} />
+      <DockItem pointer={pointer} title="GitHub" icon={GithubLogo} href={profile.github} />
+      <DockItem pointer={pointer} title="LinkedIn" icon={LinkedinLogo} href={profile.linkedin} />
+      <DockItem pointer={pointer} title={profile.x ? "X" : "X profile unavailable"} icon={XLogo} href={profile.x} disabled={!profile.x} />
+      <DockItem pointer={pointer} title="Email" icon={EnvelopeSimple} href={emailHref} />
       <span className="dock-divider" aria-hidden="true" />
-      <DockItem title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+      <DockItem pointer={pointer} title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
         icon={theme === "dark" ? MoonStars : Sun} onClick={toggleTheme} />
     </nav>
   );
@@ -248,17 +281,19 @@ function Hero() {
   return (
     <>
       <Section id="hero" className="hero">
+        <Greeting />
         <Reveal immediate>
-          <Greeting />
           <div className="hero-name">
             <span className="hero-label hero-label--work">BUILDS THINGS</span>
             <h1 id="hero-title">I’m <span className="name-outline">{profile.name}</span>.</h1>
             <span className="hero-label hero-label--location"><span aria-hidden="true">📍</span> {profile.location.toUpperCase()}</span>
           </div>
+        </Reveal>
+        <Reveal immediate delay={0.04}>
           <p>AI and Data Science student. Building <mark>practical AI systems</mark> and data products.</p>
         </Reveal>
       </Section>
-      <Reveal className="resume-row" immediate delay={0.14}>
+      <Reveal className="resume-row" immediate delay={0.08}>
         <a className="resume-button" href={profile.resume} download>Download Resume</a>
       </Reveal>
     </>
@@ -283,7 +318,7 @@ function About() {
 
   return (
     <Section id="about" className="about">
-      <Reveal>
+      <Reveal immediate delay={0.12}>
         <div className="folder-tabs" role="tablist" aria-label="About me" onKeyDown={onTabKey}>
           {aboutTabs.map((label, index) => (
             <button ref={(element) => { tabRefs.current[index] = element; }} key={label}
@@ -294,19 +329,22 @@ function About() {
         </div>
         <div className="folder-surface">
           <div className="folder-panel" id="about-panel" role="tabpanel" aria-labelledby={`about-tab-${active}`} tabIndex={0}>
-            <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22 }}>
-              <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
-              {active === 0 ? (
-                <p>
-                  I’m pursuing a <a href="#education">B.Tech in Artificial Intelligence and Data Science</a> at K.J. Somaiya School of Engineering.
-                  I like <mark>building useful products</mark> and giving real problems enough structure to solve them.
-                  My work spans <span className="inline-wave">machine learning, NLP, and data analysis</span>,
-                  from <a href="#work">defining product requirements in digital health</a> to <a href="#projects">shipping AI and data applications</a>.
-                  I’m based in Thane and open to remote and India-based opportunities.
-                </p>
-              ) : fun && <p>{fun}</p>}
-            </motion.div>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }} exit={reduced ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: reduced ? 0 : 0.22, ease: "easeOut" }}>
+                <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
+                {active === 0 ? (
+                  <p>
+                    I’m pursuing a <Link to="#education">B.Tech in Artificial Intelligence and Data Science</Link> at K.J. Somaiya School of Engineering.
+                    I like <mark>building useful products</mark> and giving real problems enough structure to solve them.
+                    My work spans <span className="inline-wave">machine learning, NLP, and data analysis</span>,
+                    from <Link to="#work">defining product requirements in digital health</Link> to <Link to="#projects">shipping AI and data applications</Link>.
+                    I’m based in Thane and open to remote and India-based opportunities.
+                  </p>
+                ) : fun && <p>{fun}</p>}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </Reveal>
@@ -361,7 +399,7 @@ function Role({ role, expanded }) {
       </button>
       <motion.div id={panelId} aria-hidden={!open} initial={false}
         animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: reduced ? 0 : 0.25 }} className="role-collapse">
+        transition={{ duration: reduced ? 0 : 0.2, ease: "easeOut" }} className="role-collapse">
         <ul>{role.details.map((item) => <li key={item}>{item}</li>)}</ul>
       </motion.div>
     </div>
