@@ -141,22 +141,7 @@ ul { padding: 0; list-style: none; }
 .home { padding: 119px 0 calc(104px + env(safe-area-inset-bottom)); }
 .home > section { position: relative; scroll-margin-top: 28px; }
 .hero { text-align: center; }
-.greeting { position: relative; height: 89px; color: #f5d860; }
-.greeting svg {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  width: 100%;
-  height: 56px;
-  transform: translateX(-50%);
-  overflow: visible;
-}
-.greeting path {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+.greeting { height: 89px; padding-top: 5px; color: #f2cb30; }
 [data-theme="light"] .greeting { color: #a27719; }
 .hero-name {
   position: relative;
@@ -870,7 +855,6 @@ a.education-item:hover { background: color-mix(in srgb, var(--chip), transparent
   .home { padding-top: 76px; }
   .pixels, .pixels--teal, .pixels--violet { height: 408px; }
   .greeting { height: 76px; }
-  .greeting svg { top: 7px; height: 48px; }
   .hero h1 { font-size: 30px; line-height: 1.2; }
   .hero p { margin-top: 9px; font-size: 16px; line-height: 1.5; }
   .folder-tabs button { min-width: min(153px, 43%); padding-inline: 16px; }

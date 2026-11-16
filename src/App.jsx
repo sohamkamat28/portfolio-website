@@ -25,7 +25,8 @@ import {
   projects, repositories, sectionLinks, skills,
 } from "./content";
 import GitHubActivity from "./Activity";
-import { Greeting, PixelBackdrop } from "./Decorations";
+import { PixelBackdrop } from "./Decorations";
+import HandwrittenGreeting from "./HandwrittenGreeting";
 
 const pageTitles = {
   "/projects": "Projects",
@@ -281,7 +282,7 @@ function Hero() {
   return (
     <>
       <Section id="hero" className="hero">
-        <Greeting />
+        <div className="greeting"><HandwrittenGreeting color="currentColor" /></div>
         <Reveal immediate>
           <div className="hero-name">
             <span className="hero-label hero-label--work">BUILDS THINGS</span>

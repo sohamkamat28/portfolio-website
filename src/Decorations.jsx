@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { useReducedMotion } from "motion/react";
 
 const stars = [
   [0.049, 0.39, 0.076], [0.25, 0.075, 0.085], [0.35, 0.45, 0.139],
@@ -147,90 +147,4 @@ export function PixelBackdrop({ kind, theme }) {
   }, [kind, theme, reduced]);
 
   return <canvas ref={canvas} aria-hidden="true" className={`pixels pixels--${kind}`} />;
-}
-
-const greetings = [
-  {
-    label: "hello", viewBox: "0 5 186 59", speed: 1, strokeWidth: 3.9,
-    strokes: [
-      ["M8 57 C27 46 48 20 44 10 C39 -2 28 16 21 64", 0, 0.8],
-      ["M21 64 C30 42 53 34 46 50 C39 70 55 65 65 54 C73 53 86 46 85 40 C84 33 72 40 68 49 C62 62 76 69 99 58 C117 44 130 3 119 7 C107 12 97 50 101 61 C111 76 140 36 145 14 C150 -4 135 9 130 34 C124 56 126 69 140 61 C151 54 155 38 163 41 C178 41 165 67 152 61 C140 53 153 37 164 42 C169 45 175 46 181 39", 0.7, 2.8],
-    ],
-  },
-  {
-    label: "नमस्ते", viewBox: "0 10 139 56", speed: 0.8, strokeWidth: 3.2,
-    strokes: [
-      ["M21 48 C15 53 10 45 15 42 C23 36 32 43 35 53", 0, 0.6],
-      ["M39 29 L33 67", 0.6, 0.4],
-      ["M57 30 C57 44 48 49 50 53 C54 58 61 47 70 50", 1, 0.6],
-      ["M78 28 C75 44 73 57 71 67", 1.6, 0.4],
-      ["M85 31 C100 33 95 45 86 49 C78 52 83 57 90 53 C95 49 104 52 110 60", 2, 0.6],
-      ["M104 43 C112 48 120 42 124 41", 2.6, 0.4],
-      ["M105 51 C105 63 114 65 120 60", 3, 0.4],
-      ["M126 29 C123 46 120 57 120 66", 3.4, 0.6],
-      ["M129 26 C125 16 110 8 108 13 C107 17 115 20 119 20", 4, 0.6],
-      ["M11 29 C50 28 90 29 133 29", 4.6, 0.8],
-    ],
-  },
-  {
-    label: "hola", viewBox: "0 6 162 56", speed: 0.8, strokeWidth: 3.9,
-    strokes: [
-      ["M10 54 C25 51 49 20 44 9 C39 -1 25 17 20 64", 0, 0.8],
-      ["M20 64 C30 45 53 29 49 46 C41 69 55 66 68 51", 0.7, 0.8],
-      ["M69 50 C76 37 90 38 88 50 C85 63 68 66 67 54 C65 44 78 37 87 43 C99 48 115 19 114 9 C112 -3 100 13 95 35 C89 55 92 69 104 60 L115 49", 1.4, 1.6],
-      ["M115 49 C126 39 142 37 135 52 C131 61 119 66 116 59 C111 52 126 39 135 42", 2.9, 0.7],
-      ["M135 42 C137 51 130 67 153 54", 3.5, 0.8],
-    ],
-  },
-  {
-    label: "xin chào", viewBox: "0 8 269 54", speed: 0.8, strokeWidth: 3.9,
-    strokes: [
-      ["M37 29 Q28 46 9 55", 0, 0.3],
-      ["M8 35 C22 28 32 45 33 52 Q37 60 49 47", 0.4, 0.7],
-      ["M55 35 C41 52 47 66 68 45", 1, 0.5],
-      ["M59 24 L61 21", 1.5, 0.3],
-      ["M73 35 L67 56 Q90 27 94 36 C91 49 86 63 111 47", 1.8, 0.9],
-      ["M147 36 C132 27 119 62 137 56 C149 52 161 39 171 23", 2.6, 1.1],
-      ["M171 23 C180 6 168 0 156 58 C171 41 183 29 184 38 C182 59 181 61 198 47", 3.6, 1],
-      ["M198 47 C208 30 223 30 220 43 C218 53 203 63 200 54 C194 45 212 31 219 36 C214 49 213 66 231 49", 4.6, 0.8],
-      ["M231 49 C236 34 255 28 256 42 C252 54 237 65 232 55 C226 47 241 33 255 39 Q261 42 266 37", 5.4, 1.5],
-      ["M201 17 L211 26", 7, 0.8],
-    ],
-  },
-];
-
-export function Greeting() {
-  const reduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
-  const timer = useRef(0);
-  const { label, viewBox, speed, strokeWidth, strokes } = greetings[reduced ? 0 : index];
-
-  useEffect(() => () => window.clearTimeout(timer.current), [reduced]);
-  const advanceAfterHold = useCallback(() => {
-    if (reduced) return;
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setIndex((current) => (current + 1) % greetings.length), 900);
-  }, [reduced]);
-
-  return (
-    <div className="greeting" role="img" aria-label="Hello in English, Hindi, Spanish, and Vietnamese">
-      <AnimatePresence mode="wait">
-        <motion.svg key={label} aria-hidden="true" viewBox={viewBox} strokeWidth={strokeWidth}
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          transition={{ duration: reduced ? 0 : 0.2, ease: "easeOut" }}>
-          {strokes.map(([path, delay, duration], stroke) => (
-            <motion.path key={path} d={path}
-              initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={reduced ? { duration: 0 } : {
-                pathLength: { delay: delay * speed, duration: duration * speed, ease: "easeInOut" },
-                opacity: { delay: delay * speed, duration: Math.min(duration, 0.45) * speed },
-              }}
-              onAnimationComplete={stroke === strokes.length - 1 ? advanceAfterHold : undefined} />
-          ))}
-        </motion.svg>
-      </AnimatePresence>
-    </div>
-  );
 }
