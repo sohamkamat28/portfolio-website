@@ -350,7 +350,7 @@ function About() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduced ? undefined : { opacity: 0, y: -3, transition: { duration: 0.14 } }}
                 transition={{ duration: reduced ? 0 : 0.25, ease: easeOut }}>
-                <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
+                <h2 id="about-title">{active ? "Also me" : "About me"}</h2>
                 {active === 0 ? (
                   <div className="about-copy">
                     <p><em>I’m drawn to ideas that make me ask, “Could this actually work?” Then comes the fun part: figuring it out.</em></p>
