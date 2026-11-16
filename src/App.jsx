@@ -335,15 +335,21 @@ function About() {
             <button ref={(element) => { tabRefs.current[index] = element; }} key={label}
               type="button" role="tab" id={`about-tab-${index}`} aria-controls="about-panel"
               aria-selected={active === index} tabIndex={active === index ? 0 : -1}
-              onClick={() => setActive(index)}>{label}</button>
+              onClick={() => setActive(index)}>
+              <svg className="folder-tab-shape" viewBox="0 0 172 41" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 41V14C0 6.27 6.27 0 14 0H143C152 0 155 9 159 20C163 31 166 40 172 40V41Z" />
+              </svg>
+              <span>{label}</span>
+            </button>
           ))}
         </div>
         <div className="folder-surface">
           <div className="folder-panel" id="about-panel" role="tabpanel" aria-labelledby={`about-tab-${active}`} tabIndex={0}>
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }} exit={reduced ? undefined : { opacity: 0, y: -6 }}
-                transition={{ duration: reduced ? 0 : 0.22, ease: "easeOut" }}>
+              <motion.div key={active} initial={reduced ? false : { opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduced ? undefined : { opacity: 0, y: -3, transition: { duration: 0.14 } }}
+                transition={{ duration: reduced ? 0 : 0.25, ease: easeOut }}>
                 <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
                 {active === 0 ? (
                   <p>
