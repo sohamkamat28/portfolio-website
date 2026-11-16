@@ -82,19 +82,6 @@ export const honours = [
     badge: "I",
     description: "Submitted SENTINEL as a team ideation entry.",
   },
-  {
-    title: "Maharashtra HSC Board Examination",
-    date: "2024",
-    subtitle: "Top rank in Thane District",
-    badge: "H",
-    description: "Scored 95.33%.",
-  },
-  {
-    title: "Elected Head Boy",
-    date: "2022",
-    subtitle: "Student Council, EuroSchool Thane",
-    badge: "E",
-  },
 ];
 
 export const certifications = [
