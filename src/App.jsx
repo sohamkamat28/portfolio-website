@@ -435,7 +435,9 @@ function Experience() {
         {experience.map((entry) => (
           <Reveal key={entry.organization}>
             <article className="experience-item">
-              <div className="employer"><Badge value={entry.badge} className="employer-badge" /><h3>{entry.organization}</h3>
+              <div className="employer">
+                <img className="employer-logo" src={entry.logo} alt="" width="54" height="34" />
+                <h3>{entry.organization}</h3>
                 {entry.roles.some((role) => role.current) && <span className="current-dot" aria-label="Current employer" />}
               </div>
               <div className="experience-roles">

@@ -50,7 +50,7 @@ export const education = [
 export const experience = [
   {
     organization: "Purple Ribbon Healthcare",
-    badge: "P",
+    logo: "/assets/purple-ribbon-logo.png",
     roles: [
       {
         title: "Technical Product Intern, Digital Health",

@@ -468,10 +468,17 @@ a.education-item:hover {
 .experience-list { display: grid; gap: 14px; }
 .experience-item { padding: 8px 6px 5px; }
 .employer { display: flex; align-items: center; gap: 10px; }
-.employer-badge { width: 33px; height: 33px; background: #d5e4f1; color: #294c6b; font-size: 14px; }
+.employer-logo {
+  flex: none;
+  padding: 4px;
+  border: 1px solid #dce0e5;
+  border-radius: 7px;
+  background: #fff;
+  object-fit: contain;
+}
 .employer h3 { font-size: 16px; font-weight: 650; }
 .current-dot { width: 7px; height: 7px; border-radius: 50%; background: #68c986; box-shadow: 0 0 9px #57ce7355; }
-.experience-roles { margin: 2px 0 0 15px; padding-left: 19px; border-left: 1px solid var(--border); }
+.experience-roles { margin: 2px 0 0 26px; padding-left: 19px; border-left: 1px solid var(--border); }
 .role-trigger {
   display: flex;
   align-items: flex-start;
