@@ -282,7 +282,7 @@ function Hero() {
   return (
     <>
       <Section id="hero" className="hero">
-        <div className="greeting"><HandwrittenGreeting color="currentColor" /></div>
+        <HandwrittenGreeting />
         <Reveal immediate>
           <div className="hero-name">
             <span className="hero-label hero-label--work">BUILDS THINGS</span>
