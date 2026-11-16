@@ -352,13 +352,17 @@ function About() {
                 transition={{ duration: reduced ? 0 : 0.25, ease: easeOut }}>
                 <h2 id="about-title"><span>{active ? "Also" : "About"} <em>me</em></span></h2>
                 {active === 0 ? (
-                  <p>
-                    I’m pursuing a <Link to="#education">B.Tech in Artificial Intelligence and Data Science</Link> at K.J. Somaiya School of Engineering.
-                    I like <mark>building useful products</mark> and giving real problems enough structure to solve them.
-                    My work spans <span className="inline-underline">machine learning, NLP, and data analysis</span>,
-                    from <Link to="#work">defining product requirements in digital health</Link> to <Link to="#projects">shipping AI and data applications</Link>.
-                    I’m based in Thane and open to remote and India-based opportunities.
-                  </p>
+                  <div className="about-copy">
+                    <p><em>I’m drawn to ideas that make me ask, “Could this actually work?” Then comes the fun part: figuring it out.</em></p>
+                    <p>
+                      Currently a B.Tech student in AI &amp; Data Science at K.J. Somaiya School of Engineering.
+                      I’ve explored a wide range of AI, from machine learning and NLP to <mark>LLM applications, RAG</mark>, automation workflows and agentic systems.
+                      I like taking ideas from <mark>data pipelines to deployment</mark>.
+                      Above all, I enjoy connecting the technical details to the bigger picture and learning something new along the way.
+                    </p>
+                    <p>Give me an interesting problem, a good cup of coffee and a little room to experiment.</p>
+                    <p>Open to internships and freelance projects. <strong><Link to="#contact">Let’s talk.</Link></strong></p>
+                  </div>
                 ) : fun && <p>{fun}</p>}
               </motion.div>
             </AnimatePresence>
