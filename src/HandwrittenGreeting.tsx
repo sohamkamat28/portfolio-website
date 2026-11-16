@@ -81,7 +81,8 @@ export default function HandwrittenGreeting({
 
   // One scale for every greeting so letter size stays consistent between them.
   const maxH = Math.max(...greetings.map((x) => x.h));
-  const scale = size / maxH;
+  const renderedSize = `var(--greeting-size, ${size}px)`;
+  const scaled = (units: number) => `calc(${renderedSize} * ${units / maxH})`;
 
   return (
     <div
@@ -89,7 +90,7 @@ export default function HandwrittenGreeting({
       aria-label={g.label}
       className={className}
       style={{
-        height: size,
+        height: renderedSize,
         display: "flex",
         alignItems: "flex-end",
         justifyContent: "center",
@@ -108,14 +109,14 @@ export default function HandwrittenGreeting({
           key={g.id + index}
           aria-hidden="true"
           viewBox={`0 0 ${g.w} ${g.h}`}
-          width={g.w * scale}
-          height={g.h * scale}
           fill="none"
           stroke={color}
           strokeWidth={g.stem * 0.55}
           strokeLinecap="round"
           strokeLinejoin="round"
           style={{
+            width: scaled(g.w),
+            height: scaled(g.h),
             overflow: "visible",
             opacity: visiblePhase === "clearing" ? 0 : 1,
             transition: `opacity ${CLEAR_MS}ms ease-out`,
