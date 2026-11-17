@@ -55,7 +55,8 @@ export const experience = [
       {
         title: "Technical Product Intern, Digital Health",
         start: "June 2026",
-        current: true,
+        end: "August 2026",
+        current: false,
         details: [
           "Led product definition for Purple Ribbon’s transition from offline healthcare coordination to an app-based platform. Authored the product requirements for role-based workflows, module interactions, and operational handoffs.",
           "Designed wireframes for four core app modules covering patient requests, nurse and caregiver allocation, and service coordination.",
