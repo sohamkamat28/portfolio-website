@@ -168,9 +168,4 @@ export const projects = [
     live: "https://ai-gym-bot.netlify.app/",
     github: "https://github.com/sohamkamat28/AI-GYM_COACH",
   },
-  {
-    name: "Secure Banking Communication",
-    description: "A local security lab project that compares insecure communication with a protected client–server design and documents the lessons from both.",
-    stack: ["Python", "Socket Programming", "Diffie–Hellman", "AES", "SHA-256"],
-  },
 ];
