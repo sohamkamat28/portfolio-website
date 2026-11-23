@@ -30,3 +30,8 @@ Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine 
 
 - Introduction to Data Visualization, Simplilearn (2026).
 - SQL for Analyst, DevTown × Google Developer Group and MSIT (2025).
+
+## Open source contributions
+
+- Recordly: [PR #1181](https://github.com/webadderallorg/Recordly/pull/1181), merged on November 22, 2026. Removed unused bundled wallpapers and added coverage for legacy wallpaper fallbacks.
+- Hugging Face Datasets: [PR #9031](https://github.com/huggingface/datasets/pull/9031), open as of November 23, 2026. Proposed a fix for Arrow writer crashes when nested lists begin with null.

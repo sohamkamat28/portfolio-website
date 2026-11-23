@@ -104,7 +104,42 @@ export const certifications = [
 
 export const fun = "";
 export const books = [];
-export const repositories = [];
+export const repositories = [
+  {
+    name: "Recordly",
+    owner: "webadderallorg",
+    href: "https://github.com/sohamkamat28/Recordly",
+    parent: { name: "webadderallorg/Recordly", href: "https://github.com/webadderallorg/Recordly" },
+    avatar: "/assets/open-source/recordly-avatar.webp",
+    description: "Create polished demo videos without editing skills. Available on Mac, Windows, and Linux.",
+    language: "TypeScript",
+    languageColor: "#3178c6",
+    stars: 37297,
+    contribution: {
+      number: 1181,
+      status: "Merged",
+      href: "https://github.com/webadderallorg/Recordly/pull/1181",
+      summary: "Removed unused bundled wallpapers and added coverage for legacy wallpaper fallbacks.",
+    },
+  },
+  {
+    name: "datasets",
+    owner: "huggingface",
+    href: "https://github.com/sohamkamat28/datasets",
+    parent: { name: "huggingface/datasets", href: "https://github.com/huggingface/datasets" },
+    avatar: "/assets/open-source/huggingface-avatar.webp",
+    description: "Fast, efficient tools for loading, processing, and sharing datasets for AI models.",
+    language: "Python",
+    languageColor: "#3572a5",
+    stars: 22182,
+    contribution: {
+      number: 9031,
+      status: "Open",
+      href: "https://github.com/huggingface/datasets/pull/9031",
+      summary: "Proposed a fix for Arrow writer crashes when nested lists start with null.",
+    },
+  },
+];
 export const posts = [];
 
 export const projects = [

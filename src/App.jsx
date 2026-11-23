@@ -11,6 +11,9 @@ import { EnvelopeSimple } from "@phosphor-icons/react/EnvelopeSimple";
 import { FileText } from "@phosphor-icons/react/FileText";
 import { FolderSimple } from "@phosphor-icons/react/FolderSimple";
 import { GithubLogo } from "@phosphor-icons/react/GithubLogo";
+import { GitFork } from "@phosphor-icons/react/GitFork";
+import { GitMerge } from "@phosphor-icons/react/GitMerge";
+import { GitPullRequest } from "@phosphor-icons/react/GitPullRequest";
 import { House } from "@phosphor-icons/react/House";
 import { LinkedinLogo } from "@phosphor-icons/react/LinkedinLogo";
 import { MapPin } from "@phosphor-icons/react/MapPin";
@@ -18,6 +21,7 @@ import { MoonStars } from "@phosphor-icons/react/MoonStars";
 import { Notebook } from "@phosphor-icons/react/Notebook";
 import { Phone } from "@phosphor-icons/react/Phone";
 import { Sun } from "@phosphor-icons/react/Sun";
+import { Star } from "@phosphor-icons/react/Star";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
 import { XLogo } from "@phosphor-icons/react/XLogo";
 import {
@@ -490,9 +494,9 @@ function MoreLink({ to, children }) {
   return <Reveal className="more-row"><Link className="more-link" to={to}>{children} <ArrowRight size={15} aria-hidden="true" /></Link></Reveal>;
 }
 
-function OutLink({ href, children, label, className = "" }) {
+function OutLink({ href, children, label, className = "", tabIndex }) {
   if (!href) return null;
-  return <a className={className} href={href} target="_blank" rel="noreferrer" aria-label={label}>{children}</a>;
+  return <a className={className} href={href} target="_blank" rel="noreferrer" aria-label={label} tabIndex={tabIndex}>{children}</a>;
 }
 
 function Tags({ values, className = "" }) {
@@ -591,36 +595,85 @@ function Honours() {
 }
 
 function RepositoryCard({ repo, mirror = false }) {
+  const tabIndex = mirror ? -1 : undefined;
+  const StatusIcon = repo.contribution?.status === "Merged" ? GitMerge : GitPullRequest;
   return (
-    <article className="repository-card">
+    <article className="repository-card" aria-hidden={mirror || undefined}>
       <div className="repository-media">
-        {repo.image ? <img src={repo.image} alt="" loading="lazy" /> : <strong>{repo.owner && `${repo.owner}/`}{repo.name}</strong>}
+        <div>
+          <div className="repository-preview-name"><span>{repo.owner}/</span><wbr /><strong>{repo.name}</strong></div>
+          <p>{repo.description}</p>
+        </div>
+        <img src={repo.avatar} alt="" width="58" height="58" />
       </div>
       <div className="repository-content">
-        <h3>{mirror ? repo.name : <OutLink href={repo.href}>{repo.name}</OutLink>}</h3>
-        {repo.parent && <p>Forked from {mirror ? repo.parent.name : <OutLink href={repo.parent.href}>{repo.parent.name}</OutLink>}</p>}
+        <h3><img src={repo.avatar} alt="" width="20" height="20" /><OutLink href={repo.href} tabIndex={tabIndex}>{repo.name}</OutLink></h3>
+        {repo.parent && <p className="repository-parent"><GitFork size={12} aria-hidden="true" />
+          <span>Forked from <OutLink href={repo.parent.href} tabIndex={tabIndex}>{repo.parent.name}</OutLink></span>
+        </p>}
         {repo.description && <p>{repo.description}</p>}
-        <div className="repository-meta">{repo.language} {Number.isFinite(repo.stars) && ` ☆ ${repo.stars.toLocaleString()}`}</div>
+        {repo.contribution && <OutLink href={repo.contribution.href} tabIndex={tabIndex}
+          className={`repository-contribution repository-contribution--${repo.contribution.status.toLowerCase()}`}
+          label={`${repo.contribution.status} pull request #${repo.contribution.number}: ${repo.contribution.summary}`}>
+          <StatusIcon size={13} aria-hidden="true" /> {repo.contribution.status} PR #{repo.contribution.number}
+        </OutLink>}
+        <div className="repository-meta">
+          <span><span className="repository-language-dot" style={{ backgroundColor: repo.languageColor }} />{repo.language}</span>
+          {Number.isFinite(repo.stars) && <OutLink href={`${repo.parent.href}/stargazers`} tabIndex={tabIndex}
+            label={`${repo.stars.toLocaleString("en-US")} stars on ${repo.parent.name}`}>
+            <Star size={13} aria-hidden="true" /> {repo.stars.toLocaleString("en-US")}
+          </OutLink>}
+        </div>
       </div>
     </article>
+  );
+}
+
+function RepositoryMarquee() {
+  const band = useRef(null);
+  const [settings, setSettings] = useState({ repetitions: 1, duration: 21 });
+
+  useLayoutEffect(() => {
+    const element = band.current;
+    const measure = () => {
+      const card = element.querySelector(".repository-card");
+      if (!card) return;
+      const groupWidth = (card.getBoundingClientRect().width + 16) * repositories.length;
+      const repetitions = Math.max(1, Math.ceil(element.clientWidth / groupWidth));
+      const duration = groupWidth * repetitions / 36;
+      setSettings((previous) => previous.repetitions === repetitions && previous.duration === duration
+        ? previous : { repetitions, duration });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="repository-band" ref={band}>
+      <div className="repository-marquee" style={{ "--marquee-duration": `${settings.duration}s` }}>
+        {[0, 1].map((group) => (
+          <div key={group} className={`repository-group${group ? " repository-group--copy" : ""}`} aria-hidden={group ? true : undefined}>
+            {Array.from({ length: settings.repetitions }, (_, repetition) => repositories.map((repo) => (
+              <RepositoryCard key={`${repetition}-${repo.name}`} repo={repo} mirror={group > 0 || repetition > 0} />
+            )))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
 function OpenSource() {
   return (
     <Section id="open-source" className="feature-section open-source">
-      <SectionIntro id="open-source" label="Open Source" tone="green">
+      <SectionIntro id="open-source" label="Open Source" tone="green"
+        description="Contributions to Recordly and Hugging Face Datasets, from merged fixes to open pull requests.">
         Building in the <span className="heading-mark heading-mark--green">Open</span>
       </SectionIntro>
-      <div className="repository-band"><Reveal>
-        {repositories.length ? <div className="repository-marquee">
-          <div className="repository-group">{repositories.map((repo) => <RepositoryCard key={repo.name} repo={repo} />)}</div>
-          <div className="repository-group repository-group--copy" aria-hidden="true">
-            {repositories.map((repo) => <RepositoryCard key={repo.name} repo={repo} mirror />)}
-          </div>
-        </div> : <div className="repository-empty" />}
-      </Reveal></div>
-      <MoreLink to="/open-source">View all repositories</MoreLink>
+      <Reveal>{repositories.length ? <RepositoryMarquee /> : <div className="repository-empty" />}</Reveal>
+      <MoreLink to="/open-source">View all {repositories.length} repositories</MoreLink>
     </Section>
   );
 }

@@ -706,27 +706,59 @@ a.education-item:hover {
   mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
 }
 .repository-empty { min-height: 187px; }
-.repository-marquee { display: flex; width: max-content; animation: repo-scroll 34s linear infinite; }
-.repository-band:hover .repository-marquee, .repository-band:focus-within .repository-marquee { animation-play-state: paused; }
+.repository-marquee { display: flex; width: max-content; animation: repo-scroll var(--marquee-duration, 21s) linear infinite; }
+.repository-band:hover .repository-marquee { animation-play-state: paused; }
+.repository-band:focus-within { overflow-x: auto; mask-image: none; }
+.repository-band:focus-within .repository-marquee { animation: none; }
 .repository-group { display: flex; flex: none; gap: 16px; padding-right: 16px; }
-.repository-group .repository-card { width: min(300px, 78vw); }
-.repository-card { overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
-.repository-media {
+.repository-group .repository-card { flex: none; width: min(360px, 80vw); }
+.repository-card {
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--panel);
+}
+.repository-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 58px;
   align-items: center;
-  justify-content: center;
-  padding: 10px;
-  aspect-ratio: 2.1;
-  background: #fafafa;
-  color: #27272a;
+  gap: 18px;
+  min-height: 138px;
+  padding: 22px;
+  background: #fff;
+  color: #24292f;
   overflow: hidden;
 }
-.repository-media img { width: 100%; height: 100%; }
-.repository-content { padding: 12px; }
-.repository-content h3 { font-size: 15px; }
+.repository-preview-name { font-size: 19px; line-height: 1.2; overflow-wrap: anywhere; }
+.repository-preview-name strong { font-weight: 700; }
+.repository-media p { margin-top: 9px; color: #57606a; font-size: 10px; line-height: 1.45; }
+.repository-media > img { width: 58px; height: 58px; object-fit: contain; }
+.repository-content { display: flex; flex: 1; flex-direction: column; align-items: start; padding: 13px; }
+.repository-content h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.repository-content h3 img { width: 20px; height: 20px; object-fit: contain; border-radius: 50%; }
 .repository-content a:hover { text-decoration: underline; }
 .repository-content p, .repository-meta { margin-top: 4px; color: var(--muted); font-size: 12px; }
-.repository-meta { margin-top: 10px; }
+.repository-content .repository-parent { display: flex; gap: 5px; align-items: center; margin-block: 8px 5px; font-size: 10px; }
+.repository-parent svg { flex: none; }
+.repository-meta { display: flex; align-items: center; gap: 12px; padding-top: 12px; margin-top: auto; }
+.repository-meta > span, .repository-meta > a { display: inline-flex; align-items: center; gap: 4px; }
+.repository-language-dot { width: 8px; height: 8px; border-radius: 50%; }
+.repository-contribution {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-block: 10px 0;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.repository-contribution--merged { background: #a371f720; color: #c09df1; }
+.repository-contribution--open { background: #3fb95020; color: #7bd591; }
+[data-theme="light"] .repository-contribution--merged { color: #6e40a3; }
+[data-theme="light"] .repository-contribution--open { color: #216e39; }
 @keyframes repo-scroll { to { transform: translateX(-50%); } }
 
 .books { margin-top: 72px; }
@@ -1007,6 +1039,9 @@ a.education-item:hover {
   .education-meta h3 { font-size: 14px; }
   .education-meta p { font-size: 12px; }
   .education-logo { width: 44px; height: 44px; }
+  .repository-media { grid-template-columns: minmax(0, 1fr) 44px; gap: 14px; padding: 18px; }
+  .repository-media > img { width: 44px; height: 44px; }
+  .repository-preview-name { font-size: 17px; }
   .project-grid, .repository-grid { grid-template-columns: 1fr; }
   .project-detail h2 { font-size: 23px; }
   .timeline-entry { gap: 11px; }
@@ -1028,5 +1063,7 @@ a.education-item:hover {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .repository-band { overflow-x: auto; mask-image: none; }
+  .repository-marquee { animation: none; transform: none; }
   .repository-group--copy { display: none; }
+  .repository-card[aria-hidden="true"] { display: none; }
 }
