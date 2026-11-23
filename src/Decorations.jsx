@@ -29,22 +29,21 @@ export function PixelBackdrop({ kind, theme }) {
     let twinkles = [];
     let elapsed = 0;
     let previousTime;
-    const isGlitter = kind === "sky";
+    const isSweep = kind === "sky";
     const lightTheme = theme === "light";
 
-    const renderGlitter = () => {
+    const renderSweep = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = lightTheme ? "#507b9e" : "#7598ba";
-      // The grid stays fixed while light flows through it. Each cell has its own
-      // smooth sparkle phase, so there is no random frame-to-frame flickering.
+      context.fillStyle = lightTheme ? "#69717b" : "#c5cbd3";
+      // Wrap the light beyond the canvas edges so the next pass enters smoothly.
+      const sweepCenter = ((elapsed * 0.08 + 0.9) % 2.2) - 0.6;
       for (const tile of tiles) {
-        const wave = Math.sin(tile.u * 10 + tile.v * 3.5 - elapsed * 0.65
-          + Math.sin(tile.v * 5 - elapsed * 0.32) * 1.8) * 0.5 + 0.5;
-        const ripple = Math.sin(tile.u * 23 - tile.v * 8 + elapsed * 0.48) * 0.5 + 0.5;
-        const sparkle = Math.max(0, Math.sin(elapsed * tile.speed + tile.phase)) ** 16;
-        const brightness = 0.10 + wave * 0.24 + ripple * 0.08
-          + tile.grain * 0.12 + sparkle * (0.20 + wave * 0.30);
-        context.globalAlpha = Math.min(0.92, brightness * tile.envelope);
+        const distance = (tile.u + tile.v * 0.16 - sweepCenter) / 0.14;
+        const sweep = Math.exp(-distance * distance * 0.5);
+        const undercurrent = Math.sin(tile.u * 6 + tile.v * 3 - elapsed * 0.22) * 0.5 + 0.5;
+        const brightness = 0.08 + tile.grain * 0.045 + undercurrent * 0.035
+          + sweep * (0.24 + tile.grain * 0.09);
+        context.globalAlpha = brightness * tile.envelope;
         context.fillRect(tile.x, tile.y, tileSize, tileSize);
       }
       context.globalAlpha = 1;
@@ -59,7 +58,7 @@ export function PixelBackdrop({ kind, theme }) {
       width = element.clientWidth;
       height = element.clientHeight;
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      const cell = isGlitter ? (width < 640 ? 8 : 13) : (width < 640 ? 15 : 28);
+      const cell = isSweep ? (width < 640 ? 8 : 13) : (width < 640 ? 15 : 28);
       tileSize = cell - 1.4;
       tiles = [];
       twinkles = [];
@@ -71,15 +70,13 @@ export function PixelBackdrop({ kind, theme }) {
         for (let column = 0; column * cell < width; column += 1) {
           const x = column * cell;
           const y = row * cell;
-          if (isGlitter) {
-            const u = x / Math.max(width, 710);
+          if (isSweep) {
+            const u = x / width;
             const v = y / height;
             const grain = noise(column, row);
             // Slightly soften the field behind the name and introduction.
             const center = Math.exp(-((x / width - 0.5) ** 2 * 15 + (v - 0.58) ** 2 * 6));
-            tiles.push({ x, y, u, v, grain, envelope: 1 - center * 0.28,
-              phase: noise(column + 91, row + 37) * Math.PI * 2,
-              speed: 1.2 + noise(column + 7, row + 19) * 1.6 });
+            tiles.push({ x, y, u, v, grain, envelope: 1 - center * 0.28 });
             continue;
           }
           const color = tileColor(column, row, kind, theme);
@@ -89,14 +86,14 @@ export function PixelBackdrop({ kind, theme }) {
           }
         }
       }
-      if (isGlitter) renderGlitter();
+      if (isSweep) renderSweep();
     };
 
     const tick = (time) => {
-      if (isGlitter) {
+      if (isSweep) {
         if (previousTime !== undefined) elapsed += Math.min(time - previousTime, 64) / 1000;
         previousTime = time;
-        renderGlitter();
+        renderSweep();
       }
       for (const tile of twinkles) {
         const phase = time / 1700 + tile.phase;
