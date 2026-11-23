@@ -35,3 +35,9 @@ Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine 
 
 - Recordly: [PR #1181](https://github.com/webadderallorg/Recordly/pull/1181), merged on November 22, 2026. Removed unused bundled wallpapers and added coverage for legacy wallpaper fallbacks.
 - Hugging Face Datasets: [PR #9031](https://github.com/huggingface/datasets/pull/9031), open as of November 23, 2026. Proposed a fix for Arrow writer crashes when nested lists begin with null.
+
+## Challenges and honours
+
+- Smart India Hackathon 2026: Cleared the institutional round, ranked 32 out of 150 teams. Built VaultMind, a money-mule detection platform using machine learning and transaction-network analysis.
+- Amazon ML Challenge 2026: Participated in the business entity resolution challenge as part of Rust-eze, a three-member team.
+- IDEA 2.0, PSBs Hackathon Series 2026: Waitlisted among 1,500+ submissions with the SENTINEL team ideation entry.

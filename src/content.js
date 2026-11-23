@@ -77,6 +77,20 @@ export const skills = [
 
 export const honours = [
   {
+    title: "Amazon ML Challenge",
+    date: "2026",
+    subtitle: "Team Rust-eze · 3 members",
+    badge: "A",
+    description: "Participated in the business entity resolution challenge, matching noisy business records across multiple data sources.",
+  },
+  {
+    title: "Smart India Hackathon",
+    date: "2026",
+    subtitle: "Cleared the institutional round · Ranked 32 out of 150 teams",
+    badge: "S",
+    description: "Built VaultMind, a money-mule detection platform combining machine learning and transaction-network analysis to flag suspicious accounts and support financial investigations.",
+  },
+  {
     title: "IDEA 2.0, PSBs Hackathon Series",
     date: "2026",
     subtitle: "Waitlisted among 1,500+ submissions",
