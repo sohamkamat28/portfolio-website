@@ -34,7 +34,7 @@ export function PixelBackdrop({ kind, theme }) {
 
     const renderGlitter = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = lightTheme ? "#a27719" : "#f2cb30";
+      context.fillStyle = lightTheme ? "#507b9e" : "#7598ba";
       // The grid stays fixed while light flows through it. Each cell has its own
       // smooth sparkle phase, so there is no random frame-to-frame flickering.
       for (const tile of tiles) {
