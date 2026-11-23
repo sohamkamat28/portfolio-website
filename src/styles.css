@@ -625,9 +625,23 @@ a.education-item:hover {
   transition: border-color .2s ease, box-shadow .2s ease;
 }
 .project-card:hover { border-color: color-mix(in srgb, var(--border), var(--fg) 22%); box-shadow: 0 9px 30px #0002; }
-.project-media { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: var(--chip); }
-.project-media img { width: 100%; height: 100%; transition: transform .4s ease; }
-.project-card a:hover .project-media img { transform: scale(1.045); }
+.project-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  padding: clamp(12px, 2vw, 22px);
+  background: radial-gradient(ellipse at 50% 0%, #303740, #161b22 75%);
+}
+.project-media img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px #0005);
+}
 .project-card-body { display: grid; flex: 1; align-content: start; gap: 7px; padding: 11px 12px; }
 .project-card h3 { font-size: 16px; font-weight: 650; line-height: 1.2; }
 .project-card p { color: var(--muted); font-size: 12px; line-height: 1.52; }

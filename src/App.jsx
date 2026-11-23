@@ -505,7 +505,8 @@ function ProjectImage({ project, index, number = false }) {
     <div className="project-media">
       {project.image ? (
         <img src={project.image} srcSet={project.imageSmall ? `${project.imageSmall} 640w, ${project.image} 1280w` : undefined}
-          sizes="(max-width: 640px) 90vw, 500px" alt={project.imageAlt} loading="lazy" width="1280" height="720" />
+          sizes="(max-width: 767px) calc(100vw - 64px), 500px" alt={project.imageAlt} loading="lazy" decoding="async"
+          width="1280" height={project.imageHeight ?? 720} />
       ) : number && <div className="project-number" aria-hidden="true"><span>Project</span><strong>{String(index + 1).padStart(2, "0")}</strong></div>}
     </div>
   );
