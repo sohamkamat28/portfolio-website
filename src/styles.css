@@ -690,6 +690,18 @@ a.education-item:hover {
 .timeline-entry .timeline-subtitle { font-weight: 500; }
 .timeline-entry .credential { font-size: 11px; }
 .timeline-entry .tags { margin-top: 6px; }
+.timeline-logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 4px;
+  border: 1px solid #dce0e5;
+  border-radius: 9px;
+  background: #fff;
+}
+.timeline-logo img { width: 100%; height: 100%; object-fit: contain; }
+.timeline-logo--dark { border-color: #353535; background: #101112; }
 .timeline-badge--0 { color: #234d77; background: #d3e4f7; }
 .timeline-badge--1 { color: #3b4a55; background: #dfe5e9; }
 .timeline-badge--2 { color: #29384b; background: #c8d4e2; }

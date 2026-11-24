@@ -566,7 +566,11 @@ function Timeline({ entries, type }) {
       {entries.map((entry, index) => (
         <li key={entry.title}>
           <Reveal className="timeline-entry">
-            <Badge value={entry.badge} className={`timeline-badge--${index % 3}`} />
+            {entry.logo ? (
+              <span className={`timeline-logo${entry.logoDark ? " timeline-logo--dark" : ""}`} aria-hidden="true">
+                <img src={entry.logo} alt="" width="36" height="36" />
+              </span>
+            ) : <Badge value={entry.badge} className={`timeline-badge--${index % 3}`} />}
             <div>
               {entry.date && <time>{entry.date}</time>}
               <h3>{entry.title}</h3>
