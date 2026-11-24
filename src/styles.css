@@ -523,7 +523,7 @@ a.education-item:hover {
 }
 .skill-pills li:hover { transform: translateY(-2px) rotate(-2deg); }
 
-.github-activity { --contribution-cell: 13px; --contribution-gap: 4px; position: relative; left: 50%; width: min(920px, calc(100vw - 48px)); transform: translateX(-50%); }
+.github-activity { --contribution-cell: 13px; --contribution-gap: 4px; position: relative; left: 50%; width: min(920px, calc(100vw - 48px)); transform: translateX(-50%); container-type: inline-size; }
 .contribution-chart { overflow: auto; padding: 8px 6px 6px; scrollbar-width: thin; overscroll-behavior-inline: contain; }
 .github-calendar { width: max-content; min-width: 100%; }
 .calendar-months, .calendar-weeks { display: grid; grid-auto-columns: var(--contribution-cell); grid-auto-flow: column; gap: var(--contribution-gap); }
@@ -555,6 +555,10 @@ a.education-item:hover {
   pointer-events: none;
 }
 .contribution-tooltip[data-side="bottom"] { transform: translateX(-50%); }
+.calendar-scroll-hint { display: none; margin-top: 7px; color: var(--muted); font-size: 12px; text-align: center; }
+@container (max-width: 908px) {
+  .calendar-scroll-hint { display: block; }
+}
 .calendar-footer { margin-top: 12px; padding-inline: 6px; color: var(--muted); font-size: 12px; text-align: center; }
 .calendar-footer p { margin-top: 8px; }
 .calendar-legend { display: flex; align-items: center; justify-content: flex-end; gap: var(--contribution-gap); }
@@ -1002,12 +1006,12 @@ a.education-item:hover {
 }
 .dock-item:is(:hover, :focus-visible) .dock-tooltip { transform: translate(-50%, 0); opacity: 1; }
 
-.assistant { position: fixed; z-index: 11; right: 23px; bottom: max(24px, env(safe-area-inset-bottom)); }
+.assistant { --assistant-bottom: max(24px, env(safe-area-inset-bottom)); --assistant-size: 52px; position: fixed; z-index: 11; right: max(23px, calc(env(safe-area-inset-right) + 12px)); bottom: var(--assistant-bottom); }
 .assistant-trigger {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: var(--assistant-size);
+  height: var(--assistant-size);
   padding: 0;
   border: 1px solid #476e95;
   border-radius: 50%;
@@ -1025,6 +1029,9 @@ a.education-item:hover {
   right: 2px;
   bottom: calc(100% + 10px);
   width: min(290px, calc(100vw - 40px));
+  max-height: calc(100dvh - var(--assistant-bottom) - var(--assistant-size) - 26px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--border), #5d9bdc 21%);
   border-radius: 13px;
@@ -1111,6 +1118,12 @@ a.education-item:hover {
 }
 @media (max-width: 1023px) {
   .section-index { display: none; }
+  .project-links { gap: 8px; }
+  .project-links a, .project-links--full a { min-height: 44px; padding: 8px 11px; font-size: 12px; }
+  .more-link { min-height: 44px; font-size: 13px; }
+  .contact-links a { min-height: 44px; }
+  .assistant-links a, .copy-prompt { min-height: 44px; }
+  .folder-tabs, .folder-tabs button { height: 44px; }
 }
 @media (max-width: 1279px) {
   .hero h1 { font-size: 48px; }
@@ -1120,8 +1133,7 @@ a.education-item:hover {
   .hero-label { display: none; }
   .project-list { width: 100%; }
   .project-detail { grid-template-columns: 1fr; gap: 16px; padding: 14px; }
-  .assistant { right: 12px; bottom: calc(76px + env(safe-area-inset-bottom)); }
-  .assistant-trigger { width: 54px; height: 54px; }
+  .assistant { --assistant-bottom: calc(76px + env(safe-area-inset-bottom)); --assistant-size: 54px; right: max(12px, calc(env(safe-area-inset-right) + 12px)); }
 }
 @media (max-width: 639px) {
   .home { padding-top: 76px; }
@@ -1161,7 +1173,11 @@ a.education-item:hover {
   .inner-page .section-intro p { font-size: 16px; margin-top: 14px; }
   .article-header { padding: 23px; }
   .dock { bottom: max(1px, env(safe-area-inset-bottom)); }
-  .dock-item { width: clamp(28px, calc((100vw - 24px) / 9), 40px); }
+  .dock-item { width: clamp(28px, calc((100vw - 24px) / 9), 40px); height: 44px; aspect-ratio: auto; }
+  .dock-slot:first-child .dock-tooltip { left: 0; transform: translateY(3px); }
+  .dock-slot:last-child .dock-tooltip { right: 0; left: auto; transform: translateY(3px); }
+  .dock-slot:first-child .dock-item:is(:hover, :focus-visible) .dock-tooltip,
+  .dock-slot:last-child .dock-item:is(:hover, :focus-visible) .dock-tooltip { transform: translateY(0); }
 }
 @media (max-width: 370px) {
   .page-column { width: calc(100% - 32px); }

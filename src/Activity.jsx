@@ -247,14 +247,17 @@ export default function GitHubActivity() {
         )}
       </div>
       {activity.status === "ready" && (
-        <div className="calendar-footer">
-          <div className="calendar-legend" aria-label="Contribution intensity from less to more">
-            <span>Less</span>
-            {[0, 1, 2, 3, 4].map((level) => <i className={`contribution-day contribution-day--level-${level}`} key={level} />)}
-            <span>More</span>
+        <>
+          <p className="calendar-scroll-hint">Swipe to explore the full year</p>
+          <div className="calendar-footer">
+            <div className="calendar-legend" aria-label="Contribution intensity from less to more">
+              <span>Less</span>
+              {[0, 1, 2, 3, 4].map((level) => <i className={`contribution-day contribution-day--level-${level}`} key={level} />)}
+              <span>More</span>
+            </div>
+            <p>{activity.total.toLocaleString()} contributions in the last year</p>
           </div>
-          <p>{activity.total.toLocaleString()} contributions in the last year</p>
-        </div>
+        </>
       )}
       {activity.status === "ready" && tooltip && createPortal(
         <div id={tooltipId} role="tooltip" className="contribution-tooltip" data-side={tooltip.above ? "top" : "bottom"}
