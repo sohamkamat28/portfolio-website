@@ -25,7 +25,7 @@ import { Star } from "@phosphor-icons/react/Star";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
 import { XLogo } from "@phosphor-icons/react/XLogo";
 import {
-  books, certifications, education, experience, fun, honours, posts, profile,
+  books, certifications, education, experience, fun, honours, personalCollections, posts, profile,
   projects, repositories, sectionLinks, skills,
 } from "./content";
 import GitHubActivity from "./Activity";
@@ -37,6 +37,7 @@ const pageTitles = {
   "/open-source": "Open Source",
   "/certifications": "Certifications",
   "/blog": "Blog",
+  "/beyond-work": "Beyond the keyboard",
 };
 const legacyAnchors = { top: "hero", journey: "education", "github-activity": "activity" };
 const emailHref = `mailto:${profile.email}`;
@@ -318,7 +319,8 @@ function Hero() {
 const aboutTabs = ["Professional", "Fun"];
 
 function About() {
-  const [active, setActive] = useState(0);
+  const { state } = useLocation();
+  const [active, setActive] = useState(state?.aboutTab === "fun" ? 1 : 0);
   const tabRefs = useRef([]);
   const reduced = useReducedMotion();
 
@@ -368,9 +370,16 @@ function About() {
                     <p>Open to internships and freelance projects. <strong><Link to="#contact">Let’s talk.</Link></strong></p>
                   </div>
                 ) : (
-                  <p>{fun.map((part, index) => typeof part === "string" ? part : (
-                    <mark key={index}><strong>{part.highlight}</strong></mark>
-                  ))}</p>
+                  <div className="about-copy">
+                    {fun.map((paragraph, paragraphIndex) => (
+                      <p key={paragraphIndex}>
+                        {paragraph.map((part, index) => typeof part === "string" ? part : (
+                          <mark key={index}>{part.highlight}</mark>
+                        ))}
+                        {paragraphIndex === fun.length - 1 && <> <Link to="/beyond-work">Have a look</Link></>}
+                      </p>
+                    ))}
+                  </div>
                 )}
               </motion.div>
             </AnimatePresence>
@@ -809,6 +818,33 @@ function CertificationPage() {
   );
 }
 
+function PersonalPage() {
+  return (
+    <main id="main-content" tabIndex={-1} className="page-column inner-page">
+      <SectionIntro id="personal" label="Also me" page
+        description="Books and running milestones.">
+        Beyond the keyboard
+      </SectionIntro>
+      <div className="personal-collections">
+        {personalCollections.map((collection) => (
+          <section key={collection.id} aria-labelledby={`${collection.id}-title`}>
+            <h2 id={`${collection.id}-title`}>{collection.title}</h2>
+            <div className="personal-gallery" role="group" aria-label={collection.title}>
+              {collection.items.map((item) => (
+                <figure key={item.title}>
+                  <img src={item.cover} alt={item.title} loading="lazy" />
+                  <figcaption>{item.title}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+      <Link className="more-link" to="/#about" state={{ aboutTab: "fun" }}>Back to About me <ArrowRight size={15} aria-hidden="true" /></Link>
+    </main>
+  );
+}
+
 function BlogPage() {
   return (
     <main id="main-content" tabIndex={-1} className="page-column inner-page inner-page--pixels">
@@ -887,6 +923,7 @@ function Portfolio() {
         <Route path="/projects" element={<ProjectPage />} />
         <Route path="/open-source" element={<RepositoryPage />} />
         <Route path="/certifications" element={<CertificationPage />} />
+        <Route path="/beyond-work" element={<PersonalPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogArticle />} />
         <Route path="*" element={<NotFound />} />

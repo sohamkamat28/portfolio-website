@@ -118,23 +118,39 @@ export const certifications = [
 ];
 
 export const fun = [
-  "Away from the keyboard, I’m a ",
-  { highlight: "marathoner at heart" },
-  ". I’ve completed a ",
-  { highlight: "10K" },
-  ", so I’m quite literally in it for the long run. That patience comes in handy with cricket. I love playing it, and I can happily watch a ",
-  { highlight: "Test match all day" },
-  ". Five days for one result has never sounded unreasonable to me. I also enjoy ",
-  { highlight: "building websites for local businesses" },
-  ". There’s something rewarding about helping a neighbourhood business tell its story and make a good first impression online. When there’s music, I’m happy to trade the keyboard for the ",
-  { highlight: "dance floor" },
-  ". Good footwork deserves a life beyond the cricket pitch. I love ",
-  { highlight: "reading non-fiction" },
-  ", especially when a book gives me a fresh perspective. That curiosity carries over to my watchlist, where ",
-  { highlight: "movies and series based on true events" },
-  " usually get first pick.",
+  [
+    "Away from the keyboard, I’m a ",
+    { highlight: "marathoner at heart" },
+    ". I’ve completed a ",
+    { highlight: "10K" },
+    ", so I’m quite literally in it for the long run. That patience comes in handy with cricket. I love playing it, and I can happily watch a ",
+    { highlight: "Test match all day" },
+    ". Five days for one result has never sounded unreasonable to me.",
+  ],
+  [
+    "I also enjoy ",
+    { highlight: "building websites for local businesses" },
+    ". There’s something rewarding about helping a neighbourhood business tell its story and make a good first impression online.",
+  ],
+  [
+    "When there’s music, I’m happy to trade the keyboard for the ",
+    { highlight: "dance floor" },
+    ". Good footwork deserves a life beyond the cricket pitch.",
+  ],
+  [
+    "I love ",
+    { highlight: "reading non-fiction" },
+    ", especially when a book gives me a fresh perspective. That curiosity carries over to my watchlist, where ",
+    { highlight: "movies and series based on true events" },
+    " usually get first pick.",
+  ],
 ];
 export const books = [];
+export const personalCollections = [
+  { id: "reading", title: "Books", items: books },
+  { id: "running-certificates", title: "Running certificates", items: [] },
+  { id: "running-medals", title: "Medals", items: [] },
+];
 export const repositories = [
   {
     name: "Recordly",
