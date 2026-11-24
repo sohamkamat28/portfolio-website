@@ -222,19 +222,6 @@ export const posts = [];
 
 export const projects = [
   {
-    name: "SceneDNA",
-    kicker: "Multimodal visual intelligence",
-    description:
-      "Analyses a reference image’s composition, lighting, colour, and materials to build reusable visual blueprints, prompts, and style variations.",
-    stack: ["React", "TypeScript", "Gemini", "Supabase", "TanStack Start"],
-    image: "/assets/scenedna-1280.webp",
-    imageSmall: "/assets/scenedna-640.webp",
-    imageHeight: 800,
-    imageAlt: "SceneDNA project cover with its complete example reference image and visual-analysis dimensions",
-    live: "https://scene-dna-studio.vercel.app/",
-    github: "https://github.com/sohamkamat28/SceneDNA",
-  },
-  {
     name: "ResumeLens ATS",
     kicker: "AI resume intelligence",
     description:
@@ -248,6 +235,19 @@ export const projects = [
     github: "https://github.com/sohamkamat28/ATS_SCORER",
   },
   {
+    name: "AI Gym Coach",
+    kicker: "Real-time exercise intelligence",
+    description:
+      "Tracks form and repetitions for five exercises from a live camera feed, then delivers concise AI voice coaching and records workout progress.",
+    stack: ["MediaPipe", "OpenCV", "Streamlit", "WebRTC", "Groq"],
+    image: "/assets/ai-gym-coach-1280.webp",
+    imageSmall: "/assets/ai-gym-coach-640.webp",
+    imageHeight: 938,
+    imageAlt: "Complete AI Gym Coach introduction with its live app button and exercise tracking overview",
+    live: "https://ai-gym-bot.netlify.app/",
+    github: "https://github.com/sohamkamat28/AI-GYM_COACH",
+  },
+  {
     name: "Eureka",
     kicker: "Research discovery and retrieval",
     description:
@@ -258,6 +258,19 @@ export const projects = [
     imageHeight: 800,
     imageAlt: "Eureka project cover showing its research-discovery workspace, source integrations, and search features",
     github: "https://github.com/yajask-maker/Webscrap_proj_Sem5",
+  },
+  {
+    name: "SceneDNA",
+    kicker: "Multimodal visual intelligence",
+    description:
+      "Analyses a reference image’s composition, lighting, colour, and materials to build reusable visual blueprints, prompts, and style variations.",
+    stack: ["React", "TypeScript", "Gemini", "Supabase", "TanStack Start"],
+    image: "/assets/scenedna-1280.webp",
+    imageSmall: "/assets/scenedna-640.webp",
+    imageHeight: 800,
+    imageAlt: "SceneDNA project cover with its complete example reference image and visual-analysis dimensions",
+    live: "https://scene-dna-studio.vercel.app/",
+    github: "https://github.com/sohamkamat28/SceneDNA",
   },
   {
     name: "StockSense",
@@ -310,18 +323,5 @@ export const projects = [
     imageAlt: "Spotify Analytics dashboard with catalog filters and fully visible popularity charts",
     live: "https://spotify-trends-dashboard.streamlit.app/",
     github: "https://github.com/sohamkamat28/SpotifyDashboard",
-  },
-  {
-    name: "AI Gym Coach",
-    kicker: "Real-time exercise intelligence",
-    description:
-      "Tracks form and repetitions for five exercises from a live camera feed, then delivers concise AI voice coaching and records workout progress.",
-    stack: ["MediaPipe", "OpenCV", "Streamlit", "WebRTC", "Groq"],
-    image: "/assets/ai-gym-coach-1280.webp",
-    imageSmall: "/assets/ai-gym-coach-640.webp",
-    imageHeight: 938,
-    imageAlt: "Complete AI Gym Coach introduction with its live app button and exercise tracking overview",
-    live: "https://ai-gym-bot.netlify.app/",
-    github: "https://github.com/sohamkamat28/AI-GYM_COACH",
   },
 ];
