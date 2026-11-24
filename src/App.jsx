@@ -367,7 +367,11 @@ function About() {
                     <p>Give me an interesting problem, a good cup of coffee and a little room to experiment.</p>
                     <p>Open to internships and freelance projects. <strong><Link to="#contact">Let’s talk.</Link></strong></p>
                   </div>
-                ) : <div className="about-copy">{fun.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>}
+                ) : (
+                  <p>{fun.map((part, index) => typeof part === "string" ? part : (
+                    <mark key={index}><strong>{part.highlight}</strong></mark>
+                  ))}</p>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
