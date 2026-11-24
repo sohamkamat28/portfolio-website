@@ -376,7 +376,7 @@ function About() {
                         {paragraph.map((part, index) => typeof part === "string" ? part : (
                           <mark key={index}>{part.highlight}</mark>
                         ))}
-                        {paragraphIndex === fun.length - 1 && <> <Link to="/beyond-work">Have a look</Link></>}
+                        {paragraphIndex === fun.length - 1 && <> <strong><Link to="/beyond-work">Have a look</Link></strong></>}
                       </p>
                     ))}
                   </div>
