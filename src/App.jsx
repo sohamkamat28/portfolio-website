@@ -730,6 +730,7 @@ function Books() {
                 data-reduced-motion={reduced || undefined}
                 style={{ "--book-color": book.color, "--book-ink": book.ink,
                   "--book-height": book.height, "--book-width": book.width,
+                  "--book-thickness": book.thickness,
                   "--book-tilt": `${book.tilt}deg` }}
                 onPointerEnter={(event) => {
                   if (event.pointerType === "mouse") setActive(book.title);
@@ -748,8 +749,10 @@ function Books() {
                 }}>
                 <span className="book-object" aria-hidden="true">
                   <span className="book-spine">
-                    <span className="book-spine-title">{book.spineTitle ?? book.title}</span>
-                    <span className="book-spine-author">{book.author}</span>
+                    {book.spine ? <img src={book.spine} alt="" loading="lazy" decoding="async" /> : <>
+                      <span className="book-spine-title">{book.title}</span>
+                      <span className="book-spine-author">{book.author}</span>
+                    </>}
                   </span>
                   <span className="book-cover">
                     <img src={book.cover} alt="" loading="lazy" decoding="async" />

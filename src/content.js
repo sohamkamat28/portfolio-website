@@ -149,27 +149,31 @@ export const books = [
   {
     title: "Atomic Habits", author: "James Clear",
     cover: "/assets/books/atomic-habits.webp",
+    spine: "/assets/books/atomic-habits-spine.svg", thickness: 32,
     color: "#eee9da", ink: "#433628", height: 224, width: 148, tilt: -5,
   },
   {
     title: "Think and Win Like Virat", author: "Sfurti Sahare",
     cover: "/assets/books/think-and-win-like-virat.webp",
+    thickness: 25,
     color: "#215b77", ink: "#fff16a", height: 236, width: 154, tilt: -2,
   },
   {
     title: "Rich Dad Poor Dad", author: "Robert T. Kiyosaki",
     cover: "/assets/books/rich-dad-poor-dad.webp",
+    spine: "/assets/books/rich-dad-poor-dad-spine.svg", thickness: 31,
     color: "#573267", ink: "#ffed72", height: 220, width: 147, tilt: 0,
   },
   {
     title: "Gurudev: On the Plateau of the Peak", author: "Bhanumathi Narasimhan",
-    spineTitle: "On the Plateau of the Peak",
     cover: "/assets/books/gurudev.webp",
+    spine: "/assets/books/gurudev-spine.svg", thickness: 36,
     color: "#276443", ink: "#fff1a2", height: 240, width: 150, tilt: 3,
   },
   {
     title: "The Subtle Art of Not Giving a F*ck", author: "Mark Manson",
     cover: "/assets/books/subtle-art.webp",
+    spine: "/assets/books/subtle-art-spine.svg", thickness: 29,
     color: "#f26816", ink: "#211e1c", height: 228, width: 152, tilt: 5,
   },
 ];
