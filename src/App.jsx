@@ -404,13 +404,20 @@ function Education() {
       <Reveal><SmallTitle id="education">Education</SmallTitle></Reveal>
       <div className="education-list">
         {education.map((entry, index) => {
-          const Tag = entry.href ? "a" : "div";
+          const Tag = entry.transcript ? "a" : "div";
           return (
             <Reveal key={entry.institution} delay={index * 0.05}>
-              <Tag className="education-item" href={entry.href} target={entry.href ? "_blank" : undefined} rel={entry.href ? "noreferrer" : undefined}>
+              <Tag
+                className="education-item"
+                href={entry.transcript}
+                target={entry.transcript ? "_blank" : undefined}
+                rel={entry.transcript ? "noreferrer" : undefined}
+                aria-label={entry.transcript ? `${entry.institution}. ${entry.details}. ${entry.date}. Open verified transcript in a new tab.` : undefined}
+              >
                 <span className="education-logo"><img src={entry.logo} alt="" width="44" height="44" /></span>
                 <div className="education-meta">
                   <h3>{entry.institution}</h3><p>{entry.details}</p>
+                  {entry.transcript && <span className="education-proof"><FileText size={13} aria-hidden="true" /> Verified transcript <ArrowUpRight size={12} aria-hidden="true" /></span>}
                 </div>
                 <span className="education-date">{entry.date}</span>
               </Tag>

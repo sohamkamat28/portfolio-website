@@ -452,6 +452,17 @@ a.education-item:hover {
 .education-meta { grid-area: details; }
 .education-meta h3 { font-size: 16px; line-height: 1.25; font-weight: 650; }
 .education-meta p { margin-top: 3px; font-size: 13px; }
+.education-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .01em;
+}
+a.education-item:is(:hover, :focus-visible) .education-proof { color: var(--fg); }
 .education-date { grid-area: date; align-self: start; color: var(--muted); font-size: 13px; white-space: nowrap; }
 .identity-badge {
   display: inline-grid;
@@ -1158,6 +1169,7 @@ a.education-item:hover {
   .education-date { font-size: 11px; }
   .education-meta h3 { font-size: 14px; }
   .education-meta p { font-size: 12px; }
+  .education-proof { margin-top: 6px; font-size: 9px; }
   .education-logo { width: 44px; height: 44px; }
   .repository-media { grid-template-columns: minmax(0, 1fr) 44px; gap: 14px; padding: 18px; }
   .repository-media > img { width: 44px; height: 44px; }
