@@ -708,20 +708,53 @@ function Certifications() {
 }
 
 function Books() {
-  const [selected, setSelected] = useState(null);
+  const [active, setActive] = useState(null);
+  const reduced = useReducedMotion();
   return (
     <Section id="books" className="books">
       <Reveal>
         <SmallTitle id="books">Bookshelf</SmallTitle>
         <div className="books-display">
-          <div className="shelf" role="group" aria-labelledby="books-title">
+          <div className="shelf" role="group" aria-labelledby="books-title"
+            onPointerLeave={(event) => {
+              if (event.pointerType === "mouse") setActive(null);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") setActive(null);
+            }}>
             {books.map((book) => (
-              <button key={book.title} type="button" aria-pressed={selected === book.title}
+              <button key={book.title} type="button" className="shelf-book"
+                aria-pressed={active === book.title}
                 aria-label={`${book.title}, by ${book.author}`}
-                style={{ "--book-color": book.color }}
-                onClick={() => setSelected(selected === book.title ? null : book.title)}>
-                {book.cover && <img src={book.cover} alt="" loading="lazy" />}
-                <span>{book.title}</span>
+                data-open={active === book.title}
+                data-reduced-motion={reduced || undefined}
+                style={{ "--book-color": book.color, "--book-ink": book.ink,
+                  "--book-height": book.height, "--book-width": book.width,
+                  "--book-tilt": `${book.tilt}deg` }}
+                onPointerEnter={(event) => {
+                  if (event.pointerType === "mouse") setActive(book.title);
+                }}
+                onFocus={(event) => {
+                  if (event.currentTarget.matches(":focus-visible")) setActive(book.title);
+                }}
+                onBlur={() => setActive((current) => current === book.title ? null : current)}
+                onClick={(event) => {
+                  // Hover has already opened a mouse-clicked book. Touch and keyboard toggle it.
+                  if (event.detail > 0 && event.nativeEvent.pointerType !== "touch") {
+                    setActive(book.title);
+                  } else {
+                    setActive((current) => current === book.title ? null : book.title);
+                  }
+                }}>
+                <span className="book-object" aria-hidden="true">
+                  <span className="book-spine">
+                    <span className="book-spine-title">{book.spineTitle ?? book.title}</span>
+                    <span className="book-spine-author">{book.author}</span>
+                  </span>
+                  <span className="book-cover">
+                    <img src={book.cover} alt="" loading="lazy" decoding="async" />
+                  </span>
+                </span>
               </button>
             ))}
           </div>
@@ -735,7 +768,9 @@ function Contact() {
   return (
     <Section id="contact" className="feature-section contact">
       <SectionIntro id="contact" label="Contact" tone="blue">
-        <span className="heading-mark heading-mark--blue">Connect</span> with me
+        <span className="name-outline">Connect<span className="name-frame" aria-hidden="true">
+          <span /><span /><span /><span />
+        </span></span> with me
       </SectionIntro>
       <Reveal>
         <p>Get in touch by <a href={emailHref}>email</a>, connect with me on <OutLink href={profile.linkedin}>LinkedIn</OutLink>, or explore my work on <OutLink href={profile.github}>GitHub</OutLink>.</p>

@@ -774,42 +774,107 @@ a.education-item:hover {
 @keyframes repo-scroll { to { transform: translateX(-50%); } }
 
 .books { margin-top: 72px; }
-.books-display { position: relative; width: min(100%, 480px); margin: auto; }
+.books-display {
+  position: relative;
+  width: min(100%, 480px);
+  margin: auto;
+  container-type: inline-size;
+}
 .shelf {
+  --book-unit: clamp(.76px, .26cqw, 1.16px);
+  --book-ease: cubic-bezier(.22, 1, .36, 1);
   display: flex;
-  min-height: 193px;
+  min-height: calc(258 * var(--book-unit));
   align-items: flex-end;
   justify-content: center;
-  gap: 2px;
-  padding: 0 12px;
-  border-bottom: 4px solid color-mix(in srgb, var(--muted), var(--bg) 71%);
-  border-radius: 3px;
+  gap: calc(8 * var(--book-unit));
+  padding: 12px 12px 0;
+  border-bottom: 5px solid color-mix(in srgb, var(--muted), var(--bg) 71%);
+  border-radius: 2px;
+  box-shadow: 0 9px 14px -10px #0009;
 }
-.shelf button {
+.shelf-book {
   position: relative;
-  width: 28px;
-  min-height: 100px;
-  padding: 5px 4px;
-  border: 1px solid #0006;
-  background: var(--book-color, #615b7e);
-  color: white;
-  writing-mode: vertical-rl;
-  transition: transform .22s ease;
+  flex: 0 0 auto;
+  width: calc(36 * var(--book-unit));
+  height: calc(var(--book-height) * var(--book-unit));
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--book-ink);
+  perspective: 1000px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: width 480ms var(--book-ease);
 }
-.shelf button:hover, .shelf button[aria-pressed="true"] { transform: translateY(-9px); }
-.shelf button img { display: none; }
-.shelf button[aria-pressed="true"] img {
-  display: block;
+.shelf-book[data-open="true"] { width: calc(var(--book-width) * var(--book-unit)); z-index: 2; }
+.book-object {
   position: absolute;
-  z-index: 3;
-  max-width: none;
-  width: 80px;
-  height: 112px;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 3px;
+  inset: 0;
+  display: block;
+  transform: rotate(var(--book-tilt));
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+  transition: transform 480ms var(--book-ease);
 }
+.shelf-book[data-open="true"] .book-object { transform: rotate(0); }
+.book-spine, .book-cover {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  height: 100%;
+  border-radius: 2px 3px 3px 2px;
+  backface-visibility: hidden;
+  transform-origin: left center;
+  transition: transform 480ms var(--book-ease), opacity 240ms ease;
+}
+.book-spine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: calc(36 * var(--book-unit));
+  padding: calc(14 * var(--book-unit)) calc(7 * var(--book-unit));
+  background: linear-gradient(90deg, #0005, transparent 18%, #fff2 35%, transparent 60%, #0004), var(--book-color);
+  box-shadow: inset 1px 0 #ffffff38, inset -1px 0 #0005, 3px 3px 6px #0005;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotateY(0deg);
+}
+.book-spine-title {
+  font-size: calc(12 * var(--book-unit));
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.015em;
+}
+.book-spine-author {
+  font-size: calc(7 * var(--book-unit));
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.book-cover {
+  width: calc(var(--book-width) * var(--book-unit));
+  overflow: hidden;
+  background: var(--book-color);
+  opacity: 0;
+  transform: rotateY(90deg);
+  box-shadow: 5px 5px 12px -4px #0009;
+}
+.book-cover img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.book-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #0005, transparent 2%, #fff2 3%, transparent 5%);
+  box-shadow: inset -1px 0 #0004;
+}
+.shelf-book[data-open="true"] .book-spine { opacity: 0; transform: rotateY(-90deg); }
+.shelf-book[data-open="true"] .book-cover { opacity: 1; transform: rotateY(0deg); }
+.shelf-book:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
+.shelf-book[data-reduced-motion="true"],
+.shelf-book[data-reduced-motion="true"] * { transition-duration: .01ms; }
 
 .contact { margin-top: 83px; text-align: center; }
 .contact .section-intro { margin-bottom: 12px; }
