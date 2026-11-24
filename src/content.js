@@ -118,9 +118,7 @@ export const certifications = [
 ];
 
 export const fun = [
-  "I’ve completed a 10K, so I’m quite literally in it for the long run. I also love playing cricket and can happily watch a Test match all day. Five days for one result feels perfectly reasonable to me.",
-  "I enjoy building websites for local businesses, helping them make a good first impression before a customer even walks through the door. A little home advantage for the neighbourhood.",
-  "I dance too. Between the dance floor and the cricket pitch, good footwork is a recurring theme.",
+  "Away from the keyboard, I like to keep moving, whether it’s going for a run, dancing, or playing cricket. I’ve completed a 10K, and yes, I’m also the person who can watch a Test match all day and call it a day well spent. I love building websites for local businesses too. There’s something rewarding about helping a neighbourhood business put its best foot forward online.",
 ];
 export const books = [];
 export const repositories = [
