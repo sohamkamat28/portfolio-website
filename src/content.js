@@ -222,6 +222,19 @@ export const posts = [];
 
 export const projects = [
   {
+    name: "SceneDNA",
+    kicker: "Multimodal visual intelligence",
+    description:
+      "Analyses a reference image’s composition, lighting, colour, and materials to build reusable visual blueprints, prompts, and style variations.",
+    stack: ["React", "TypeScript", "Gemini", "Supabase", "TanStack Start"],
+    image: "/assets/scenedna-1280.webp",
+    imageSmall: "/assets/scenedna-640.webp",
+    imageHeight: 800,
+    imageAlt: "SceneDNA project cover with its complete example reference image and visual-analysis dimensions",
+    live: "https://scene-dna-studio.vercel.app/",
+    github: "https://github.com/sohamkamat28/SceneDNA",
+  },
+  {
     name: "ResumeLens ATS",
     kicker: "AI resume intelligence",
     description:
@@ -233,6 +246,31 @@ export const projects = [
     imageAlt: "Updated ResumeLens interface with its dark landing page and complete example resume report",
     live: "https://resumelens-ats.vercel.app/",
     github: "https://github.com/sohamkamat28/ATS_SCORER",
+  },
+  {
+    name: "Eureka",
+    kicker: "Research discovery and retrieval",
+    description:
+      "Combines paper and conference discovery from Crossref, arXiv, and web scraping, with TF-IDF search, deduplication, bookmarks, and CSV exports.",
+    stack: ["FastAPI", "SQLite", "scikit-learn", "Beautiful Soup"],
+    image: "/assets/eureka-1280.webp",
+    imageSmall: "/assets/eureka-640.webp",
+    imageHeight: 800,
+    imageAlt: "Eureka project cover showing its research-discovery workspace, source integrations, and search features",
+    github: "https://github.com/yajask-maker/Webscrap_proj_Sem5",
+  },
+  {
+    name: "StockSense",
+    kicker: "Explainable market modeling",
+    description:
+      "Predicts next-session stock direction from nine engineered indicators with walk-forward testing, confidence scores, and decision-path explanations.",
+    stack: ["Flask", "scikit-learn", "yfinance", "D3.js"],
+    image: "/assets/stocksense-1280.webp",
+    imageSmall: "/assets/stocksense-640.webp",
+    imageHeight: 838,
+    imageAlt: "Complete StockSense market console with ticker selection and its illustrative signal preview",
+    live: "https://stocksense-rho-ochre.vercel.app/",
+    github: "https://github.com/sohamkamat28/StockSense",
   },
   {
     name: "MedSimplify",
@@ -248,17 +286,17 @@ export const projects = [
     github: "https://github.com/sohamkamat28/medlife",
   },
   {
-    name: "StockSense",
-    kicker: "Explainable market modeling",
+    name: "YouTube Video Analyser",
+    kicker: "Video-to-notes intelligence",
     description:
-      "Predicts next-session stock direction from nine engineered indicators with walk-forward testing, confidence scores, and decision-path explanations.",
-    stack: ["Flask", "scikit-learn", "yfinance", "D3.js"],
-    image: "/assets/stocksense-1280.webp",
-    imageSmall: "/assets/stocksense-640.webp",
-    imageHeight: 838,
-    imageAlt: "Complete StockSense market console with ticker selection and its illustrative signal preview",
-    live: "https://stocksense-rho-ochre.vercel.app/",
-    github: "https://github.com/sohamkamat28/StockSense",
+      "Turns public YouTube videos into timestamped summaries, study guides, and key takeaways with Gemini, caption-based fallback, and downloadable Markdown notes.",
+    stack: ["Python", "Streamlit", "Gemini", "Agno", "Groq"],
+    image: "/assets/youtube-1280.webp",
+    imageSmall: "/assets/youtube-640.webp",
+    imageHeight: 812,
+    imageAlt: "YouTube Video Analyser interface with its complete video-link form and report-style controls",
+    live: "https://youtube-video-analyser.streamlit.app/",
+    github: "https://github.com/sohamkamat28/YouTube-video-analyser",
   },
   {
     name: "Spotify Analytics",

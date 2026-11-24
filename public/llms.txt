@@ -13,11 +13,16 @@ Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine 
 
 ## Featured work
 
+- SceneDNA: reference-image analysis, reusable visual blueprints, and prompt variations using Gemini.
 - ResumeLens ATS: AI-assisted resume and job-description analysis.
-- MedSimplify: OCR and biomedical NLP for readable medical reports.
+- Eureka: multi-source paper and conference discovery with TF-IDF retrieval, deduplication, bookmarks, and CSV exports. Source repository: https://github.com/yajask-maker/Webscrap_proj_Sem5
 - StockSense: explainable stock-direction modeling.
-- Spotify Analytics: interactive music-data exploration.
 
+## More projects
+
+- MedSimplify: OCR and biomedical NLP for readable medical reports.
+- YouTube Video Analyser: summaries, timestamped notes, study guides, and Markdown reports from public YouTube videos.
+- Spotify Analytics: interactive music-data exploration.
 - AI Gym Coach: camera-based exercise tracking and voice coaching.
 
 ## Education and experience
