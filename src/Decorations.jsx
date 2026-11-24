@@ -34,9 +34,9 @@ export function PixelBackdrop({ kind, theme }) {
 
     const renderSweep = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = lightTheme ? "#69717b" : "#c5cbd3";
+      context.fillStyle = lightTheme ? "#456c9a" : "#c5cbd3";
       // Wrap the light beyond the canvas edges so the next pass enters smoothly.
-      const sweepCenter = ((elapsed * 0.08 + 0.9) % 2.2) - 0.6;
+      const sweepCenter = ((elapsed * 0.1 + 0.9) % 2.2) - 0.6;
       for (const tile of tiles) {
         const distance = (tile.u + tile.v * 0.16 - sweepCenter) / 0.14;
         const sweep = Math.exp(-distance * distance * 0.5);

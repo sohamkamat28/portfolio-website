@@ -57,18 +57,18 @@
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #fff;
-  --fg: #0a0b0c;
-  --muted: #626268;
-  --panel: #fff;
-  --border: #dedfe4;
-  --chip: #efeff2;
-  --inverse: #fafafa;
+  --bg: #e4edf6;
+  --fg: #172637;
+  --muted: #34475f;
+  --panel: #f7faff;
+  --border: #bdccde;
+  --chip: #dbe5f0;
+  --inverse: #f7faff;
   --button: #18191b;
-  --link: #174e99;
+  --link: #123f7c;
   --green: #246b49;
-  --dock-bg: rgb(248 248 250 / 94%);
-  --heat-0: #ebedf0;
+  --dock-bg: rgb(241 246 252 / 94%);
+  --heat-0: #d8e3ed;
   --heat-1: #9be9a8;
   --heat-2: #40c463;
   --heat-3: #30a14e;
@@ -128,7 +128,7 @@ ul { padding: 0; list-style: none; }
 }
 .pixels--teal, .pixels--violet { height: 420px; }
 [data-theme="light"] .pixels--sky {
-  mask-image: linear-gradient(rgb(0 0 0 / 42%), rgb(0 0 0 / 21%) 42%, transparent 100%);
+  mask-image: linear-gradient(rgb(0 0 0 / 80%) 0%, rgb(0 0 0 / 62%) 43%, rgb(0 0 0 / 30%) 65%, transparent 100%);
 }
 
 .page-column {
@@ -150,7 +150,7 @@ ul { padding: 0; list-style: none; }
   color: #f2cb30;
 }
 .greeting svg { display: block; width: auto; height: var(--apple-greeting-height); max-width: 100%; overflow: visible; }
-[data-theme="light"] .greeting { color: #a27719; }
+[data-theme="light"] .greeting { color: #805b13; }
 .hero-name {
   position: relative;
   width: fit-content;

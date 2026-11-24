@@ -943,7 +943,7 @@ function Portfolio() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0a0b0c" : "#ffffff");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0a0b0c" : "#e4edf6");
     try { localStorage.setItem("soham-portfolio-theme", theme); }
     catch { /* The theme remains active for this visit. */ }
   }, [theme]);
