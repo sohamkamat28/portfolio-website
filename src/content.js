@@ -79,7 +79,7 @@ export const honours = [
   {
     title: "Amazon ML Challenge",
     date: "2026",
-    subtitle: "Team Rust-eze · 3 members",
+    subtitle: "Placed in approximately the top 10% of 32,000 teams",
     badge: "A",
     description: "Participated in the business entity resolution challenge, matching noisy business records across multiple data sources.",
   },

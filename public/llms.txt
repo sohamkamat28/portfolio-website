@@ -39,5 +39,5 @@ Portfolio of Soham Kamat, an AI and Data Science undergraduate building machine 
 ## Challenges and honours
 
 - Smart India Hackathon 2026: Cleared the institutional round, ranked 32 out of 150 teams. Built VaultMind, a money-mule detection platform using machine learning and transaction-network analysis.
-- Amazon ML Challenge 2026: Participated in the business entity resolution challenge as part of Rust-eze, a three-member team.
+- Amazon ML Challenge 2026: Placed in approximately the top 10% of 32,000 teams in the business entity resolution challenge.
 - IDEA 2.0, PSBs Hackathon Series 2026: Waitlisted among 1,500+ submissions with the SENTINEL team ideation entry.
