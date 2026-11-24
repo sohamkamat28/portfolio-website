@@ -1,6 +1,6 @@
 # Book spine references
 
-The four `*-spine.svg` assets display the photographed printed spines with embedded WebP source images. SVG affine transforms flatten the camera angle; the titles and publisher marks are part of the source photographs, not replacement lettering.
+The four `*-spine.svg` assets display the photographed printed spines with embedded WebP source images. SVG affine transforms flatten the camera angle; the printed artwork comes from the source photographs. The Subtle Art spine has a typeset title correction to read “THE SUBTLE ART OF NOT GIVING A F*CK” as requested, while retaining its photographed author and publisher details.
 
 - Atomic Habits, Avery hardcover: https://pangobooks.com/books/67273af0-5042-4f0a-915b-e9e5f2966049-qZCgFSDYYAW72FMqvybw6jJCl522
 - Rich Dad Poor Dad, 20th anniversary paperback: https://www.eourmart.com/products/rich-dad-poor-dad
