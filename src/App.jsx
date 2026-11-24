@@ -367,7 +367,7 @@ function About() {
                     <p>Give me an interesting problem, a good cup of coffee and a little room to experiment.</p>
                     <p>Open to internships and freelance projects. <strong><Link to="#contact">Let’s talk.</Link></strong></p>
                   </div>
-                ) : fun && <p>{fun}</p>}
+                ) : <div className="about-copy">{fun.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>}
               </motion.div>
             </AnimatePresence>
           </div>
