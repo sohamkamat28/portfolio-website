@@ -796,7 +796,7 @@ a.education-item:hover {
 .shelf-book {
   position: relative;
   flex: 0 0 auto;
-  width: calc(var(--book-thickness) * var(--book-unit));
+  width: calc(36 * var(--book-unit));
   height: calc(var(--book-height) * var(--book-unit));
   padding: 0;
   border: 0;
@@ -834,7 +834,7 @@ a.education-item:hover {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  width: calc(var(--book-thickness) * var(--book-unit));
+  width: calc(36 * var(--book-unit));
   padding: calc(14 * var(--book-unit)) calc(7 * var(--book-unit));
   background: linear-gradient(90deg, #0005, transparent 18%, #fff2 35%, transparent 60%, #0004), var(--book-color);
   box-shadow: inset 1px 0 #ffffff38, inset -1px 0 #0005, 3px 3px 6px #0005;
@@ -842,15 +842,6 @@ a.education-item:hover {
   text-orientation: mixed;
   transform: rotateY(0deg);
   overflow: hidden;
-}
-.book-spine:has(img) { padding: 0; }
-.book-spine img { display: block; width: 100%; height: 100%; object-fit: fill; }
-.book-spine::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, #0002, transparent 22%, #ffffff0a 45%, transparent 65%, #0002);
 }
 .book-spine-title {
   font-size: calc(12 * var(--book-unit));
