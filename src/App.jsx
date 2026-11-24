@@ -417,7 +417,6 @@ function Education() {
                 <span className="education-logo"><img src={entry.logo} alt="" width="44" height="44" /></span>
                 <div className="education-meta">
                   <h3>{entry.institution}</h3><p>{entry.details}</p>
-                  {entry.transcript && <span className="education-proof"><FileText size={13} aria-hidden="true" /> Verified transcript <ArrowUpRight size={12} aria-hidden="true" /></span>}
                 </div>
                 <span className="education-date">{entry.date}</span>
               </Tag>
