@@ -58,9 +58,9 @@ function RouteEffects() {
   }, []);
 
   useLayoutEffect(() => {
-    const title = pageTitles[pathname] ?? (pathname === "/" ? "AI and Data Science" : "Page not found");
+    const title = pageTitles[pathname] ?? "Page not found";
     const article = posts.find((post) => pathname === `/blog/${post.slug}`);
-    document.title = `${article?.title ?? title} | ${profile.name}`;
+    document.title = pathname === "/" ? profile.name : `${article?.title ?? title} | ${profile.name}`;
     const meta = document.querySelector('meta[property="og:title"]');
     meta?.setAttribute("content", document.title);
     const canonical = new URL(pathname, profile.website).href;
